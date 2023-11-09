@@ -10,8 +10,30 @@ class SecondePageProblem extends StatefulWidget {
 
 class _SecondePageProblemState extends State<SecondePageProblem> {
 
-  List<double> note_height_list = [27,54,70,83,110,135];
-  List<double> randomItems = [30,50];
+  // list 변경
+  // before
+  // List<double> note_height_list = [31,42,55,67.5,81,94.5,108,121.5];
+  // after
+  List<List<dynamic>> note_height_list =
+  [
+    // [17.0,1],
+    // [31.0,2],
+    // [42.0,3],
+    // [55.0,4],
+    // [67.5,5],
+    // [81.0,6],
+    // [94.5,7],
+    // [108.0,8],
+    // [121.5,9],
+    // [135.0,10],
+    // [145.0,11],
+    [159.0,12],
+    [172.0,13],
+    [184.0,14],
+  ];
+  // List<double> note_height_list = [31,42,55,67.5,81,94.5,108,121.5];
+  List randomItems = [30,50];
+  double downNoteLeft = 180.0;
 
   bool setEquals<T>(Set<T>? a, Set<T>? b) {
     if (a == null) {
@@ -31,13 +53,39 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
     return true;
   }
 
+  // 도 에서 추가 줄 만들기
+  Widget addLineDown(int noteNumber1,int noteNumber2){
+    if ((noteNumber1==13)|(noteNumber1==14)
+    |(noteNumber2==13)|(noteNumber2==14)
+    ){
+      return Positioned(
+        top: 172,
+        left: 180,
+        child: SizedBox(
+          width: 50,
+          height: 50,
+          child: Image.asset('assets/music_five_line_one.png'),
+        ),
+      );
+    } else {
+      return SizedBox();
+    }
+  }
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     note_height_list.shuffle();
-    randomItems = note_height_list.take(2).toList();
+    print([note_height_list[0][0],note_height_list[1][0]]);
+    randomItems = [note_height_list[0][0],note_height_list[1][0]];
+    randomItems.sort();
+    if ((note_height_list[0][1]-note_height_list[1][1]).abs()==1){
+      downNoteLeft = 207;
+    } else {
+      downNoteLeft = 180;
+    }
   }
 
 
@@ -53,13 +101,13 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
           Stack(
             children: [
               Container(
-                height: 200,
+                height: 250,
                 // width: 100,
                 child: Image.asset('assets/music_five_line.png'),
               ),
               Positioned(
                 top: randomItems[0],
-                left: 180,
+                left: downNoteLeft,
                 child: SizedBox(
                   width: 50,
                   height: 50,
@@ -75,6 +123,7 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
                   child: Image.asset('assets/whole_note_lean.png'),
                 ),
               ),
+              addLineDown(note_height_list[0][1],note_height_list[1][1]),
             ]
           ),
           ElevatedButton(onPressed: (){
@@ -82,17 +131,35 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
             // 새로운 문제 생성
             note_height_list.shuffle();
             // 이전 문제와 동일하지 않게 방지 하는 장치
-            while (setEquals(
-                note_height_list.take(2).toList().toSet(),
+            // 동일하면 while문이 계속 실행
+            print((note_height_list[0][1]-note_height_list[1][1]).abs());
+            while (
+            setEquals(
+                [note_height_list[0][0],note_height_list[1][0]].toSet(),
                 [randomItems[0],randomItems[1]].toSet())
+            |((note_height_list[0][1]-note_height_list[1][1]).abs()>7)
             ){
               note_height_list.shuffle();
             }
 
             setState(() {
               // 문제 적용
-              randomItems = note_height_list.take(2).toList();
+              randomItems = [note_height_list[0][0],note_height_list[1][0]];
+              randomItems.sort();
             });
+
+            print((note_height_list[0][1]-note_height_list[1][1]).abs());
+            if ((note_height_list[0][1]-note_height_list[1][1]).abs()==1){
+              setState(() {
+                downNoteLeft = 207;
+              });
+            } else {
+              setState(() {
+                downNoteLeft = 180;
+              });
+            }
+
+            print(randomItems);
             // List randomItems = note_height_list.take(2).toList();
           }, child: Text('버튼'))
         ],
