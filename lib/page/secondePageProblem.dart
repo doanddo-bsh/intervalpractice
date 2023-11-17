@@ -20,7 +20,7 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
   [
     [4.0,0,Note.b.inOctave(5)],
     [17.0,1,Note.a.inOctave(5)],
-    [31.0,2,Note.g.inOctave(5)],
+    [29.0,2,Note.g.inOctave(5)],
     [42.0,3,Note.f.inOctave(5)],
     [55.0,4,Note.e.inOctave(5)],
     [67.5,5,Note.d.inOctave(5)],
@@ -88,6 +88,30 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
         ),
       );
     } else if (
+    ((noteNumber2==13))
+    ){
+      return Positioned(
+        top: 172,
+        left: 155,
+        child: SizedBox(
+          width: 100,
+          height: 50,
+          child: Image.asset('assets/music_five_line_one.png'),
+        ),
+      );
+    }  else if (
+    ((noteNumber2==14))
+    ){
+      return Positioned(
+        top: 172,
+        left: 155,
+        child: SizedBox(
+          width: 100,
+          height: 50,
+          child: Image.asset('assets/music_five_line_one.png'),
+        ),
+      );
+    } else if (
     (noteNumber1==0)&(noteNumber2==3)
     |(noteNumber1==1)&(noteNumber2==3)
     |(noteNumber1==0)&(noteNumber2==2)
@@ -121,6 +145,26 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
           width: 100,
           height: 50,
           child: Image.asset('assets/five_long.png'),
+        ),
+      );
+    } else if ((noteNumber1==1)) {
+      return Positioned(
+        top: 17,
+        left: 155,
+        child: SizedBox(
+          width: 100,
+          height: 50,
+          child: Image.asset('assets/music_five_line_one.png'),
+        ),
+      );
+    } else if ((noteNumber1==0)) {
+      return Positioned(
+        top: 17,
+        left: 155,
+        child: SizedBox(
+          width: 100,
+          height: 50,
+          child: Image.asset('assets/music_five_line_one.png'),
         ),
       );
     }
@@ -214,12 +258,15 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
   }
 
   Widget showAnswerBefore(String answerInterval){
-    if (answerInterval == randomNote[0].interval(randomNote[1]).toString()){
+
+    String answerReal = randomNote[0].interval(randomNote[1]).toString();
+
+    if (answerInterval == answerReal){
       print(answerInterval);
       return Text('정답입니다.');
     } else {
       print(answerInterval);
-      return Text('오답입니다.');
+      return Text('오답입니다. 정답은' + answerReal);
     }
   }
 
@@ -227,7 +274,15 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // 새로운 문제 생성
     note_height_list.shuffle();
+
+    while (
+    // 7음정 넘게 차이날 경우 다시 생성
+    ((note_height_list[0][1]-note_height_list[1][1]).abs()>7)
+    ){
+      note_height_list.shuffle();
+    }
 
     randomItems = [note_height_list[0][0],note_height_list[1][0]];
     randomItems.sort();
@@ -378,7 +433,7 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
                 setEquals(
                     [note_height_list[0][0],note_height_list[1][0]].toSet(),
                     [randomItems[0],randomItems[1]].toSet())
-                // 7넘게 차이나면 다시 생성
+                // 7음정 넘게 차이날 경우 다시 생성
                 |((note_height_list[0][1]-note_height_list[1][1]).abs()>7)
                 ){
                   note_height_list.shuffle();

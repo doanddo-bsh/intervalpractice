@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'secondePageProblem.dart';
+import 'thirdPageProblem.dart';
 
 class FirstProblemTypeList extends StatefulWidget {
   const FirstProblemTypeList({Key? key}) : super(key: key);
@@ -83,6 +84,8 @@ class ListViewEasy extends StatelessWidget {
     ['음정 문제3','인벌스 넣을 거임.'],
   ];
 
+  List problemPage = [SecondePageProblem(),ThirdPageProblem(),ThirdPageProblem()];
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -91,45 +94,56 @@ class ListViewEasy extends StatelessWidget {
         itemBuilder: (BuildContext context, int index){
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(
-                height: 150,
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        color: Colors.black
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                        problemPage[index]
                     )
-                ),
-                child:Row(
-                  children: [
-                    const SizedBox(
-                        height:100,
-                        width: 100,
-                        child: FittedBox(
-                          child: Icon(Icons.music_note,
-                          ),
-                        )
-                    ),
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children:[
-                          const SizedBox(height: 15,),
-                          SizedBox(
-                            width: 200,
-                            child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(mainTitleAndContentsEasy[index][0])
+                );
+              },
+              child: Container(
+                  height: 150,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Colors.black
+                      )
+                  ),
+                  child:Row(
+                    children: [
+                      const SizedBox(
+                          height:100,
+                          width: 100,
+                          child: FittedBox(
+                            child: Icon(Icons.music_note,
                             ),
-                          ),
-                          const SizedBox(height: 10,),
-                          SizedBox(
-                            width: 200,
-                            child: AutoSizeText(mainTitleAndContentsEasy[index][1],
-                              maxLines: 4,
+                          )
+                      ),
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children:[
+                            const SizedBox(height: 15,),
+                            SizedBox(
+                              width: 200,
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(mainTitleAndContentsEasy[index][0])
+                              ),
                             ),
-                          ),
-                        ]
-                    ),
-                  ],
-                )
+                            const SizedBox(height: 10,),
+                            SizedBox(
+                              width: 200,
+                              child: AutoSizeText(mainTitleAndContentsEasy[index][1],
+                                maxLines: 4,
+                              ),
+                            ),
+                          ]
+                      ),
+                    ],
+                  )
+              ),
             ),
           );
         }

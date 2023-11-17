@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> {
         },
         home: child,
       ),
-      child: SecondePageProblem(),
+      child: FirstProblemTypeList(),
     );
   }
 }
