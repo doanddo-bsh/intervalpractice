@@ -28,7 +28,7 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
     [94.5,7,Note.b.inOctave(4)],
     [108.0,8,Note.a.inOctave(4)],
     [121.5,9,Note.g.inOctave(4)],
-    [135.0,10,Note.f.inOctave(4)],
+    [133.0,10,Note.f.inOctave(4)],
     [145.0,11,Note.e.inOctave(4)],
     [159.0,12,Note.d.inOctave(4)],
     [172.0,13,Note.c.inOctave(4)],
@@ -323,7 +323,7 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
                 children: [
                   Container(
                     height: 250,
-                    width: 400,
+                    width: 390,
                     child: Image.asset('assets/music_five_line.png'),
                     // color: Colors.redAccent,
                   ),
