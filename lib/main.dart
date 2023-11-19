@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
     // );
 
     return ScreenUtilInit(
-      designSize: const Size(390, 844),
+      designSize: Size(375, 844),
       builder: (context, child) => MaterialApp(
         title: 'itervalpractice',
         debugShowCheckedModeBanner: false,

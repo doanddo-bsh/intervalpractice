@@ -38,6 +38,7 @@ dependencies:
   auto_size_text: ^3.0.0
   flutter_screenutil: ^5.9.0
   music_notes: ^0.13.0
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:
