@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-import 'package:music_notes/music_notes.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:lottie/lottie.dart';
+import 'secondePageFunc/secondePageList.dart';
+import 'secondePageFunc/secondePageFunc.dart';
 
 class SecondePageProblem extends StatefulWidget {
   const SecondePageProblem({super.key});
@@ -13,72 +15,12 @@ class SecondePageProblem extends StatefulWidget {
 
 class _SecondePageProblemState extends State<SecondePageProblem> {
 
-  // list 변경
-  // before
-  // List<double> note_height_list = [31,42,55,67.5,81,94.5,108,121.5];
-  // after
-  Map intervalNameKorEng = {
-    '감' : 'd',
-    '완전' : 'P',
-    '증' : 'A',
-    '겹감' : 'dd',
-    '단' : 'm',
-    '장' : 'M',
-    '겹증' : 'AA',
-  };
 
-  Map intervalNameEngKor = {
-    'd':'감',
-    'P':'완전',
-    'A':'증',
-    'dd':'겹감',
-    'm':'단',
-    'M':'장',
-    'AA':'겹증',
-  };
-
-
-  List<List<dynamic>> note_height_list =
-  [
-    [4.0,0,Note.b.inOctave(5)],
-    [17.0,1,Note.a.inOctave(5)],
-    [29.0,2,Note.g.inOctave(5)],
-    [42.0,3,Note.f.inOctave(5)],
-    [55.0,4,Note.e.inOctave(5)],
-    [67.5,5,Note.d.inOctave(5)],
-    [81.0,6,Note.c.inOctave(5)],
-    [94.5,7,Note.b.inOctave(4)],
-    [108.0,8,Note.a.inOctave(4)],
-    [121.5,9,Note.g.inOctave(4)],
-    [133.0,10,Note.f.inOctave(4)],
-    [145.0,11,Note.e.inOctave(4)],
-    [159.0,12,Note.d.inOctave(4)],
-    [172.0,13,Note.c.inOctave(4)],
-    [184.0,14,Note.b.inOctave(3)],
-  ];
   // List<double> note_height_list = [31,42,55,67.5,81,94.5,108,121.5];
   late List<double> randomItems ;
   late List<int> randomNoteNumber ;
   late List<dynamic> randomNote ;
   double downNoteLeft = 180.0;
-
-  bool setEquals<T>(Set<T>? a, Set<T>? b) {
-    if (a == null) {
-      return b == null;
-    }
-    if (b == null || a.length != b.length) {
-      return false;
-    }
-    if (identical(a, b)) {
-      return true;
-    }
-    for (final T value in a) {
-      if (!b.contains(value)) {
-        return false;
-      }
-    }
-    return true;
-  }
 
   // 도 에서 추가 줄 만들기
   Widget addLineDown(int noteNumber1,int noteNumber2){
@@ -197,6 +139,7 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
 
   String? intervalNumber = null;
 
+  // 음정과 음정이름을 함께 보여주는 버튼을 생성하는 함수
   Widget secondeElevatedButton(String intervalName,String intervalNumber){
     return ElevatedButton(
         onPressed: (){
@@ -332,7 +275,7 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   const Text('정답입니다.'),
-                  nextProblem(),
+                  (problemNumber!=10)? nextProblem('다음문제') : showResult()
                 ],
               ),
             ),
@@ -360,7 +303,7 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
                   const Text('오답입니다.'),
                   Text('정답은 ${answerRealKor} 입니다.'),
                   const Text('풀이 : ...'),
-                  nextProblem(),
+                  (problemNumber!=10)? nextProblem('') : showResult()
                 ],
               ),
             ),
@@ -370,33 +313,20 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
     }
   }
 
-  Widget nextProblem(){
+  Widget nextProblem(String buttonText){
     return ElevatedButton(
 
         onPressed: (){
           if (problemNumber==10){
-            print('afterProblemTen');
-            afterProblemTen();
             setState(() {
               problemNumber = 0;
             });
           }
 
-          // 새로운 문제 생성
-          note_height_list.shuffle();
-          // 이전 문제와 동일하지 않게 방지 하는 장치
-          // 동일하면 while문이 계속 실행
-          print((note_height_list[0][1]-note_height_list[1][1]).abs());
-          while (
-          // 이전 문제와 동일하지 않게 방지 하는 장치
-          setEquals(
-              [note_height_list[0][0],note_height_list[1][0]].toSet(),
-              [randomItems[0],randomItems[1]].toSet())
-          // 7음정 넘게 차이날 경우 다시 생성
-          |((note_height_list[0][1]-note_height_list[1][1]).abs()>7)
-          ){
-            note_height_list.shuffle();
-          }
+          note_height_list = shuffle(
+            note_height_list,
+            randomItems,
+          );
 
           setState(() {
             // 문제 적용
@@ -404,6 +334,8 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
             randomItems.sort();
             randomNoteNumber = [note_height_list[0][1],note_height_list[1][1]];
             randomNoteNumber.sort();
+            randomNote = [note_height_list[0][2],note_height_list[1][2]];
+            randomNote.sort();
 
             answerInterval = null;
             intervalNumber = null;
@@ -411,7 +343,6 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
             problemNumber += 1;
           });
 
-          print((note_height_list[0][1]-note_height_list[1][1]).abs());
           if ((note_height_list[0][1]-note_height_list[1][1]).abs()==1){
             setState(() {
               downNoteLeft = 207;
@@ -422,21 +353,215 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
             });
           }
 
-          randomNote = [note_height_list[0][2],note_height_list[1][2]];
-          randomNote.sort();
-
-          print(randomItems);
-          print(randomNoteNumber);
-          print(randomNote);
-          print(randomNote[0].interval(randomNote[1]));
-
           Navigator.pop(context);
-          // List randomItems = note_height_list.take(2).toList();
-        }, child: const Text('다음문제')
+
+        }, child: Text(buttonText)
     );
   }
 
-  int problemNumber = 0 ;
+  Widget showResult(){
+
+    // Navigator.pop(context);
+
+    return ElevatedButton(
+        onPressed: (){
+
+          Navigator.pop(context);
+
+          showModalBottomSheet<void>(
+            context: context,
+            isScrollControlled: true,
+            builder: (BuildContext context) {
+              return Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                ),
+                height: MediaQuery.of(context).size.height * 1.0,
+                child: Center(
+                  child:
+                  SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 40,),
+                                Stack(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Container(
+                                          width: 600.w,
+                                          height: 450.h,
+                                          color: Colors.lightGreen.withOpacity(0.4),
+                                        ),),
+                                    ),
+                                    Center(
+                                      child: Container(
+                                        child: Column(
+                                            children: [
+                                              SizedBox(height: 60,),
+                                              Container(
+                                                  child: Text('이번 문제의 점수는',
+                                                    style: TextStyle(
+                                                        fontSize: 25,
+                                                        color: Colors.grey[700]
+                                                    ),)),
+                                              // SizedBox(height: 30,),
+                                              Stack(
+                                                children:[
+                                                  Container(
+                                                    child: Lottie.asset
+                                                      ('assets/animation/star2.json'),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.fromLTRB(40, 60, 0, 0),
+                                                    child: Container(
+                                                      child: Text('85점',
+                                                          style: TextStyle(
+                                                              fontSize: 60,
+                                                              fontWeight: FontWeight.bold
+                                                          )),
+                                                    ),
+                                                  ),
+                                                ],),
+                                              // SizedBox(height: 30,),
+                                              Container(
+                                                  child: Text('정말 멋져요! 내가바로 음정고수🎉',
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          color: Colors.grey[700]
+                                                      ))),
+                                              SizedBox(height: 20,),
+                                              Container(
+                                                  child: Text('10문제중에서 8문제를 맞췄습니다',
+                                                      style:
+                                                      TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight: FontWeight.bold
+                                                      ))),
+                                              SizedBox(height: 20,),
+                                              Container(
+                                                height: 40,
+                                                width: 300,
+                                                child: ElevatedButton(
+                                                  child: Text('틀린 문제 다시 풀기',
+                                                    style: TextStyle(
+                                                        color: Colors.grey[700]
+                                                    ),
+                                                  ),
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor: Colors.yellow[200]
+
+                                                  ),
+                                                  onPressed: () {},
+                                                ) ,
+                                              )
+                                            ]),
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 1, 0, 2),
+                            child: Divider(thickness: 1,
+                              indent: 7,
+                              endIndent: 7,),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Stack(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Container(
+                                      width: 600,
+                                      height: 400,
+                                      color: Colors.grey[300],
+                                    ),),
+                                  Container(
+                                    margin: EdgeInsets.all(15),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Container(child:
+                                        Text('계속해서 문제를 푸시겠습니까?',
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold
+                                          ),),
+                                        ),
+                                        SizedBox(height: 13,),
+                                        Center(
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              ElevatedButton(onPressed: (){
+                                                setState(() {
+                                                  problemNumber = 1 ;
+                                                });
+                                                Navigator.of(context).pop();
+                                              },
+                                                  style: ElevatedButton.styleFrom(
+                                                      shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(10)
+                                                      )
+                                                  ),
+                                                  child: Text('네',
+                                                    style: TextStyle(
+                                                        color: Colors.grey[700]
+                                                    ),)
+                                              ),
+                                              nextProblem('네'),
+                                              SizedBox(width: 40,),
+                                              ElevatedButton(onPressed: (){},
+                                                  style: ElevatedButton.styleFrom(
+                                                      shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(10)
+                                                      )
+                                                  ),
+                                                  child: Text('아니오',
+                                                      style: TextStyle(
+                                                          color: Colors.grey[700]))
+                                              )],
+                                          ),
+                                        ),
+
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        },
+        child: Text('결과보기')
+    );
+  }
+
+  int problemNumber = 1 ;
 
   Widget lastRidingProgress() {
     double percent = problemNumber / 10;
@@ -458,33 +583,6 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
           width: MediaQuery.of(context).size.width-50.w,
         )
       ],
-    );
-  }
-
-  // 문제 10문제 다 푼 다음 창
-  void afterProblemTen(){
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-          ),
-          height: 600,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const Text('열문제 다 풀었다!.'),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 
@@ -521,7 +619,6 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
 
@@ -542,6 +639,7 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
           Stack(
             alignment: Alignment.center,
             children: [
+              // 악보
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -556,6 +654,7 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
                   ),
                 ],
               ),
+              // 음표 1
               Positioned(
                 top: randomItems[0].h,
                 left: downNoteLeft.w,
@@ -565,6 +664,7 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
                   child: Image.asset('assets/whole_note_lean.png'),
                 ),
               ),
+              // 음표 2
               Positioned(
                 top: randomItems[1].h,
                 left: 180.w,
@@ -574,10 +674,16 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
                   child: Image.asset('assets/whole_note_lean.png'),
                 ),
               ),
+              // 필요시 덧줄
               addLineDown(randomNoteNumber[0],randomNoteNumber[1]),
             ]
           ),
           const SizedBox(height: 10.0,),
+          ElevatedButton(onPressed: (){
+            setState(() {
+              problemNumber = 10;
+            });
+          }, child: Text('test')),
           Text('음정 번호를 쓰세요'),
           const SizedBox(height: 10.0,),
           SizedBox(
@@ -647,7 +753,6 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
           showIntervalName(intervalNumber),
           SizedBox(height: 30,),
           showAnswer(answerInterval),
-
         ],
       ),
     );

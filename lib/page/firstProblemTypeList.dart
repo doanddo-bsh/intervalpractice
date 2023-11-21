@@ -16,6 +16,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       body: SafeArea(
         child: Column(
           children: [
@@ -27,46 +28,59 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList> {
                   // ignore: prefer_const_constructors
                   SizedBox(),
                   TextButton(
-                      child: const Text('easy',
-                          style: TextStyle(
-                            color: Colors.black
-                          ),
+                    child: const Text('easy',
+                      style: TextStyle(
+                          color: Color(0xff377a46),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15
                       ),
-                      onPressed: (){
-                        setState(() {
-                          isEasy = true;
-                        });
-                      },
+                    ),
+                    // style: ButtonStyle(
+                    //   backgroundColor: MaterialStateProperty.all(Color(
+                    //       0xff75B082)),
+                    // ),
+                    onPressed: (){
+                      setState(() {
+                        isEasy = true;
+                        print('isEasy $isEasy');
+                      });
+                    },
                   ),
-                  const VerticalDivider(),
+                  const VerticalDivider(color: Colors.grey,
+                    indent: 13,
+                    endIndent: 13,),
                   TextButton(
                     child: const Text('hard',
                       style: TextStyle(
-                        color: Colors.black
+                          color: Color(0xff873a32),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15
+                      ),
                     ),
-                  ),
                     onPressed: (){
                       isEasy = false;
+                      print('isEasy $isEasy');
                     },
                   ),
                   const SizedBox(),
                 ],
               ),
             ),
-            SizedBox(
-              height: 30.0,
-              child: TextButton(
-                  onPressed: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SecondePageProblem()
-                      ),
-                    );
-                  }, child: const Text('임시버튼2222ㅈㅈㄴㄴ')
-              ),
-            ),
-            Expanded(child:isEasy? ListViewEasy() : ListViewHard()
+            // SizedBox(
+            //   height: 30.0,
+            //   child: TextButton(
+            //       onPressed: (){
+            //         Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //               builder: (context) => const SecondePageProblem()
+            //           ),
+            //         );
+            //       }, child: const Text('임시버튼2222ㅈㅈㄴㄴ')
+            //   ),
+            // ),
+            Expanded(
+                child:isEasy? ListViewEasy() : ListViewHard()
             )
           ],
         ),
@@ -79,9 +93,9 @@ class ListViewEasy extends StatelessWidget {
   ListViewEasy({Key? key}) : super(key: key);
 
   List<List<String>> mainTitleAndContentsEasy = [
-    ['음정 문제1','악보 위의 음정을 계산하여 정답을 맞춰보세요.'],
-    ['음정 문제2','주어진 음정을 보고 등러갈 음을 계산해보세요.'],
-    ['음정 문제3','인벌스 넣을 거임.'],
+    ['음정 문제1','악보 위의 음정을 계산하여\n정답을 맞춰보세요.'],
+    ['음정 문제2','주어진 음정을 보고 빈칸에 들어갈 \n계이름을 맞춰보세요.'],
+    ['음정 문제3','주어진 음정의 자리바꿈 음정을 \n계산하여 정답을 맞춰보세요.'],
   ];
 
   List problemPage = [SecondePageProblem(),ThirdPageProblem(),ThirdPageProblem()];
@@ -89,11 +103,11 @@ class ListViewEasy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        padding:const EdgeInsets.all(8),
+        padding:const EdgeInsets.all(5),
         itemCount:mainTitleAndContentsEasy.length,
         itemBuilder: (BuildContext context, int index){
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(5.0),
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -105,31 +119,40 @@ class ListViewEasy extends StatelessWidget {
                 );
               },
               child: Container(
-                  height: 150,
+                  height: 155,
                   decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Colors.black
-                      )
+                    color: Colors.white,
+                    border: Border.all(
+                        color: Colors.white
+                    ),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   child:Row(
                     children: [
-                      const SizedBox(
-                          height:100,
-                          width: 100,
-                          child: FittedBox(
-                            child: Icon(Icons.music_note,
-                            ),
-                          )
+                      Container(
+                        width: 130,
+                        height: 73,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/music_2805328.png'),
+                          ),
+                        ),
                       ),
+                      // SizedBox(width: 10,),
                       Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children:[
                             const SizedBox(height: 15,),
-                            SizedBox(
+                            Container(
+                              margin: EdgeInsets.all(10),
                               width: 200,
                               child: Align(
                                   alignment: Alignment.centerLeft,
-                                  child: Text(mainTitleAndContentsEasy[index][0])
+                                  child: Text(mainTitleAndContentsEasy[index][0],
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16
+                                    ),)
                               ),
                             ),
                             const SizedBox(height: 10,),

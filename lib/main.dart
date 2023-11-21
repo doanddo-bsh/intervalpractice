@@ -3,6 +3,7 @@ import '../page/firstProblemTypeList.dart';
 import '../page/secondePageProblem.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
+import '../page/scorePage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
