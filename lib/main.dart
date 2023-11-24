@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../page/firstProblemTypeList.dart';
-import '../page/secondePageProblem.dart';
+import 'page/easyProblem/easyProblemType1.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
 import '../page/scorePage.dart';

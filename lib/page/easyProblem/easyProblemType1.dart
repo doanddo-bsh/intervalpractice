@@ -3,8 +3,9 @@ import 'dart:math' as math;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:lottie/lottie.dart';
-import 'secondePageFunc/secondePageList.dart';
-import 'secondePageFunc/secondePageFunc.dart';
+import '../easyProblemType1Func/easyProblemType1Func.dart';
+import '../easyProblemType1Func/easyProblemType1List.dart';
+// import '../secondePageFunc/easyProblemType1Func.dart';
 
 class SecondePageProblem extends StatefulWidget {
   const SecondePageProblem({super.key});
@@ -20,7 +21,15 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
   late List<double> randomItems ;
   late List<int> randomNoteNumber ;
   late List<dynamic> randomNote ;
+
+  List<List<int>> wrongProblems = [];
+  List<List<int>> wrongProblemsSave = [];
+
+  bool wrongProblemMode = false ;
+
   double downNoteLeft = 180.0;
+
+  int numberOfRight = 0 ;
 
   // 도 에서 추가 줄 만들기
   Widget addLineDown(int noteNumber1,int noteNumber2){
@@ -139,17 +148,46 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
 
   String? intervalNumber = null;
 
+  Widget intervalNumberButton(String number){
+    return ElevatedButton(
+        onPressed: answerInterval==null?
+            (){
+          setState(() {intervalNumber = number;});
+        } :
+            (){
+          // print('정답이 이미 들어옴');
+        },
+        child: Text(number),
+        style: ElevatedButton.styleFrom(
+          backgroundColor:
+          intervalNumber==number ?
+          Color(0xffccccff) :
+          Theme.of(context).colorScheme.onTertiary,
+        )
+    );
+  }
+
   // 음정과 음정이름을 함께 보여주는 버튼을 생성하는 함수
   Widget secondeElevatedButton(String intervalName,String intervalNumber){
     return ElevatedButton(
-        onPressed: (){
-          setState(() {
-            answerInterval = intervalNameKorEng[intervalName] + intervalNumber;
-            print(answerInterval);
-            showBottomResult(answerInterval!);
-          });
-        },
-        child: Text(intervalName + intervalNumber)
+        onPressed: answerInterval==null?
+            () {
+                setState(() {
+                  answerInterval = intervalNameKorEng[intervalName] + intervalNumber;
+                  print(answerInterval);
+                  showBottomResult(answerInterval!);
+                });
+              }:
+            (){
+              // print('정답이 이미 들어옴');
+            },
+        child: Text(intervalName + intervalNumber + '도'),
+        style: ElevatedButton.styleFrom(
+          backgroundColor:
+          answerInterval==intervalNameKorEng[intervalName] + intervalNumber ?
+          Color(0xffccccff) :
+          Theme.of(context).colorScheme.onTertiary,
+        )
     );
   }
 
@@ -219,29 +257,7 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
 
   String? answerInterval = null;
 
-  Widget showAnswer(String? answerInterval){
-    if (answerInterval == null){
-      return SizedBox(height: 10.0,);
-    } else {
-      return showAnswerBefore(answerInterval);
-    }
-  }
 
-  Widget showAnswerBefore(String answerInterval){
-
-    String answerReal = randomNote[0].interval(randomNote[1]).toString();
-
-    print('answerReal $answerReal');
-    print('answerInterval $answerInterval');
-
-    if (answerInterval == answerReal){
-      print(answerInterval);
-      return Text('정답입니다.');
-    } else {
-      print(answerInterval);
-      return Text('오답입니다. 정답은' + answerReal);
-    }
-  }
 
   void showBottomResult(String answerInterval){
 
@@ -258,7 +274,12 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
 
     if (answerInterval == answerReal){
 
+      setState(() {
+        numberOfRight += 1 ;
+      });
+
       showModalBottomSheet<void>(
+        isDismissible:false,
         context: context,
         builder: (BuildContext context) {
           return Container(
@@ -274,8 +295,21 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  Text(answerRealKor + '도',
+                      style: TextStyle(
+                        fontSize : 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                  ),
                   const Text('정답입니다.'),
-                  (problemNumber!=10)? nextProblem('다음문제') : showResult()
+                  wrongProblemMode?
+                  (wrongProblemsSave.length != problemNumber)?
+                  wrongProblemNextProblem('다음문제') :
+                  showResult() :
+                  (problemNumber!=10)?
+                  nextProblem('다음문제') :
+                  showResult(),
+                  // (problemNumber!=10)? nextProblem('다음문제') : showResult()
                 ],
               ),
             ),
@@ -284,7 +318,13 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
       );
 
     } else {
+
+      wrongProblems += [randomNoteNumber] ;
+
+      print('wrongProblems $wrongProblems');
+
       showModalBottomSheet<void>(
+        isDismissible:false,
         context: context,
         builder: (BuildContext context) {
           return Container(
@@ -300,10 +340,23 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  Text(answerRealKor + '도',
+                    style: TextStyle(
+                      fontSize : 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   const Text('오답입니다.'),
                   Text('정답은 ${answerRealKor} 입니다.'),
                   const Text('풀이 : ...'),
-                  (problemNumber!=10)? nextProblem('') : showResult()
+                  wrongProblemMode?
+                  (wrongProblemsSave.length != problemNumber)?
+                  wrongProblemNextProblem('다음문제') :
+                  showResult() :
+                  (problemNumber!=10)?
+                  nextProblem('다음문제') :
+                  showResult(),
+                  // (problemNumber!=10)? nextProblem('다음문제') : showResult()
                 ],
               ),
             ),
@@ -353,9 +406,180 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
             });
           }
 
+          print(randomNote[0].interval(randomNote[1]).toString());
+
           Navigator.pop(context);
 
         }, child: Text(buttonText)
+    );
+  }
+
+
+  Widget nextProblemResult(){
+    return ElevatedButton(
+
+        onPressed: (){
+
+          numberOfRight = 0 ;
+          wrongProblems = [];
+          wrongProblemMode = false ;
+
+          note_height_list = shuffle(
+            note_height_list,
+            randomItems,
+          );
+
+          setState(() {
+            // 문제 적용
+            randomItems = [note_height_list[0][0],note_height_list[1][0]];
+            randomItems.sort();
+            randomNoteNumber = [note_height_list[0][1],note_height_list[1][1]];
+            randomNoteNumber.sort();
+            randomNote = [note_height_list[0][2],note_height_list[1][2]];
+            randomNote.sort();
+
+            answerInterval = null;
+            intervalNumber = null;
+
+          });
+
+          if ((note_height_list[0][1]-note_height_list[1][1]).abs()==1){
+            setState(() {
+              downNoteLeft = 207;
+            });
+          } else {
+            setState(() {
+              downNoteLeft = 180;
+            });
+          }
+
+          print(randomNote[0].interval(randomNote[1]).toString());
+
+          setState(() {
+            problemNumber = 1 ;
+          });
+
+          Navigator.pop(context);
+
+
+        },  style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+        )
+    ),
+        child: Text('네',
+          style: TextStyle(
+              color: Colors.grey[700]
+          ),
+        )
+    );
+  }
+
+
+  Widget wrongProblemNextProblem(String buttonText){
+    return ElevatedButton(
+
+        onPressed: (){
+
+          setState(() {
+            // 문제 적용
+            randomNoteNumber = wrongProblemsSave[problemNumber];
+            randomNoteNumber.sort();
+
+            randomItems =
+            [note_height_list_fix[randomNoteNumber[0]][0],
+              note_height_list_fix[randomNoteNumber[1]][0]];
+            randomItems.sort();
+            randomNote =
+            [note_height_list_fix[randomNoteNumber[0]][2],
+              note_height_list_fix[randomNoteNumber[1]][2]];
+            randomNote.sort();
+
+            answerInterval = null;
+            intervalNumber = null;
+
+            problemNumber += 1;
+
+          });
+
+          if ((randomNoteNumber[0]-randomNoteNumber[1]).abs()==1){
+            setState(() {
+              downNoteLeft = 207;
+            });
+          } else {
+            setState(() {
+              downNoteLeft = 180;
+            });
+          }
+
+          print(randomNote[0].interval(randomNote[1]).toString());
+
+          Navigator.pop(context);
+
+        }, child: Text(buttonText)
+    );
+  }
+
+
+  Widget wrongProblemSolveStart(String buttonText){
+    return ElevatedButton(
+
+        onPressed: (wrongProblems.isEmpty) ? null:(){
+
+          numberOfRight = 0 ;
+
+          // back up
+          wrongProblemsSave = wrongProblems ;
+          print('wrongProblemsSave $wrongProblemsSave');
+          print('wrongProblems $wrongProblems');
+          wrongProblems = [] ;
+
+          setState(() {
+            // 문제 적용
+            randomNoteNumber = wrongProblemsSave[0];
+            randomNoteNumber.sort();
+
+            randomItems =
+            [note_height_list_fix[randomNoteNumber[0]][0],
+              note_height_list_fix[randomNoteNumber[1]][0]];
+            randomItems.sort();
+            randomNote =
+            [note_height_list_fix[randomNoteNumber[0]][2],
+              note_height_list_fix[randomNoteNumber[1]][2]];
+            randomNote.sort();
+
+            answerInterval = null;
+            intervalNumber = null;
+
+          });
+
+          if ((randomNoteNumber[0]-randomNoteNumber[1]).abs()==1){
+            setState(() {
+              downNoteLeft = 207;
+            });
+          } else {
+            setState(() {
+              downNoteLeft = 180;
+            });
+          }
+
+          setState(() {
+            problemNumber = 1 ;
+            wrongProblemMode = true ;
+          });
+
+          print(randomNote[0].interval(randomNote[1]).toString());
+
+          Navigator.pop(context);
+        },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.yellow[200]
+      ),
+        child: Text('틀린 문제 다시 풀기',
+          style: TextStyle(
+              color: Colors.grey[700]
+          ),
+        ),
     );
   }
 
@@ -426,11 +650,25 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
                                                   Padding(
                                                     padding: const EdgeInsets.fromLTRB(40, 60, 0, 0),
                                                     child: Container(
-                                                      child: Text('85점',
+                                                      child:
+                                                      wrongProblemMode?
+                                                      Text
+                                                        ('${
+                                                        (numberOfRight/wrongProblemsSave.length *
+                                                          100).round()}점',
                                                           style: TextStyle(
                                                               fontSize: 60,
                                                               fontWeight: FontWeight.bold
-                                                          )),
+                                                          )
+                                                      ):Text
+                                                        ('${
+                                                          (numberOfRight/10 *
+                                                              100).round()}점',
+                                                          style: TextStyle(
+                                                              fontSize: 60,
+                                                              fontWeight: FontWeight.bold
+                                                          )
+                                                      ),
                                                     ),
                                                   ),
                                                 ],),
@@ -443,28 +681,50 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
                                                       ))),
                                               SizedBox(height: 20,),
                                               Container(
-                                                  child: Text('10문제중에서 8문제를 맞췄습니다',
+                                                  child: wrongProblemMode?
+                                                  Text
+                                                    ('${wrongProblemsSave.length
+                                                      .toString()}문제중에서 '
+                                                      '${numberOfRight}문제를 '
+                                                      '맞췄습니다',
                                                       style:
                                                       TextStyle(
                                                           fontSize: 20,
                                                           fontWeight: FontWeight.bold
-                                                      ))),
+                                                      )
+                                                  ) : Text
+                                                    ('10문제중에서 '
+                                                      '${numberOfRight}문제를 '
+                                                      '맞췄습니다',
+                                                      style:
+                                                      TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight: FontWeight.bold
+                                                      )
+                                                  )
+                                              ),
                                               SizedBox(height: 20,),
                                               Container(
                                                 height: 40,
                                                 width: 300,
-                                                child: ElevatedButton(
-                                                  child: Text('틀린 문제 다시 풀기',
-                                                    style: TextStyle(
-                                                        color: Colors.grey[700]
-                                                    ),
-                                                  ),
-                                                  style: ElevatedButton.styleFrom(
-                                                      backgroundColor: Colors.yellow[200]
-
-                                                  ),
-                                                  onPressed: () {},
-                                                ) ,
+                                                child: wrongProblemSolveStart
+                                                  ('틀린 문제 다시 풀기'),
+                                                // ElevatedButton(
+                                                //   child: Text('틀린 문제 다시 풀기',
+                                                //     style: TextStyle(
+                                                //         color: Colors.grey[700]
+                                                //     ),
+                                                //   ),
+                                                //   style: ElevatedButton.styleFrom(
+                                                //       backgroundColor: Colors.yellow[200]
+                                                //
+                                                //   ),
+                                                //   onPressed: () {
+                                                //     setState(() {
+                                                //       wrongProblemMode = true ;
+                                                //     });
+                                                //   },
+                                                // ) ,
                                               )
                                             ]),
                                       ),
@@ -510,25 +770,16 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
-                                              ElevatedButton(onPressed: (){
-                                                setState(() {
-                                                  problemNumber = 1 ;
-                                                });
-                                                Navigator.of(context).pop();
-                                              },
-                                                  style: ElevatedButton.styleFrom(
-                                                      shape: RoundedRectangleBorder(
-                                                          borderRadius: BorderRadius.circular(10)
-                                                      )
-                                                  ),
-                                                  child: Text('네',
-                                                    style: TextStyle(
-                                                        color: Colors.grey[700]
-                                                    ),)
-                                              ),
-                                              nextProblem('네'),
+                                              nextProblemResult(),
                                               SizedBox(width: 40,),
-                                              ElevatedButton(onPressed: (){},
+                                              ElevatedButton(
+                                                  onPressed: (){
+                                                    wrongProblems = [];
+                                                    wrongProblemMode = false ;
+                                                    numberOfRight = 0 ;
+                                                    Navigator.popUntil
+                                                      (context, ModalRoute.withName(Navigator.defaultRouteName));
+                                                  },
                                                   style: ElevatedButton.styleFrom(
                                                       shape: RoundedRectangleBorder(
                                                           borderRadius: BorderRadius.circular(10)
@@ -536,7 +787,8 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
                                                   ),
                                                   child: Text('아니오',
                                                       style: TextStyle(
-                                                          color: Colors.grey[700]))
+                                                          color: Colors.grey[700])
+                                                  ),
                                               )],
                                           ),
                                         ),
@@ -564,27 +816,56 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
   int problemNumber = 1 ;
 
   Widget lastRidingProgress() {
-    double percent = problemNumber / 10;
+
+    double percent =
+    wrongProblemMode?
+    double.parse((problemNumber / wrongProblemsSave.length).toStringAsFixed
+      (1)) :
+    problemNumber / 10 ;
+
+    print(percent);
+    print('problemNumber $problemNumber');
+    print('wrongProblemsSave.length ${wrongProblemsSave.length}');
+
     return Column(
       children: [
-        // Container(
-        //   alignment: FractionalOffset(percent, 1 - percent),
-        //   child: FractionallySizedBox(
-        //       child: Image.asset('assets/icons/cycling_person.png',
-        //           width: 30, height: 30, fit: BoxFit.cover)),
-        // ),
-        LinearPercentIndicator(
-          padding: EdgeInsets.zero,
-          percent: percent,
-          lineHeight: 20.h,
-          center: Text(problemNumber.toString() + '/10'),
-          backgroundColor: Colors.black12,
-          progressColor: Colors.amber,
-          width: MediaQuery.of(context).size.width-50.w,
+        Center(
+          child: Container(
+            // color: Colors.black12,
+            width: MediaQuery.of(context).size.width-15.w,
+            alignment: FractionalOffset(percent, 1 - percent),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+              child: Container(
+                // color: Colors.red,
+                  child: Image.asset('assets/noteToProgress.png',
+                      width: 20, height: 20, fit: BoxFit.cover)
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 3,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            LinearPercentIndicator(
+              width: MediaQuery.of(context).size.width-50.w,
+              padding: EdgeInsets.zero,
+              percent: percent,
+              lineHeight: 20.h,
+              center: wrongProblemMode?
+              Text(problemNumber.toString() + '/' + wrongProblemsSave.length
+                  .toString()) :
+              Text(problemNumber.toString() + '/10') ,
+              backgroundColor: Colors.black12,
+              progressColor: Colors.amber,
+            ),
+          ],
         )
       ],
     );
   }
+
 
   @override
   void initState() {
@@ -619,6 +900,16 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
     }
   }
 
+  bool _isEnabled = true;
+
+  void _toggleEnabled() {
+    print(_isEnabled);
+    setState(() {
+      _isEnabled = !_isEnabled;
+      print(_isEnabled);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -626,16 +917,21 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Chart Page"),
+        title: wrongProblemMode? Text("오답 풀이 중") : Text("문제 풀이 중"),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            );
+          },
+        ),
       ),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              lastRidingProgress()
-            ]
-          ),
+          lastRidingProgress(),
           Stack(
             alignment: Alignment.center,
             children: [
@@ -694,26 +990,10 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ElevatedButton(onPressed: (){
-                        setState(() {
-                          intervalNumber = '1';
-                        });
-                      }, child: const Text('1')),
-                      ElevatedButton(onPressed: (){
-                        setState(() {
-                          intervalNumber = '2';
-                        });
-                      }, child: const Text('2')),
-                      ElevatedButton(onPressed: (){
-                        setState(() {
-                          intervalNumber = '3';
-                        });
-                      }, child: const Text('3')),
-                      ElevatedButton(onPressed: (){
-                        setState(() {
-                          intervalNumber = '4';
-                        });
-                      }, child: const Text('4')),
+                      intervalNumberButton('1'),
+                      intervalNumberButton('2'),
+                      intervalNumberButton('3'),
+                      intervalNumberButton('4'),
                     ],
                   ),
                 ),
@@ -723,26 +1003,10 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ElevatedButton(onPressed: (){
-                        setState(() {
-                          intervalNumber = '5';
-                        });
-                      }, child: const Text('5')),
-                      ElevatedButton(onPressed: (){
-                        setState(() {
-                          intervalNumber = '6';
-                        });
-                      }, child: const Text('6')),
-                      ElevatedButton(onPressed: (){
-                        setState(() {
-                          intervalNumber = '7';
-                        });
-                      }, child: const Text('7')),
-                      ElevatedButton(onPressed: (){
-                        setState(() {
-                          intervalNumber = '8';
-                        });
-                      }, child: const Text('8')),
+                      intervalNumberButton('5'),
+                      intervalNumberButton('6'),
+                      intervalNumberButton('7'),
+                      intervalNumberButton('8'),
                     ],
                   ),
                 ),
@@ -752,7 +1016,7 @@ class _SecondePageProblemState extends State<SecondePageProblem> {
           SizedBox(height: 30.0,),
           showIntervalName(intervalNumber),
           SizedBox(height: 30,),
-          showAnswer(answerInterval),
+          // showAnswer(answerInterval),
         ],
       ),
     );

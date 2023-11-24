@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'secondePageProblem.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'easyProblem/easyProblemType1.dart';
 import 'thirdPageProblem.dart';
 
 class FirstProblemTypeList extends StatefulWidget {
@@ -10,81 +11,84 @@ class FirstProblemTypeList extends StatefulWidget {
   State<FirstProblemTypeList> createState() => _FirstProblemTypeListState();
 }
 
-class _FirstProblemTypeListState extends State<FirstProblemTypeList> {
-  bool isEasy = true ;
+class _FirstProblemTypeListState extends State<FirstProblemTypeList>
+  with SingleTickerProviderStateMixin {
+
+  late TabController tabController = TabController(length: 2, vsync: this);
+
+  @override
+  void initState() {
+    tabController.addListener(() {});
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 50.0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // ignore: prefer_const_constructors
-                  SizedBox(),
-                  TextButton(
-                    child: const Text('easy',
-                      style: TextStyle(
-                          color: Color(0xff377a46),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15
+      body: _body()
+    );
+  }
+
+  Widget _body() {
+    return SafeArea(
+      child: Column(
+        children: [
+          _tabBar(),
+          // Expanded 없으면 오류 발생
+          // Horizontal viewport was given unbounded height.
+          Expanded(child: _tabBarView()),
+        ],
+      ),
+    );
+  }
+
+  Widget _tabBar() {
+    return TabBar(
+      controller: tabController,
+      labelColor: Colors.black,
+      unselectedLabelColor: Colors.grey,
+      labelStyle: const TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+      ),
+      unselectedLabelStyle: const TextStyle(
+        fontSize: 16,
+      ),
+      tabs: const [
+        Tab(child: Text('easy',
+                        style: TextStyle(
+                            color: Color(0xff377a46),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15
+                        ),
                       ),
-                    ),
-                    // style: ButtonStyle(
-                    //   backgroundColor: MaterialStateProperty.all(Color(
-                    //       0xff75B082)),
-                    // ),
-                    onPressed: (){
-                      setState(() {
-                        isEasy = true;
-                        print('isEasy $isEasy');
-                      });
-                    },
-                  ),
-                  const VerticalDivider(color: Colors.grey,
-                    indent: 13,
-                    endIndent: 13,),
-                  TextButton(
-                    child: const Text('hard',
+        ),
+        Tab(child: Text('hard',
                       style: TextStyle(
                           color: Color(0xff873a32),
                           fontWeight: FontWeight.bold,
                           fontSize: 15
                       ),
-                    ),
-                    onPressed: (){
-                      isEasy = false;
-                      print('isEasy $isEasy');
-                    },
-                  ),
-                  const SizedBox(),
-                ],
-              ),
-            ),
-            // SizedBox(
-            //   height: 30.0,
-            //   child: TextButton(
-            //       onPressed: (){
-            //         Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //               builder: (context) => const SecondePageProblem()
-            //           ),
-            //         );
-            //       }, child: const Text('임시버튼2222ㅈㅈㄴㄴ')
-            //   ),
-            // ),
-            Expanded(
-                child:isEasy? ListViewEasy() : ListViewHard()
-            )
-          ],
+                    )
         ),
-      ),
+      ],
+    );
+  }
+
+  Widget _tabBarView() {
+    return TabBarView(
+      controller: tabController,
+      children: [
+        ListViewEasy(),
+        ListViewHard(),
+      ],
     );
   }
 }
@@ -102,75 +106,111 @@ class ListViewEasy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        padding:const EdgeInsets.all(5),
-        itemCount:mainTitleAndContentsEasy.length,
-        itemBuilder: (BuildContext context, int index){
-          return Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                        problemPage[index]
-                    )
-                );
-              },
-              child: Container(
-                  height: 155,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(
-                        color: Colors.white
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child:Row(
-                    children: [
-                      Container(
-                        width: 130,
-                        height: 73,
+    return Column(
+      children: [
+        Container(
+          height: 600.h,
+          child: ListView.builder(
+              padding:const EdgeInsets.all(5),
+              itemCount:mainTitleAndContentsEasy.length,
+              itemBuilder: (BuildContext context, int index){
+                return Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                              problemPage[index]
+                          )
+                      );
+                    },
+                    child: Container(
+                        height: 155,
                         decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/music_2805328.png'),
+                          color: Colors.white,
+                          border: Border.all(
+                              color: Colors.white
                           ),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
-                      ),
-                      // SizedBox(width: 10,),
-                      Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children:[
-                            const SizedBox(height: 15,),
+                        child:Row(
+                          children: [
                             Container(
-                              margin: EdgeInsets.all(10),
-                              width: 200,
-                              child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(mainTitleAndContentsEasy[index][0],
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16
-                                    ),)
-                              ),
+                              width: 130,
+                              height: 130,
+                              child: Stack(children: [
+                                Center(
+                                  child: SizedBox(
+                                    height: 73,
+                                    width: 73,
+                                    child: Image(
+                                        image: AssetImage('assets/music_2805328.png')
+                                    ),
+                                  ),
+                                ),
+                              ],),
+                              // decoration: BoxDecoration(
+                              //   image: DecorationImage(
+                              //     image: AssetImage('assets/music_2805328.png'),
+                              //   ),
+                              // ),
                             ),
-                            const SizedBox(height: 10,),
-                            SizedBox(
-                              width: 200,
-                              child: AutoSizeText(mainTitleAndContentsEasy[index][1],
-                                maxLines: 4,
-                              ),
+                            // SizedBox(width: 10,),
+                            Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children:[
+                                  const SizedBox(height: 15,),
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    width: 200,
+                                    child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(mainTitleAndContentsEasy[index][0],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16
+                                          ),)
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10,),
+                                  SizedBox(
+                                    width: 200,
+                                    child: AutoSizeText(mainTitleAndContentsEasy[index][1],
+                                      maxLines: 4,
+                                    ),
+                                  ),
+                                ]
                             ),
-                          ]
-                      ),
-                    ],
-                  )
+
+                          ],
+                        )
+                    ),
+                  ),
+                );
+              }
+
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(10.w, 10.h, 30.w, 30.h),
+              child: Tooltip(
+                triggerMode: TooltipTriggerMode.tap,
+                showDuration: Duration(milliseconds: 2500),
+                message:
+                'hard 문제는 샵과 플랫 포함',
+                child: Icon(
+                  Icons.info,
+                ),
               ),
             ),
-          );
-        }
-
+          ],
+        ),
+      ],
     );
   }
 }
@@ -179,64 +219,145 @@ class ListViewEasy extends StatelessWidget {
 class ListViewHard extends StatelessWidget {
   ListViewHard({Key? key}) : super(key: key);
 
-  List<List<String>> mainTitleAndContentsHard = [
-    ['음정 문제1','악보 위의 음정을 계산하여 정답을 맞춰보세요.'],
-    ['음정 문제2','주어진 음정을 보고 등러갈 음을 계산해보세요.'],
-    ['음정 문제3','인벌스 넣을 거임.'],
+  List<List<String>> mainTitleAndContentsEasy = [
+    ['음정 문제1','악보 위의 음정을 계산하여\n정답을 맞춰보세요.'],
+    ['음정 문제2','주어진 음정을 보고 빈칸에 들어갈 \n계이름을 맞춰보세요.'],
+    ['음정 문제3','주어진 음정의 자리바꿈 음정을 \n계산하여 정답을 맞춰보세요.'],
   ];
+
+  List problemPage = [SecondePageProblem(),ThirdPageProblem(),ThirdPageProblem()];
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        padding:const EdgeInsets.all(8),
-        itemCount:mainTitleAndContentsHard.length,
-        itemBuilder: (BuildContext context, int index){
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-                height: 150,
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        color: Colors.black
-                    )
-                ),
-                child:Row(
-                  children: [
-                    const SizedBox(
-                        height:100,
-                        width: 100,
-                        child: FittedBox(
-                          child: Icon(Icons.music_note,
+    return Column(
+      children: [
+        Container(
+          height: 600.h,
+          child: ListView.builder(
+              padding:const EdgeInsets.all(5),
+              itemCount:mainTitleAndContentsEasy.length,
+              itemBuilder: (BuildContext context, int index){
+                return Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                              problemPage[index]
+                          )
+                      );
+                    },
+                    child: Container(
+                        height: 155,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                              color: Colors.white
                           ),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child:Row(
+                          children: [
+                            Container(
+                              width: 130,
+                              height: 130,
+                              child: Stack(children: [
+                                Center(
+                                  child: SizedBox(
+                                    height: 73,
+                                    width: 73,
+                                    child: Image(
+                                        image: AssetImage('assets/music_2805328.png')
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 30,
+                                  left: 24,
+                                  child: SizedBox(
+                                    height: 30,
+                                    width: 15,
+                                    child: Image(
+                                        image: AssetImage('assets/sharp1.png',
+                                        ),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 70,
+                                  left: 10,
+                                  child: SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: Image(
+                                        image: AssetImage('assets/flat1.png')
+                                    ),
+                                  ),
+                                ),
+                              ],),
+                              // decoration: BoxDecoration(
+                              //   image: DecorationImage(
+                              //     image: AssetImage('assets/music_2805328.png'),
+                              //   ),
+                              // ),
+                            ),
+                            // SizedBox(width: 10,),
+                            Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children:[
+                                  const SizedBox(height: 15,),
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    width: 200,
+                                    child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(mainTitleAndContentsEasy[index][0],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16
+                                          ),)
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10,),
+                                  SizedBox(
+                                    width: 200,
+                                    child: AutoSizeText(mainTitleAndContentsEasy[index][1],
+                                      maxLines: 4,
+                                    ),
+                                  ),
+                                ]
+                            ),
+
+                          ],
                         )
                     ),
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children:[
-                          const SizedBox(height: 15,),
-                          SizedBox(
-                            width: 200,
-                            child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(mainTitleAndContentsHard[index][0])
-                            ),
-                          ),
-                          const SizedBox(height: 10,),
-                          SizedBox(
-                            width: 200,
-                            child: AutoSizeText(mainTitleAndContentsHard[index][1],
-                              maxLines: 4,
-                            ),
-                          ),
-                        ]
-                    ),
-                  ],
-                )
-            ),
-          );
-        }
+                  ),
+                );
+              }
 
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(10.w, 10.h, 30.w, 30.h),
+              child: Tooltip(
+                triggerMode: TooltipTriggerMode.tap,
+                showDuration: Duration(milliseconds: 2500),
+                message:
+                'hard 문제는 샵과 플랫 포함',
+                child: Icon(
+                  Icons.info,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
-
