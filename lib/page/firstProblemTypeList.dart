@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'easyProblem/easyProblemType1.dart';
 import 'thirdPageProblem.dart';
+import 'easyProblem/easyProblemType1.dart';
+import 'easyProblem/easyProblemType2.dart';
+import 'easyProblem/easyProblemType3.dart';
 
 class FirstProblemTypeList extends StatefulWidget {
   const FirstProblemTypeList({Key? key}) : super(key: key);
@@ -102,7 +104,7 @@ class ListViewEasy extends StatelessWidget {
     ['음정 문제3','주어진 음정의 자리바꿈 음정을 \n계산하여 정답을 맞춰보세요.'],
   ];
 
-  List problemPage = [SecondePageProblem(),ThirdPageProblem(),ThirdPageProblem()];
+  List problemPage = [EasyProblemType1(),EasyProblemType2(),EasyProblemType3()];
 
   @override
   Widget build(BuildContext context) {
@@ -225,7 +227,7 @@ class ListViewHard extends StatelessWidget {
     ['음정 문제3','주어진 음정의 자리바꿈 음정을 \n계산하여 정답을 맞춰보세요.'],
   ];
 
-  List problemPage = [SecondePageProblem(),ThirdPageProblem(),ThirdPageProblem()];
+  List problemPage = [EasyProblemType1(),ThirdPageProblem(),ThirdPageProblem()];
 
   @override
   Widget build(BuildContext context) {

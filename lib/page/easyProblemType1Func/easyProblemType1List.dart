@@ -20,6 +20,23 @@ Map intervalNameEngKor = {
   'AA':'겹증',
 };
 
+Map pitchNameEngToKr = {
+  Note.b.inOctave(5):'시',
+  Note.a.inOctave(5):'라',
+  Note.g.inOctave(5):'솔',
+  Note.f.inOctave(5):'파',
+  Note.e.inOctave(5):'미',
+  Note.d.inOctave(5):'레',
+  Note.c.inOctave(5):'도',
+  Note.b.inOctave(4):'시',
+  Note.a.inOctave(4):'라',
+  Note.g.inOctave(4):'솔',
+  Note.f.inOctave(4):'파',
+  Note.e.inOctave(4):'미',
+  Note.d.inOctave(4):'레',
+  Note.c.inOctave(4):'도',
+  Note.b.inOctave(3):'시',
+};
 
 List<List<dynamic>> note_height_list_fix =
 [
