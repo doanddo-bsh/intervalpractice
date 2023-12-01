@@ -396,16 +396,16 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
           if ((randomNoteNumber[0]-randomNoteNumber[1]).abs()==1){
             setState(() {
-              downNoteLeft = 207.w;
+              downNoteLeft = 207;
             });
           } else if ((randomNoteNumber[0]-randomNoteNumber[1
           ]).abs()==0){
             setState(() {
-              downNoteLeft = 207.w;
+              downNoteLeft = 207;
             });
           } else {
             setState(() {
-              downNoteLeft = 180.w;
+              downNoteLeft = 180;
             });
           }
 
@@ -448,16 +448,16 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
           if ((note_height_list_problem[0][1]-note_height_list_problem[1][1]).abs()==1){
             setState(() {
-              downNoteLeft = 207.w;
+              downNoteLeft = 207;
             });
           } else if ((randomNoteNumber[0]-randomNoteNumber[1
           ]).abs()==0){
             setState(() {
-              downNoteLeft = 207.w;
+              downNoteLeft = 207;
             });
           } else {
             setState(() {
-              downNoteLeft = 180.w;
+              downNoteLeft = 180;
             });
           }
 
@@ -512,16 +512,16 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
           if ((randomNoteNumber[0]-randomNoteNumber[1]).abs()==1){
             setState(() {
-              downNoteLeft = 207.w;
+              downNoteLeft = 207;
             });
           } else if ((randomNoteNumber[0]-randomNoteNumber[1
           ]).abs()==0){
             setState(() {
-              downNoteLeft = 207.w;
+              downNoteLeft = 207;
             });
           } else {
             setState(() {
-              downNoteLeft = 180.w;
+              downNoteLeft = 180;
             });
           }
 
@@ -568,16 +568,16 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
           if ((randomNoteNumber[0]-randomNoteNumber[1]).abs()==1){
             setState(() {
-              downNoteLeft = 207.w;
+              downNoteLeft = 207;
             });
           } else if ((randomNoteNumber[0]-randomNoteNumber[1
           ]).abs()==0){
             setState(() {
-              downNoteLeft = 207.w;
+              downNoteLeft = 207;
             });
           } else {
             setState(() {
-              downNoteLeft = 180.w;
+              downNoteLeft = 180;
             });
           }
 
@@ -868,6 +868,33 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     );
   }
 
+  Widget returnLine(double top){
+    return Positioned(
+        top: top.h,
+        left: 10.w,
+        right: 10.w,
+        child:
+        Container(
+          color: Colors.black,
+          width: double.infinity,
+          height: 2.0.h,
+        )
+    );
+  }
+
+  Widget returnShortLine(double top, double left){
+    return Positioned(
+        top: top.h,
+        left: left.w,
+        child:
+        Container(
+          color: Colors.black,
+          height: 2.0.h,
+          width: 50.w,
+        )
+    );
+  }
+
 
   @override
   void initState() {
@@ -887,19 +914,23 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     randomNote.sort();
 
     if ((note_height_list_problem[0][1]-note_height_list_problem[1][1]).abs()==1){
-      downNoteLeft = 207.w;
+      downNoteLeft = 207;
     } else if ((note_height_list_problem[0][1]-note_height_list_problem[1][1
     ]).abs()==0){
-      downNoteLeft = 207.w;
+      downNoteLeft = 207;
     } else {
-      downNoteLeft = 180.w;
+      downNoteLeft = 180;
     }
+
+    print(randomNote);
   }
 
   @override
   Widget build(BuildContext context) {
 
     print(MediaQuery.of(context).size.width);
+    print('downNoteLeft $downNoteLeft');
+    print(180.w);
 
     return Scaffold(
       appBar: AppBar(
@@ -918,47 +949,92 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
       body: Column(
         children: [
           lastRidingProgress(),
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              // 악보
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height:250.h,
-                    width: 375.w,
-                    child: Image.asset(
-                      'assets/music_five_line.png',
-                      // fit: BoxFit.fitWidth,
-                      // alignment: Alignment.center,
-                    ),
+          // Stack(
+          //   alignment: Alignment.center,
+          //   children: [
+          //     // 악보
+          //     Row(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         SizedBox(
+          //           height:250.h,
+          //           width: 375.w,
+          //           child: Image.asset(
+          //             'assets/music_five_line.png',
+          //             // fit: BoxFit.fitWidth,
+          //             // alignment: Alignment.center,
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //     // 음표 1
+          //     Positioned(
+          //       top: randomItems[0].h,
+          //       left: downNoteLeft.w,
+          //       child: SizedBox(
+          //         width: 50.w,
+          //         height: 50.h,
+          //         child: Image.asset('assets/whole_note_lean.png'),
+          //       ),
+          //     ),
+          //     // 음표 2
+          //     Positioned(
+          //       top: randomItems[1].h,
+          //       left: 180.w,
+          //       child: SizedBox(
+          //         width: 50.w,
+          //         height: 50.h,
+          //         child: Image.asset('assets/whole_note_lean.png'),
+          //       ),
+          //     ),
+          //     // 필요시 덧줄
+          //     addLineDown(randomNoteNumber[0],randomNoteNumber[1]),
+          //   ]
+          // ),
+          Container(
+            height: 300.h,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black)
+            ),
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0.h,
+                  bottom: 0.h,
+                  left: 10.0.w,
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child:Image.asset('assets/treble_clef_ff_cut.png',
+                        height: 180.h,
+                      ),
                   ),
-                ],
-              ),
-              // 음표 1
-              Positioned(
-                top: randomItems[0].h,
-                left: downNoteLeft.w,
-                child: SizedBox(
-                  width: 50.w,
-                  height: 50.h,
-                  child: Image.asset('assets/whole_note_lean.png'),
                 ),
-              ),
-              // 음표 2
-              Positioned(
-                top: randomItems[1].h,
-                left: 180.w,
-                child: SizedBox(
-                  width: 50.w,
-                  height: 50.h,
-                  child: Image.asset('assets/whole_note_lean.png'),
+                returnLine(90),
+                returnLine(116.5),
+                returnLine(143),
+                returnLine(169.5),
+                returnLine(196.0),
+                Positioned(
+                  top: randomItems[0].h,
+                  left: downNoteLeft.w,
+                  child: SizedBox(
+                    height: 26.5.h,
+                    child: Image.asset('assets/whole_note_lean.png'),
+                  ),
                 ),
-              ),
-              // 필요시 덧줄
-              addLineDown(randomNoteNumber[0],randomNoteNumber[1]),
-            ]
+                // 음표 2
+                Positioned(
+                  top: randomItems[1].h,
+                  left: 180.w,
+                  child: SizedBox(
+                    height: 26.5.h,
+                    child: Image.asset('assets/whole_note_lean.png'),
+                  ),
+                ),
+                returnShortLine(222.5,180),
+              ],
+            ),
           ),
           const SizedBox(height: 10.0,),
           ElevatedButton(onPressed: (){
@@ -1002,7 +1078,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           SizedBox(height: 30.0,),
           showIntervalName(intervalNumber),
           SizedBox(height: 30,),
-          // showAnswer(answerInterval),
         ],
       ),
     );
