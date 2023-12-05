@@ -1,5 +1,4 @@
 import 'package:music_notes/music_notes.dart';
-
 Map intervalNameKorEng = {
   '감' : 'd',
   '완전' : 'P',
@@ -77,3 +76,4 @@ List<List<dynamic>> note_height_list =
   [209.75,13,Note.c.inOctave(4)],
   [223.00,14,Note.b.inOctave(3)],
 ];
+

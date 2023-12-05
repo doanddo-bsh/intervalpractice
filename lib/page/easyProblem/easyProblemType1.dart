@@ -6,6 +6,7 @@ import 'package:lottie/lottie.dart';
 import '../easyProblemType1Func/easyProblemType1Func.dart';
 import '../easyProblemType1Func/easyProblemType1List.dart';
 // import '../secondePageFunc/easyProblemType1Func.dart';
+import 'package:music_notes/music_notes.dart';
 
 class EasyProblemType1 extends StatefulWidget {
   const EasyProblemType1({super.key});
@@ -882,18 +883,63 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     );
   }
 
-  Widget returnShortLine(double top, double left){
-    return Positioned(
-        top: top.h,
-        left: left.w,
-        child:
-        Container(
+  // 덧줄용
+  Widget addLine(PositionedNote randomNote){
+
+    // middle line
+    List<PositionedNote> middleLine = [
+      Note.a.inOctave(5),
+      Note.f.inOctave(5),
+      Note.d.inOctave(5),
+      Note.b.inOctave(4),
+      Note.g.inOctave(4),
+      Note.e.inOctave(4),
+      Note.c.inOctave(4),
+    ];
+    // low line
+    List<PositionedNote> lowLine = [
+      Note.b.inOctave(5)
+    ];
+
+    // high line
+    List<PositionedNote> highLine = [
+      Note.b.inOctave(3)
+    ];
+
+    if (middleLine.contains(randomNote)){
+      return
+        Positioned(
+        top: 12.75.h,
+        child: Container(
           color: Colors.black,
           height: 2.0.h,
           width: 50.w,
-        )
-    );
+        ),
+      );
+    } else if (lowLine.contains(randomNote)) {
+      return
+        Positioned(
+          top: 24.5.h,
+          child: Container(
+            color: Colors.black,
+            height: 2.0.h,
+            width: 50.w,
+          ),
+        );
+    } else if (highLine.contains(randomNote)){
+      return
+        Positioned(
+          child: Container(
+            color: Colors.black,
+            height: 2.0.h,
+            width: 50.w,
+          ),
+        );
+    } else {
+      return SizedBox();
+    }
   }
+
 
 
   @override
@@ -928,6 +974,8 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
   @override
   Widget build(BuildContext context) {
 
+    print('randomNote $randomNote');
+
     print(MediaQuery.of(context).size.width);
     print('downNoteLeft $downNoteLeft');
     print(180.w);
@@ -949,48 +997,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
       body: Column(
         children: [
           lastRidingProgress(),
-          // Stack(
-          //   alignment: Alignment.center,
-          //   children: [
-          //     // 악보
-          //     Row(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         SizedBox(
-          //           height:250.h,
-          //           width: 375.w,
-          //           child: Image.asset(
-          //             'assets/music_five_line.png',
-          //             // fit: BoxFit.fitWidth,
-          //             // alignment: Alignment.center,
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //     // 음표 1
-          //     Positioned(
-          //       top: randomItems[0].h,
-          //       left: downNoteLeft.w,
-          //       child: SizedBox(
-          //         width: 50.w,
-          //         height: 50.h,
-          //         child: Image.asset('assets/whole_note_lean.png'),
-          //       ),
-          //     ),
-          //     // 음표 2
-          //     Positioned(
-          //       top: randomItems[1].h,
-          //       left: 180.w,
-          //       child: SizedBox(
-          //         width: 50.w,
-          //         height: 50.h,
-          //         child: Image.asset('assets/whole_note_lean.png'),
-          //       ),
-          //     ),
-          //     // 필요시 덧줄
-          //     addLineDown(randomNoteNumber[0],randomNoteNumber[1]),
-          //   ]
-          // ),
           Container(
             height: 300.h,
             width: double.infinity,
@@ -1020,7 +1026,12 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                   left: downNoteLeft.w,
                   child: SizedBox(
                     height: 26.5.h,
-                    child: Image.asset('assets/whole_note_lean.png'),
+                    child: Stack(
+                      children: [
+                        Image.asset('assets/whole_note_lean.png'),
+                        addLine(randomNote[1]),
+                      ],
+                    ),
                   ),
                 ),
                 // 음표 2
@@ -1029,10 +1040,14 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                   left: 180.w,
                   child: SizedBox(
                     height: 26.5.h,
-                    child: Image.asset('assets/whole_note_lean.png'),
+                    child: Stack(
+                      children: [
+                        Image.asset('assets/whole_note_lean.png'),
+                        addLine(randomNote[0]),
+                      ],
+                    ),
                   ),
                 ),
-                returnShortLine(222.5,180),
               ],
             ),
           ),
