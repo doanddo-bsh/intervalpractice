@@ -20,6 +20,8 @@ Map intervalNameEngKor = {
 };
 
 Map pitchNameEngToKr = {
+  Note.d.inOctave(6):'레',
+  Note.c.inOctave(6):'도',
   Note.b.inOctave(5):'시',
   Note.a.inOctave(5):'라',
   Note.g.inOctave(5):'솔',
@@ -35,11 +37,15 @@ Map pitchNameEngToKr = {
   Note.d.inOctave(4):'레',
   Note.c.inOctave(4):'도',
   Note.b.inOctave(3):'시',
+  Note.a.inOctave(3):'라',
+  Note.g.inOctave(3):'솔',
 };
 
 List<List<dynamic>> note_height_list_fix =
 [
   // topheigh, number, note
+  [11.00,0,Note.d.inOctave(6)],
+  [24.25,0,Note.c.inOctave(6)],
   [37.50,0,Note.b.inOctave(5)],
   [50.75,1,Note.a.inOctave(5)],
   [64.00,2,Note.g.inOctave(5)],
@@ -55,11 +61,15 @@ List<List<dynamic>> note_height_list_fix =
   [196.50,12,Note.d.inOctave(4)],
   [209.75,13,Note.c.inOctave(4)],
   [223.00,14,Note.b.inOctave(3)],
+  [236.25,14,Note.a.inOctave(3)],
+  [249.50,14,Note.g.inOctave(3)],
 ];
 
 List<List<dynamic>> note_height_list =
 [
   // topheigh, number, note
+  [11.00,0,Note.d.inOctave(6)],
+  [24.25,0,Note.c.inOctave(6)],
   [37.50,0,Note.b.inOctave(5)],
   [50.75,1,Note.a.inOctave(5)],
   [64.00,2,Note.g.inOctave(5)],
@@ -75,5 +85,7 @@ List<List<dynamic>> note_height_list =
   [196.50,12,Note.d.inOctave(4)],
   [209.75,13,Note.c.inOctave(4)],
   [223.00,14,Note.b.inOctave(3)],
+  [236.25,14,Note.a.inOctave(3)],
+  [249.50,14,Note.g.inOctave(3)],
 ];
 

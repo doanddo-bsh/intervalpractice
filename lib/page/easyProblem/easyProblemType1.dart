@@ -28,7 +28,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
   bool wrongProblemMode = false ;
 
-  double downNoteLeft = 180.0;
+  // double downNoteLeft = 180.0;
 
   int numberOfRight = 0 ;
 
@@ -175,7 +175,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             () {
                 setState(() {
                   answerInterval = intervalNameKorEng[intervalName] + intervalNumber;
-                  print(answerInterval);
+                  print('answerInterval $answerInterval');
                   showBottomResult(answerInterval!);
                 });
               }:
@@ -260,7 +260,14 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
   void showBottomResult(String answerInterval){
 
-    String answerReal = randomNote[0].interval(randomNote[1]).toString();
+    List<dynamic> randomNoteAnswer = [] ;
+
+    randomNoteAnswer.add(randomNote[0]);
+    randomNoteAnswer.add(randomNote[1]);
+
+    randomNoteAnswer.sort();
+
+    String answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1]).toString();
     String answerRealKor = '';
 
     if (answerReal.length==2){
@@ -270,6 +277,9 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
       answerRealKor = intervalNameEngKor[answerReal.substring(0, 2)] +
           answerReal.substring(2, 3);
     }
+
+    print('answerReal $answerReal');
+    print('answerRealKor $answerRealKor');
 
     if (answerInterval == answerReal){
 
@@ -383,11 +393,11 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           setState(() {
             // 문제 적용
             randomItems = [note_height_list_problem[0][0],note_height_list_problem[1][0]];
-            randomItems.sort();
+            // randomItems.sort();
             randomNoteNumber = [note_height_list_problem[0][1],note_height_list_problem[1][1]];
-            randomNoteNumber.sort();
+            // randomNoteNumber.sort();
             randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
-            randomNote.sort();
+            // randomNote.sort();
 
             answerInterval = null;
             intervalNumber = null;
@@ -395,20 +405,20 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             problemNumber += 1;
           });
 
-          if ((randomNoteNumber[0]-randomNoteNumber[1]).abs()==1){
-            setState(() {
-              downNoteLeft = 207;
-            });
-          } else if ((randomNoteNumber[0]-randomNoteNumber[1
-          ]).abs()==0){
-            setState(() {
-              downNoteLeft = 207;
-            });
-          } else {
-            setState(() {
-              downNoteLeft = 180;
-            });
-          }
+          // if ((randomNoteNumber[0]-randomNoteNumber[1]).abs()==1){
+          //   setState(() {
+          //     downNoteLeft = 207;
+          //   });
+          // } else if ((randomNoteNumber[0]-randomNoteNumber[1
+          // ]).abs()==0){
+          //   setState(() {
+          //     downNoteLeft = 207;
+          //   });
+          // } else {
+          //   setState(() {
+          //     downNoteLeft = 180;
+          //   });
+          // }
 
           print(randomNote[0].interval(randomNote[1]).toString());
 
@@ -436,31 +446,31 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           setState(() {
             // 문제 적용
             randomItems = [note_height_list_problem[0][0],note_height_list_problem[1][0]];
-            randomItems.sort();
+            // randomItems.sort();
             randomNoteNumber = [note_height_list_problem[0][1],note_height_list_problem[1][1]];
-            randomNoteNumber.sort();
+            // randomNoteNumber.sort();
             randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
-            randomNote.sort();
+            // randomNote.sort();
 
             answerInterval = null;
             intervalNumber = null;
 
           });
 
-          if ((note_height_list_problem[0][1]-note_height_list_problem[1][1]).abs()==1){
-            setState(() {
-              downNoteLeft = 207;
-            });
-          } else if ((randomNoteNumber[0]-randomNoteNumber[1
-          ]).abs()==0){
-            setState(() {
-              downNoteLeft = 207;
-            });
-          } else {
-            setState(() {
-              downNoteLeft = 180;
-            });
-          }
+          // if ((note_height_list_problem[0][1]-note_height_list_problem[1][1]).abs()==1){
+          //   setState(() {
+          //     downNoteLeft = 207;
+          //   });
+          // } else if ((randomNoteNumber[0]-randomNoteNumber[1
+          // ]).abs()==0){
+          //   setState(() {
+          //     downNoteLeft = 207;
+          //   });
+          // } else {
+          //   setState(() {
+          //     downNoteLeft = 180;
+          //   });
+          // }
 
           print(randomNote[0].interval(randomNote[1]).toString());
 
@@ -493,16 +503,16 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           setState(() {
             // 문제 적용
             randomNoteNumber = wrongProblemsSave[problemNumber];
-            randomNoteNumber.sort();
+            // randomNoteNumber.sort();
 
             randomItems =
             [note_height_list_fix[randomNoteNumber[0]][0],
               note_height_list_fix[randomNoteNumber[1]][0]];
-            randomItems.sort();
+            // randomItems.sort();
             randomNote =
             [note_height_list_fix[randomNoteNumber[0]][2],
               note_height_list_fix[randomNoteNumber[1]][2]];
-            randomNote.sort();
+            // randomNote.sort();
 
             answerInterval = null;
             intervalNumber = null;
@@ -511,20 +521,20 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
           });
 
-          if ((randomNoteNumber[0]-randomNoteNumber[1]).abs()==1){
-            setState(() {
-              downNoteLeft = 207;
-            });
-          } else if ((randomNoteNumber[0]-randomNoteNumber[1
-          ]).abs()==0){
-            setState(() {
-              downNoteLeft = 207;
-            });
-          } else {
-            setState(() {
-              downNoteLeft = 180;
-            });
-          }
+          // if ((randomNoteNumber[0]-randomNoteNumber[1]).abs()==1){
+          //   setState(() {
+          //     downNoteLeft = 207;
+          //   });
+          // } else if ((randomNoteNumber[0]-randomNoteNumber[1
+          // ]).abs()==0){
+          //   setState(() {
+          //     downNoteLeft = 207;
+          //   });
+          // } else {
+          //   setState(() {
+          //     downNoteLeft = 180;
+          //   });
+          // }
 
           print(randomNote[0].interval(randomNote[1]).toString());
 
@@ -551,36 +561,36 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           setState(() {
             // 문제 적용
             randomNoteNumber = wrongProblemsSave[0];
-            randomNoteNumber.sort();
+            // randomNoteNumber.sort();
 
             randomItems =
             [note_height_list_fix[randomNoteNumber[0]][0],
               note_height_list_fix[randomNoteNumber[1]][0]];
-            randomItems.sort();
+            // randomItems.sort();
             randomNote =
             [note_height_list_fix[randomNoteNumber[0]][2],
               note_height_list_fix[randomNoteNumber[1]][2]];
-            randomNote.sort();
+            // randomNote.sort();
 
             answerInterval = null;
             intervalNumber = null;
 
           });
 
-          if ((randomNoteNumber[0]-randomNoteNumber[1]).abs()==1){
-            setState(() {
-              downNoteLeft = 207;
-            });
-          } else if ((randomNoteNumber[0]-randomNoteNumber[1
-          ]).abs()==0){
-            setState(() {
-              downNoteLeft = 207;
-            });
-          } else {
-            setState(() {
-              downNoteLeft = 180;
-            });
-          }
+          // if ((randomNoteNumber[0]-randomNoteNumber[1]).abs()==1){
+          //   setState(() {
+          //     downNoteLeft = 207;
+          //   });
+          // } else if ((randomNoteNumber[0]-randomNoteNumber[1
+          // ]).abs()==0){
+          //   setState(() {
+          //     downNoteLeft = 207;
+          //   });
+          // } else {
+          //   setState(() {
+          //     downNoteLeft = 180;
+          //   });
+          // }
 
           setState(() {
             problemNumber = 1 ;
@@ -883,8 +893,8 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     );
   }
 
-  // 덧줄용
-  Widget addLine(PositionedNote randomNote){
+  // 덧줄용1
+  Widget addLine1(PositionedNote randomNote){
 
     // middle line
     List<PositionedNote> middleLine = [
@@ -895,15 +905,19 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
       Note.g.inOctave(4),
       Note.e.inOctave(4),
       Note.c.inOctave(4),
+      Note.a.inOctave(3),
+      Note.c.inOctave(6),
     ];
     // low line
     List<PositionedNote> lowLine = [
-      Note.b.inOctave(5)
+      Note.b.inOctave(5),
+      Note.d.inOctave(6),
     ];
 
     // high line
     List<PositionedNote> highLine = [
-      Note.b.inOctave(3)
+      Note.b.inOctave(3),
+      Note.g.inOctave(3)
     ];
 
     if (middleLine.contains(randomNote)){
@@ -935,11 +949,54 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             width: 50.w,
           ),
         );
-    } else {
+    }
+    else {
       return SizedBox();
     }
   }
 
+
+  // 덧줄용2
+  Widget addLine2(PositionedNote randomNote, double left){
+
+    // highhigh line
+    List<PositionedNote> highHighLine = [
+      Note.d.inOctave(6),
+      Note.c.inOctave(6),
+    ];
+    // lowlow line
+    List<PositionedNote> lowLowLine = [
+      Note.a.inOctave(3),
+      Note.g.inOctave(3),
+    ];
+
+    if (highHighLine.contains(randomNote)){
+      return
+        Positioned(
+          top: 63.5.h,
+          left: left,
+          child: Container(
+            color: Colors.black,
+            height: 2.0.h,
+            width: 50.w,
+          ),
+        );
+    } else if (lowLowLine.contains(randomNote)) {
+      return
+        Positioned(
+          top: 222.5.h,
+          left: left,
+          child: Container(
+            color: Colors.black,
+            height: 2.0.h,
+            width: 50.w,
+          ),
+        );
+    }
+    else {
+      return SizedBox();
+    }
+  }
 
 
   @override
@@ -953,20 +1010,20 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     );
 
     randomItems = [note_height_list_problem[0][0],note_height_list_problem[1][0]];
-    randomItems.sort();
+    // randomItems.sort();
     randomNoteNumber = [note_height_list_problem[0][1],note_height_list_problem[1][1]];
-    randomNoteNumber.sort();
+    // randomNoteNumber.sort();
     randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
-    randomNote.sort();
+    // randomNote.sort();
 
-    if ((note_height_list_problem[0][1]-note_height_list_problem[1][1]).abs()==1){
-      downNoteLeft = 207;
-    } else if ((note_height_list_problem[0][1]-note_height_list_problem[1][1
-    ]).abs()==0){
-      downNoteLeft = 207;
-    } else {
-      downNoteLeft = 180;
-    }
+    // if ((note_height_list_problem[0][1]-note_height_list_problem[1][1]).abs()==1){
+    //   downNoteLeft = 207;
+    // } else if ((note_height_list_problem[0][1]-note_height_list_problem[1][1
+    // ]).abs()==0){
+    //   downNoteLeft = 207;
+    // } else {
+    //   downNoteLeft = 180;
+    // }
 
     print(randomNote);
   }
@@ -977,7 +1034,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     print('randomNote $randomNote');
 
     print(MediaQuery.of(context).size.width);
-    print('downNoteLeft $downNoteLeft');
+    // print('downNoteLeft $downNoteLeft');
     print(180.w);
 
     return Scaffold(
@@ -1016,38 +1073,40 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                       ),
                   ),
                 ),
-                returnLine(90),
+                returnLine(90.0),
                 returnLine(116.5),
-                returnLine(143),
+                returnLine(143.0),
                 returnLine(169.5),
                 returnLine(196.0),
                 Positioned(
                   top: randomItems[0].h,
-                  left: downNoteLeft.w,
+                  left: 130.w,
                   child: SizedBox(
                     height: 26.5.h,
                     child: Stack(
                       children: [
                         Image.asset('assets/whole_note_lean.png'),
-                        addLine(randomNote[1]),
+                        addLine1(randomNote[0]),
                       ],
                     ),
                   ),
                 ),
+                addLine2(randomNote[0],130.w),
                 // 음표 2
                 Positioned(
                   top: randomItems[1].h,
-                  left: 180.w,
+                  left: 230.w,
                   child: SizedBox(
                     height: 26.5.h,
                     child: Stack(
                       children: [
                         Image.asset('assets/whole_note_lean.png'),
-                        addLine(randomNote[0]),
+                        addLine1(randomNote[1]),
                       ],
                     ),
                   ),
                 ),
+                addLine2(randomNote[1],230.w),
               ],
             ),
           ),
