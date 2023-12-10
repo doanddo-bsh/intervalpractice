@@ -45,47 +45,104 @@ List<List<dynamic>> note_height_list_fix =
 [
   // topheigh, number, note
   [11.00,0,Note.d.inOctave(6)],
-  [24.25,0,Note.c.inOctave(6)],
-  [37.50,0,Note.b.inOctave(5)],
-  [50.75,1,Note.a.inOctave(5)],
-  [64.00,2,Note.g.inOctave(5)],
-  [77.25,3,Note.f.inOctave(5)],
-  [90.50,4,Note.e.inOctave(5)],
-  [103.75,5,Note.d.inOctave(5)],
-  [117.00,6,Note.c.inOctave(5)],
-  [130.25,7,Note.b.inOctave(4)],
-  [143.50,8,Note.a.inOctave(4)],
-  [156.75,9,Note.g.inOctave(4)],
-  [170.00,10,Note.f.inOctave(4)],
-  [183.25,11,Note.e.inOctave(4)],
-  [196.50,12,Note.d.inOctave(4)],
-  [209.75,13,Note.c.inOctave(4)],
-  [223.00,14,Note.b.inOctave(3)],
-  [236.25,14,Note.a.inOctave(3)],
-  [249.50,14,Note.g.inOctave(3)],
+  [24.25,1,Note.c.inOctave(6)],
+  [37.50,2,Note.b.inOctave(5)],
+  [50.75,3,Note.a.inOctave(5)],
+  [64.00,4,Note.g.inOctave(5)],
+  [77.25,5,Note.f.inOctave(5)],
+  [90.50,6,Note.e.inOctave(5)],
+  [103.75,7,Note.d.inOctave(5)],
+  [117.00,8,Note.c.inOctave(5)],
+  [130.25,9,Note.b.inOctave(4)],
+  [143.50,10,Note.a.inOctave(4)],
+  [156.75,11,Note.g.inOctave(4)],
+  [170.00,12,Note.f.inOctave(4)],
+  [183.25,13,Note.e.inOctave(4)],
+  [196.50,14,Note.d.inOctave(4)],
+  [209.75,15,Note.c.inOctave(4)],
+  [223.00,16,Note.b.inOctave(3)],
+  [236.25,17,Note.a.inOctave(3)],
+  [249.50,18,Note.g.inOctave(3)],
 ];
 
 List<List<dynamic>> note_height_list =
 [
   // topheigh, number, note
   [11.00,0,Note.d.inOctave(6)],
-  [24.25,0,Note.c.inOctave(6)],
-  [37.50,0,Note.b.inOctave(5)],
-  [50.75,1,Note.a.inOctave(5)],
-  [64.00,2,Note.g.inOctave(5)],
-  [77.25,3,Note.f.inOctave(5)],
-  [90.50,4,Note.e.inOctave(5)],
-  [103.75,5,Note.d.inOctave(5)],
-  [117.00,6,Note.c.inOctave(5)],
-  [130.25,7,Note.b.inOctave(4)],
-  [143.50,8,Note.a.inOctave(4)],
-  [156.75,9,Note.g.inOctave(4)],
-  [170.00,10,Note.f.inOctave(4)],
-  [183.25,11,Note.e.inOctave(4)],
-  [196.50,12,Note.d.inOctave(4)],
-  [209.75,13,Note.c.inOctave(4)],
-  [223.00,14,Note.b.inOctave(3)],
-  [236.25,14,Note.a.inOctave(3)],
-  [249.50,14,Note.g.inOctave(3)],
+  [24.25,1,Note.c.inOctave(6)],
+  [37.50,2,Note.b.inOctave(5)],
+  [50.75,3,Note.a.inOctave(5)],
+  [64.00,4,Note.g.inOctave(5)],
+  [77.25,5,Note.f.inOctave(5)],
+  [90.50,6,Note.e.inOctave(5)],
+  [103.75,7,Note.d.inOctave(5)],
+  [117.00,8,Note.c.inOctave(5)],
+  [130.25,9,Note.b.inOctave(4)],
+  [143.50,10,Note.a.inOctave(4)],
+  [156.75,11,Note.g.inOctave(4)],
+  [170.00,12,Note.f.inOctave(4)],
+  [183.25,13,Note.e.inOctave(4)],
+  [196.50,14,Note.d.inOctave(4)],
+  [209.75,15,Note.c.inOctave(4)],
+  [223.00,16,Note.b.inOctave(3)],
+  [236.25,17,Note.a.inOctave(3)],
+  [249.50,18,Note.g.inOctave(3)],
+];
+
+List<List<PositionedNote>> noDiffDoubleList = [
+  [Note.e.inOctave(4),Note.f.inOctave(4)],
+  [Note.e.inOctave(5),Note.f.inOctave(5)],
+
+  [Note.b.inOctave(4),Note.c.inOctave(5)],
+  [Note.b.inOctave(3),Note.c.inOctave(4)],
+  [Note.b.inOctave(5),Note.c.inOctave(6)],
+
+  [Note.d.inOctave(4),Note.f.inOctave(4)],
+  [Note.d.inOctave(5),Note.f.inOctave(5)],
+
+  [Note.e.inOctave(4),Note.g.inOctave(4)],
+  [Note.e.inOctave(5),Note.g.inOctave(5)],
+
+  [Note.a.inOctave(3),Note.c.inOctave(4)],
+  [Note.a.inOctave(4),Note.c.inOctave(5)],
+  [Note.a.inOctave(5),Note.c.inOctave(6)],
+
+  [Note.b.inOctave(3),Note.d.inOctave(4)],
+  [Note.b.inOctave(4),Note.d.inOctave(5)],
+  [Note.b.inOctave(5),Note.d.inOctave(6)],
+
+  [Note.f.inOctave(4),Note.b.inOctave(4)],
+  [Note.f.inOctave(5),Note.b.inOctave(5)],
+  [Note.f.inOctave(6),Note.b.inOctave(6)],
+
+  [Note.b.inOctave(3),Note.f.inOctave(4)],
+  [Note.b.inOctave(4),Note.f.inOctave(5)],
+  [Note.b.inOctave(5),Note.f.inOctave(6)],
+
+  [Note.e.inOctave(3),Note.c.inOctave(4)],
+  [Note.e.inOctave(4),Note.c.inOctave(5)],
+  [Note.e.inOctave(5),Note.c.inOctave(6)],
+
+  [Note.b.inOctave(3),Note.g.inOctave(4)],
+  [Note.b.inOctave(4),Note.g.inOctave(5)],
+  [Note.b.inOctave(5),Note.g.inOctave(6)],
+
+  [Note.a.inOctave(3),Note.f.inOctave(4)],
+  [Note.a.inOctave(4),Note.f.inOctave(5)],
+
+  [Note.d.inOctave(3),Note.c.inOctave(4)],
+  [Note.d.inOctave(4),Note.c.inOctave(5)],
+  [Note.d.inOctave(5),Note.c.inOctave(6)],
+
+  [Note.e.inOctave(4),Note.d.inOctave(5)],
+
+  [Note.g.inOctave(3),Note.f.inOctave(4)],
+  [Note.g.inOctave(4),Note.f.inOctave(5)],
+
+  [Note.a.inOctave(4),Note.g.inOctave(5)],
+  [Note.a.inOctave(3),Note.g.inOctave(4)],
+
+  [Note.b.inOctave(4),Note.a.inOctave(5)],
+  [Note.b.inOctave(3),Note.a.inOctave(4)],
 ];
 

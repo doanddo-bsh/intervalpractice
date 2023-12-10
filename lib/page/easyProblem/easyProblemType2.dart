@@ -719,8 +719,8 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
     super.initState();
     // 새로운 문제 생성
 
-    List<List<dynamic>> note_height_list_problem = getProblemListNoteInit(
-      note_height_list,
+    List<List<dynamic>> note_height_list_problem = getProblemListNote(
+      note_height_list,randomItems
     );
 
     randomItems = [note_height_list_problem[0][0],note_height_list_problem[1][0]];

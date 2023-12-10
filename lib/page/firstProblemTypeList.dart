@@ -5,6 +5,7 @@ import 'thirdPageProblem.dart';
 import 'easyProblem/easyProblemType1.dart';
 import 'easyProblem/easyProblemType2.dart';
 import 'easyProblem/easyProblemType3.dart';
+import 'hardProblem/hardProblemType1.dart';
 
 class FirstProblemTypeList extends StatefulWidget {
   const FirstProblemTypeList({Key? key}) : super(key: key);
@@ -227,7 +228,7 @@ class ListViewHard extends StatelessWidget {
     ['음정 문제3','주어진 음정의 자리바꿈 음정을 \n계산하여 정답을 맞춰보세요.'],
   ];
 
-  List problemPage = [EasyProblemType1(),ThirdPageProblem(),ThirdPageProblem()];
+  List problemPage = [HardProblemType1(),ThirdPageProblem(),ThirdPageProblem()];
 
   @override
   Widget build(BuildContext context) {
