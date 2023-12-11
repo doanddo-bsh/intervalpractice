@@ -44,7 +44,7 @@ class _HardProblemType1State extends State<HardProblemType1> {
           setState(() {intervalNumber = number;});
         } :
             (){
-          // print('정답이 이미 들어옴');
+          // 정답이 null 이 아닐때?
         },
         child: Text(number),
         style: ElevatedButton.styleFrom(
@@ -63,12 +63,11 @@ class _HardProblemType1State extends State<HardProblemType1> {
             () {
           setState(() {
             answerInterval = intervalNameKorEng[intervalName] + intervalNumber;
-            print('answerInterval $answerInterval');
             showBottomResult(answerInterval!);
           });
         }:
             (){
-          // print('정답이 이미 들어옴');
+          // ('정답이 이미 들어옴')?;
         },
         child: Text(intervalName + intervalNumber + '도'),
         style: ElevatedButton.styleFrom(
@@ -165,9 +164,6 @@ class _HardProblemType1State extends State<HardProblemType1> {
       answerRealKor = intervalNameEngKor[answerReal.substring(0, 2)] +
           answerReal.substring(2, 3);
     }
-
-    print('answerReal $answerReal');
-    print('answerRealKor $answerRealKor');
 
     if (answerInterval == answerReal){
 
@@ -297,8 +293,6 @@ class _HardProblemType1State extends State<HardProblemType1> {
             accidentals = accidentalsFinal(randomNote);
           });
 
-          // print(randomNote[0].interval(randomNote[1]).toString());
-
           Navigator.pop(context);
 
         }, child: Text(buttonText)
@@ -336,8 +330,6 @@ class _HardProblemType1State extends State<HardProblemType1> {
             accidentals = accidentalsFinal(randomNote);
           });
 
-          print(randomNote[0].interval(randomNote[1]).toString());
-
           setState(() {
             problemNumber = 1 ;
           });
@@ -365,6 +357,9 @@ class _HardProblemType1State extends State<HardProblemType1> {
         onPressed: (){
 
           setState(() {
+
+            problemNumber += 1;
+
             // 문제 적용
             randomNoteNumber = wrongProblemsSave[problemNumber-1];
             // randomNoteNumber.sort();
@@ -381,12 +376,8 @@ class _HardProblemType1State extends State<HardProblemType1> {
             answerInterval = null;
             intervalNumber = null;
 
-            problemNumber += 1;
-
             accidentals = wrongProblemsAccidentalsSave[problemNumber-1];
           });
-
-          // print(randomNote[0].interval(randomNote[1]).toString());
 
           Navigator.pop(context);
 
@@ -437,8 +428,6 @@ class _HardProblemType1State extends State<HardProblemType1> {
           problemNumber = 1 ;
           wrongProblemMode = true ;
         });
-
-        print(randomNote[0].interval(randomNote[1]).toString());
 
         Navigator.pop(context);
       },
@@ -924,7 +913,6 @@ class _HardProblemType1State extends State<HardProblemType1> {
     // randomNote.sort();
     accidentals = accidentalsFinal(randomNote);
 
-    print(randomNote);
   }
 
   @override
@@ -932,9 +920,27 @@ class _HardProblemType1State extends State<HardProblemType1> {
 
     print('randomNote $randomNote');
 
-    print(MediaQuery.of(context).size.width);
-    // print('downNoteLeft $downNoteLeft');
-    print(180.w);
+    List<dynamic> randomNoteAnswerTemp = [] ;
+
+    randomNoteAnswerTemp.add(addAccidental(randomNote[0], accidentals[0]));
+    randomNoteAnswerTemp.add(addAccidental(randomNote[1], accidentals[1]));
+
+    randomNoteAnswerTemp.sort();
+
+    String answerRealTemp = randomNoteAnswerTemp[0].interval
+      (randomNoteAnswerTemp[1]).toString();
+    String answerRealKorTemp = '';
+
+    if (answerRealTemp.length==2){
+      answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 1)] +
+          answerRealTemp.substring(1, 2);
+    } else {
+      answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 2)] +
+          answerRealTemp.substring(2, 3);
+    }
+
+    print('answerRealTemp $answerRealTemp');
+    print('answerRealKorTemp $answerRealKorTemp');
 
     return Scaffold(
       appBar: AppBar(

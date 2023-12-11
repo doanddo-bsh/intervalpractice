@@ -89,6 +89,8 @@ List<List<dynamic>> note_height_list =
   [249.50,18,Note.g.inOctave(3)],
 ];
 
+
+// 더블 샵 및 더블 플랫이 나오지 않는 리스트
 List<List<PositionedNote>> noDiffDoubleList = [
   [Note.e.inOctave(4),Note.f.inOctave(4)],
   [Note.e.inOctave(5),Note.f.inOctave(5)],

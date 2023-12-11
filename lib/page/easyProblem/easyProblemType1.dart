@@ -175,7 +175,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             () {
                 setState(() {
                   answerInterval = intervalNameKorEng[intervalName] + intervalNumber;
-                  print('answerInterval $answerInterval');
+
                   showBottomResult(answerInterval!);
                 });
               }:
@@ -277,9 +277,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
       answerRealKor = intervalNameEngKor[answerReal.substring(0, 2)] +
           answerReal.substring(2, 3);
     }
-
-    print('answerReal $answerReal');
-    print('answerRealKor $answerRealKor');
 
     if (answerInterval == answerReal){
 
@@ -420,8 +417,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           //   });
           // }
 
-          print(randomNote[0].interval(randomNote[1]).toString());
-
           Navigator.pop(context);
 
         }, child: Text(buttonText)
@@ -457,23 +452,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
           });
 
-          // if ((note_height_list_problem[0][1]-note_height_list_problem[1][1]).abs()==1){
-          //   setState(() {
-          //     downNoteLeft = 207;
-          //   });
-          // } else if ((randomNoteNumber[0]-randomNoteNumber[1
-          // ]).abs()==0){
-          //   setState(() {
-          //     downNoteLeft = 207;
-          //   });
-          // } else {
-          //   setState(() {
-          //     downNoteLeft = 180;
-          //   });
-          // }
-
-          print(randomNote[0].interval(randomNote[1]).toString());
-
           setState(() {
             problemNumber = 1 ;
           });
@@ -501,6 +479,9 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
         onPressed: (){
 
           setState(() {
+
+            problemNumber += 1;
+
             // 문제 적용
             randomNoteNumber = wrongProblemsSave[problemNumber-1];
             // randomNoteNumber.sort();
@@ -517,26 +498,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             answerInterval = null;
             intervalNumber = null;
 
-            problemNumber += 1;
-
           });
-
-          // if ((randomNoteNumber[0]-randomNoteNumber[1]).abs()==1){
-          //   setState(() {
-          //     downNoteLeft = 207;
-          //   });
-          // } else if ((randomNoteNumber[0]-randomNoteNumber[1
-          // ]).abs()==0){
-          //   setState(() {
-          //     downNoteLeft = 207;
-          //   });
-          // } else {
-          //   setState(() {
-          //     downNoteLeft = 180;
-          //   });
-          // }
-
-          print(randomNote[0].interval(randomNote[1]).toString());
 
           Navigator.pop(context);
 
@@ -577,27 +539,10 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
           });
 
-          // if ((randomNoteNumber[0]-randomNoteNumber[1]).abs()==1){
-          //   setState(() {
-          //     downNoteLeft = 207;
-          //   });
-          // } else if ((randomNoteNumber[0]-randomNoteNumber[1
-          // ]).abs()==0){
-          //   setState(() {
-          //     downNoteLeft = 207;
-          //   });
-          // } else {
-          //   setState(() {
-          //     downNoteLeft = 180;
-          //   });
-          // }
-
           setState(() {
             problemNumber = 1 ;
             wrongProblemMode = true ;
           });
-
-          print(randomNote[0].interval(randomNote[1]).toString());
 
           Navigator.pop(context);
         },
@@ -1016,16 +961,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
     // randomNote.sort();
 
-    // if ((note_height_list_problem[0][1]-note_height_list_problem[1][1]).abs()==1){
-    //   downNoteLeft = 207;
-    // } else if ((note_height_list_problem[0][1]-note_height_list_problem[1][1
-    // ]).abs()==0){
-    //   downNoteLeft = 207;
-    // } else {
-    //   downNoteLeft = 180;
-    // }
-
-    print(randomNote);
   }
 
   @override
@@ -1033,9 +968,28 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
     print('randomNote $randomNote');
 
-    print(MediaQuery.of(context).size.width);
-    // print('downNoteLeft $downNoteLeft');
-    print(180.w);
+
+    List<dynamic> randomNoteAnswerTemp = [] ;
+
+    randomNoteAnswerTemp.add(randomNote[0]);
+    randomNoteAnswerTemp.add(randomNote[1]);
+
+    randomNoteAnswerTemp.sort();
+
+    String answerRealTemp = randomNoteAnswerTemp[0].interval
+      (randomNoteAnswerTemp[1]).toString();
+    String answerRealKorTemp = '';
+
+    if (answerRealTemp.length==2){
+      answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 1)] +
+          answerRealTemp.substring(1, 2);
+    } else {
+      answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 2)] +
+          answerRealTemp.substring(2, 3);
+    }
+
+    print('answerRealTemp $answerRealTemp');
+    print('answerRealKorTemp $answerRealKorTemp');
 
     return Scaffold(
       appBar: AppBar(

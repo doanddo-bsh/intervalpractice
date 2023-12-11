@@ -110,6 +110,8 @@ List<String> accidentalsFinal(List<PositionedNote> randomNote){
   String accidentalWhere = accidentalsWhere();
   Random r3 = new Random();
 
+  var randomNote2 = [randomNote[1],randomNote[0]];
+
   if (accidentalWhere == 'none'){
     return ['none','none'];
   } else if (accidentalWhere == 'one'){
@@ -120,7 +122,8 @@ List<String> accidentalsFinal(List<PositionedNote> randomNote){
     }
   } else {
     // no double
-    if (noDiffDoubleList.contains(randomNote)){
+    if (noDiffDoubleList.contains(randomNote)|
+        noDiffDoubleList.contains(randomNote2)){
       String fixAccidental = accidentalsNoDouble();
       return [fixAccidental,fixAccidental];
     } else {
