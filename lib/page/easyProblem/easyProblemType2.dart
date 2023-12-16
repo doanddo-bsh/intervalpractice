@@ -758,6 +758,10 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
     print('randomNote $randomNote');
     print('randomNoteNumber $randomNoteNumber');
 
+    (upDown==0)?
+    print(engToKorNote[randomNote[0].note]):
+    print(engToKorNote[randomNote[1].note]);
+
     List<dynamic> randomNoteAnswerTemp = [] ;
 
     randomNoteAnswerTemp.add(randomNote[0]);

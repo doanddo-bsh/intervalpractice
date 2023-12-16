@@ -124,9 +124,11 @@ List<String> accidentalsFinal(List<PositionedNote> randomNote){
     // no double
     if (noDiffDoubleList.contains(randomNote)|
         noDiffDoubleList.contains(randomNote2)){
+      print('nonolist 포함');
       String fixAccidental = accidentalsNoDouble();
       return [fixAccidental,fixAccidental];
     } else {
+      print('nonolist 미포함');
       return [accidentalsNoDouble(),accidentalsNoDouble()];
     }
   }

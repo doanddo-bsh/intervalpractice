@@ -43,11 +43,15 @@ class _HardProblemType2State extends State<HardProblemType2> {
 
   String? intervalNumber = null;
 
+  Note? answerNote = null;
+
   Widget intervalNumberButton(String number){
     return ElevatedButton(
-        onPressed: answerInterval==null?
+        onPressed: answerNote==null?
             (){
-          setState(() {intervalNumber = number;});
+          setState(() {
+            intervalNumber = number;
+          });
         } :
             (){
           // 정답이 null 이 아닐때?
@@ -62,23 +66,48 @@ class _HardProblemType2State extends State<HardProblemType2> {
     );
   }
 
-  // 음정과 음정이름을 함께 보여주는 버튼을 생성하는 함수
+  // sharp, double sharp, flat, double flat
   Widget secondeElevatedButton(String intervalName,String intervalNumber){
+
+    late Note answerCheck;
+
+    if (intervalName == '샵'){
+      answerCheck = korToEngNote[intervalNumber].sharp;
+    } else if (intervalName == '더블샵'){
+      answerCheck = korToEngNote[intervalNumber].sharp.sharp;
+    } else if(intervalName == '플랫'){
+      answerCheck = korToEngNote[intervalNumber].flat;
+    } else if (intervalName == '더블플랫'){
+      answerCheck = korToEngNote[intervalNumber].flat.flat;
+    } else {
+      answerCheck = korToEngNote[intervalNumber];
+    }
+
     return ElevatedButton(
-        onPressed: answerInterval==null?
+        onPressed: answerNote==null?
             () {
           setState(() {
-            answerInterval = intervalNameKorEng[intervalName] + intervalNumber;
-            showBottomResult(answerInterval!);
+            if (intervalName == '샵'){
+              answerNote = korToEngNote[intervalNumber].sharp;
+            } else if (intervalName == '더블샵'){
+              answerNote = korToEngNote[intervalNumber].sharp.sharp;
+            } else if(intervalName == '플랫'){
+              answerNote = korToEngNote[intervalNumber].flat;
+            } else if (intervalName == '더블플랫'){
+              answerNote = korToEngNote[intervalNumber].flat.flat;
+            } else {
+              answerNote = korToEngNote[intervalNumber];
+            }
+            showBottomResult(answerNote!);
           });
         }:
             (){
           // ('정답이 이미 들어옴')?;
         },
-        child: Text(intervalName + intervalNumber + '도'),
+        child: Text(intervalName),
         style: ElevatedButton.styleFrom(
           backgroundColor:
-          answerInterval==intervalNameKorEng[intervalName] + intervalNumber ?
+          answerNote==answerCheck ?
           Color(0xffccccff) :
           Theme.of(context).colorScheme.onTertiary,
         )
@@ -89,7 +118,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
     return SizedBox(
       child: Column(
         children: [
-          Text('음정 이름을 고르세요'),
+          Text('변화표를 고르세요'),
           const SizedBox(height: 10.0,),
           SizedBox(
             height: 30.0,
@@ -97,40 +126,23 @@ class _HardProblemType2State extends State<HardProblemType2> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 secondeElevatedButton(
-                    '감',
+                    '없음',
                     intervalNumber
                 ),
                 secondeElevatedButton(
-                    '완전',
+                    '샵',
                     intervalNumber
                 ),
                 secondeElevatedButton(
-                    '증',
-                    intervalNumber
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10.0,),
-          SizedBox(
-            height: 30.0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                secondeElevatedButton(
-                    '겹감',
+                    '더블샵',
                     intervalNumber
                 ),
                 secondeElevatedButton(
-                    '단',
+                    '플랫',
                     intervalNumber
                 ),
                 secondeElevatedButton(
-                    '장',
-                    intervalNumber
-                ),
-                secondeElevatedButton(
-                    '겹증',
+                    '더블플랫',
                     intervalNumber
                 ),
               ],
@@ -149,29 +161,51 @@ class _HardProblemType2State extends State<HardProblemType2> {
     }
   }
 
-  String? answerInterval = null;
 
-  void showBottomResult(String answerInterval){
 
-    List<dynamic> randomNoteAnswer = [] ;
+  void showBottomResult(Note answerNote){
 
-    randomNoteAnswer.add(addAccidental(randomNote[0], accidentals[0]));
-    randomNoteAnswer.add(addAccidental(randomNote[1], accidentals[1]));
+    print('randomNote $randomNote');
 
-    randomNoteAnswer.sort();
+    // List<dynamic> randomNoteAnswer = [] ;
+    //
+    // randomNoteAnswer.add(addAccidental(randomNote[0], accidentals[0]));
+    // randomNoteAnswer.add(addAccidental(randomNote[1], accidentals[1]));
+    //
+    // randomNoteAnswer.sort();
+    //
+    // String answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1]).toString();
+    // String answerRealKor = '';
+    //
+    // if (answerReal.length==2){
+    //   answerRealKor = intervalNameEngKor[answerReal.substring(0, 1)] +
+    //       answerReal.substring(1, 2);
+    // } else {
+    //   answerRealKor = intervalNameEngKor[answerReal.substring(0, 2)] +
+    //       answerReal.substring(2, 3);
+    // }
 
-    String answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1]).toString();
-    String answerRealKor = '';
+    PositionedNote realNote = (upDown != 0)?
+    randomNote[0]:randomNote[1];
 
-    if (answerReal.length==2){
-      answerRealKor = intervalNameEngKor[answerReal.substring(0, 1)] +
-          answerReal.substring(1, 2);
+    String realAccidental = (upDown != 0)?
+    accidentals[0]:accidentals[1];
+
+    late Note realNoteAccidental ;
+
+    if (realAccidental == 'sharp'){
+      realNoteAccidental = realNote.note.sharp;
+    } else if (realAccidental == 'double sharp') {
+      realNoteAccidental = realNote.note.sharp.sharp;
+    } else if (realAccidental == 'flat') {
+      realNoteAccidental = realNote.note.flat;
+    } else if (realAccidental == 'double flat') {
+      realNoteAccidental = realNote.note.flat.flat;
     } else {
-      answerRealKor = intervalNameEngKor[answerReal.substring(0, 2)] +
-          answerReal.substring(2, 3);
+      realNoteAccidental = realNote.note;
     }
 
-    if (answerInterval == answerReal){
+    if (answerNote == realNoteAccidental){
 
       setState(() {
         numberOfRight += 1 ;
@@ -194,7 +228,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(answerRealKor + '도',
+                  Text(realNoteAccidental.toString(),
                     style: TextStyle(
                       fontSize : 20.0,
                       fontWeight: FontWeight.bold,
@@ -218,11 +252,14 @@ class _HardProblemType2State extends State<HardProblemType2> {
 
     } else {
 
+
       wrongProblems += [randomNoteNumber] ;
       wrongProblemsAccidentals += [accidentals];
+      upDownWorngList += [upDown];
 
       print('wrongProblems $wrongProblems');
       print('wrongProblemsAccidentals $wrongProblemsAccidentals');
+      print('upDownWorngList $upDownWorngList');
 
       showModalBottomSheet<void>(
         isDismissible:false,
@@ -241,14 +278,14 @@ class _HardProblemType2State extends State<HardProblemType2> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(answerRealKor + '도',
+                  Text(realNoteAccidental.toString(),
                     style: TextStyle(
                       fontSize : 20.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const Text('오답입니다.'),
-                  Text('정답은 ${answerRealKor} 입니다.'),
+                  Text('정답은 ${realNoteAccidental.toString()} 입니다.'),
                   const Text('풀이 : ...'),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
@@ -291,7 +328,9 @@ class _HardProblemType2State extends State<HardProblemType2> {
             randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
             // randomNote.sort();
 
-            answerInterval = null;
+            upDown = Random().nextInt(2);
+
+            answerNote = null;
             intervalNumber = null;
 
             problemNumber += 1;
@@ -330,7 +369,9 @@ class _HardProblemType2State extends State<HardProblemType2> {
             randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
             // randomNote.sort();
 
-            answerInterval = null;
+            upDown = Random().nextInt(2);
+
+            answerNote = null;
             intervalNumber = null;
 
             accidentals = accidentalsFinal(randomNote);
@@ -369,6 +410,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
             // 문제 적용
             randomNoteNumber = wrongProblemsSave[problemNumber-1];
             // randomNoteNumber.sort();
+            upDown = upDownWorngListSave[problemNumber-1];
 
             randomItems =
             [note_height_list_fix[randomNoteNumber[0]][0],
@@ -379,7 +421,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
               note_height_list_fix[randomNoteNumber[1]][2]];
             // randomNote.sort();
 
-            answerInterval = null;
+            answerNote = null;
             intervalNumber = null;
 
             accidentals = wrongProblemsAccidentalsSave[problemNumber-1];
@@ -402,6 +444,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
         // back up
         wrongProblemsSave = wrongProblems ;
         wrongProblemsAccidentalsSave = wrongProblemsAccidentals;
+        upDownWorngListSave = upDownWorngList;
 
         print('wrongProblemsSave $wrongProblemsSave');
         print('wrongProblems $wrongProblems');
@@ -409,9 +452,14 @@ class _HardProblemType2State extends State<HardProblemType2> {
         wrongProblems = [] ;
         wrongProblemsAccidentals = [] ;
 
+        print('upDownWorngListSave $upDownWorngListSave');
+        print('upDownWorngList $upDownWorngList');
+        upDownWorngList = [] ;
+
         setState(() {
           // 문제 적용
           randomNoteNumber = wrongProblemsSave[0];
+          upDown = upDownWorngListSave[0];
           // randomNoteNumber.sort();
 
           randomItems =
@@ -423,7 +471,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
             note_height_list_fix[randomNoteNumber[1]][2]];
           // randomNote.sort();
 
-          answerInterval = null;
+          answerNote = null;
           intervalNumber = null;
 
           accidentals = wrongProblemsAccidentalsSave[0];
@@ -624,6 +672,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
                                               ElevatedButton(
                                                 onPressed: (){
                                                   wrongProblems = [];
+                                                  upDownWorngList = [];
                                                   wrongProblemMode = false ;
                                                   numberOfRight = 0 ;
                                                   Navigator.popUntil
@@ -918,13 +967,21 @@ class _HardProblemType2State extends State<HardProblemType2> {
     randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
     // randomNote.sort();
     accidentals = accidentalsFinal(randomNote);
-
+    upDown = Random().nextInt(2);
   }
 
   @override
   Widget build(BuildContext context) {
 
+    print('upDown $upDown');
     print('randomNote $randomNote');
+    print('randomNoteNumber $randomNoteNumber');
+    print('accidentals $accidentals');
+
+    print('kor note name');
+    (upDown!=0)?
+    print(engToKorNote[randomNote[0].note]):
+    print(engToKorNote[randomNote[1].note]);
 
     List<dynamic> randomNoteAnswerTemp = [] ;
 
@@ -989,6 +1046,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
                 returnLine(143.0),
                 returnLine(169.5),
                 returnLine(196.0),
+                (upDown == 0)?
                 Positioned(
                   top: randomItems[0].h,
                   left: 130.w,
@@ -1001,12 +1059,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
                       ],
                     ),
                   ),
-                ),
-                addLine2(randomNote[0],130.w),
-                // accidentals
-                addAccidentals(accidentals[0],randomItems[0].h,110.w),
-                // 음표 2
-                Positioned(
+                ):Positioned(
                   top: randomItems[1].h,
                   left: 230.w,
                   child: SizedBox(
@@ -1019,8 +1072,12 @@ class _HardProblemType2State extends State<HardProblemType2> {
                     ),
                   ),
                 ),
-                addLine2(randomNote[1],230.w),
-                // accidentals
+                (upDown == 0)?
+                addLine2(randomNote[0],130.w):
+                addLine2(randomNote[1],230.w)
+                ,
+                (upDown == 0)?
+                addAccidentals(accidentals[0],randomItems[0].h,110.w):
                 addAccidentals(accidentals[1],randomItems[1].h,210.w),
               ],
             ),
@@ -1030,8 +1087,16 @@ class _HardProblemType2State extends State<HardProblemType2> {
             setState(() {
               problemNumber = 10;
             });
-          }, child: Text('test')),
-          Text('음정 번호를 쓰세요'),
+          }, child: Text('test')
+          ),
+          Text('주어진 음정 $answerRealKorTemp'),
+          (upDown == 0)?
+          (randomNoteNumber[0] < randomNoteNumber[1])?
+          Text('주어진 음정을 만들려면 필요한 아래 계이름은?'):
+          Text('주어진 음정을 만들려면 필요한 위에 계이름은?'):
+          (randomNoteNumber[0] < randomNoteNumber[1])?
+          Text('주어진 음정을 만들려면 필요한 위에 계이름은?'):
+          Text('주어진 음정을 만들려면 필요한 아래 계이름은?'),
           const SizedBox(height: 10.0,),
           SizedBox(
             child: Column(
@@ -1041,10 +1106,10 @@ class _HardProblemType2State extends State<HardProblemType2> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      intervalNumberButton('1'),
-                      intervalNumberButton('2'),
-                      intervalNumberButton('3'),
-                      intervalNumberButton('4'),
+                      intervalNumberButton('도'),
+                      intervalNumberButton('레'),
+                      intervalNumberButton('미'),
+                      intervalNumberButton('파'),
                     ],
                   ),
                 ),
@@ -1054,10 +1119,10 @@ class _HardProblemType2State extends State<HardProblemType2> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      intervalNumberButton('5'),
-                      intervalNumberButton('6'),
-                      intervalNumberButton('7'),
-                      intervalNumberButton('8'),
+                      intervalNumberButton('솔'),
+                      intervalNumberButton('라'),
+                      intervalNumberButton('시'),
+                      // intervalNumberButton('8'),
                     ],
                   ),
                 ),

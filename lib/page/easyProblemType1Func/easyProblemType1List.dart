@@ -19,6 +19,26 @@ Map intervalNameEngKor = {
   'AA':'겹증',
 };
 
+Map korToEngNote = {
+  '도':Note.c,
+  '레':Note.d,
+  '미':Note.e,
+  '파':Note.f,
+  '솔':Note.g,
+  '라':Note.a,
+  '시':Note.b,
+};
+
+Map engToKorNote = {
+  Note.c:'도',
+  Note.d:'레',
+  Note.e:'미',
+  Note.f:'파',
+  Note.g:'솔',
+  Note.a:'라',
+  Note.b:'시',
+};
+
 Map pitchNameEngToKr = {
   Note.d.inOctave(6):'레',
   Note.c.inOctave(6):'도',
