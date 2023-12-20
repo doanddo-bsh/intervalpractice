@@ -8,144 +8,32 @@ import '../easyProblemType1Func/easyProblemType1List.dart';
 // import '../secondePageFunc/easyProblemType1Func.dart';
 import 'package:music_notes/music_notes.dart';
 
-class EasyProblemType3 extends StatefulWidget {
-  const EasyProblemType3({super.key});
+class HardProblemType3 extends StatefulWidget {
+  const HardProblemType3({super.key});
 
   @override
-  State<EasyProblemType3> createState() => _EasyProblemType3State();
+  State<HardProblemType3> createState() => _HardProblemType3State();
 }
 
-class _EasyProblemType3State extends State<EasyProblemType3> {
-
+class _HardProblemType3State extends State<HardProblemType3> {
 
   // List<double> note_height_list = [31,42,55,67.5,81,94.5,108,121.5];
   List<double> randomItems = [];
   late List<int> randomNoteNumber ;
-  late List<dynamic> randomNote ;
+  late List<PositionedNote> randomNote ;
+  List<String> accidentals = [];
 
   List<List<int>> wrongProblems = [];
   List<List<int>> wrongProblemsSave = [];
+
+  List<List<String>> wrongProblemsAccidentals = [];
+  List<List<String>> wrongProblemsAccidentalsSave = [];
 
   bool wrongProblemMode = false ;
 
   // double downNoteLeft = 180.0;
 
   int numberOfRight = 0 ;
-
-  // 도 에서 추가 줄 만들기
-  Widget addLineDown(int noteNumber1,int noteNumber2){
-    if (
-    ((noteNumber1==11)&(noteNumber2==13))
-    |((noteNumber1==12)&(noteNumber2==14))
-    |((noteNumber1==11)&(noteNumber2==14))
-    |((noteNumber1==12)&(noteNumber2==13))
-    ){
-      return Positioned(
-        top: 172.h,
-        left: 180.w,
-        child: SizedBox(
-          width: 50.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    } else if (
-    ((noteNumber1==13)&(noteNumber2==14))
-    ){
-      return Positioned(
-        top: 172.h,
-        left: 170.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/five_long.png'),
-        ),
-      );
-    } else if (
-    ((noteNumber2==13))
-    ){
-      return Positioned(
-        top: 172.h,
-        left: 155.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    }  else if (
-    ((noteNumber2==14))
-    ){
-      return Positioned(
-        top: 172.h,
-        left: 155.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    } else if (
-    (noteNumber1==0)&(noteNumber2==3)
-    |(noteNumber1==1)&(noteNumber2==3)
-    |(noteNumber1==0)&(noteNumber2==2)
-    // |(noteNumber1==0)&(noteNumber2==1)
-    // |(noteNumber1==1)&(noteNumber2==2)
-    ) {
-      return Positioned(
-        top: 17.h,
-        left: 180.w,
-        child: SizedBox(
-          width: 50.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    } else if ((noteNumber1==1)&(noteNumber2==2)) {
-      return Positioned(
-        top: 17.h,
-        left: 207.w,
-        child: SizedBox(
-          width: 50.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    } else if ((noteNumber1==0)&(noteNumber2==1)) {
-      return Positioned(
-        top: 17.h,
-        left: 170.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/five_long.png'),
-        ),
-      );
-    } else if ((noteNumber1==1)) {
-      return Positioned(
-        top: 17.h,
-        left: 155.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    } else if ((noteNumber1==0)) {
-      return Positioned(
-        top: 17.h,
-        left: 155.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    }
-    else {
-      return const SizedBox();
-    }
-  }
 
   String? intervalNumber = null;
 
@@ -156,7 +44,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
           setState(() {intervalNumber = number;});
         } :
             (){
-          // print('정답이 이미 들어옴');
+          // 정답이 null 이 아닐때?
         },
         child: Text(number),
         style: ElevatedButton.styleFrom(
@@ -175,12 +63,11 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
             () {
           setState(() {
             answerInterval = intervalNameKorEng[intervalName] + intervalNumber;
-
             showBottomResult(answerInterval!);
           });
         }:
             (){
-          // print('정답이 이미 들어옴');
+          // ('정답이 이미 들어옴')?;
         },
         child: Text(intervalName + intervalNumber + '도'),
         style: ElevatedButton.styleFrom(
@@ -196,7 +83,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
     return SizedBox(
       child: Column(
         children: [
-          Text('음정 이름을 고르세요'),
+          Text('자리바꿈 음정을 고르세요'),
           const SizedBox(height: 10.0,),
           SizedBox(
             height: 30.0,
@@ -262,14 +149,15 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
 
     List<dynamic> randomNoteAnswer = [] ;
 
-    randomNoteAnswer.add(randomNote[0]);
-    randomNoteAnswer.add(randomNote[1]);
+    randomNoteAnswer.add(addAccidental(randomNote[0], accidentals[0]));
+    randomNoteAnswer.add(addAccidental(randomNote[1], accidentals[1]));
 
     randomNoteAnswer.sort();
 
-    // 자리바꿈 음정
     String answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
-      .inverted.toString();
+        .inverted
+        .toString();
+
     String answerRealKor = '';
 
     if (answerReal.length==2){
@@ -328,8 +216,10 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
     } else {
 
       wrongProblems += [randomNoteNumber] ;
+      wrongProblemsAccidentals += [accidentals];
 
       print('wrongProblems $wrongProblems');
+      print('wrongProblemsAccidentals $wrongProblemsAccidentals');
 
       showModalBottomSheet<void>(
         isDismissible:false,
@@ -402,22 +292,9 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
             intervalNumber = null;
 
             problemNumber += 1;
-          });
 
-          // if ((randomNoteNumber[0]-randomNoteNumber[1]).abs()==1){
-          //   setState(() {
-          //     downNoteLeft = 207;
-          //   });
-          // } else if ((randomNoteNumber[0]-randomNoteNumber[1
-          // ]).abs()==0){
-          //   setState(() {
-          //     downNoteLeft = 207;
-          //   });
-          // } else {
-          //   setState(() {
-          //     downNoteLeft = 180;
-          //   });
-          // }
+            accidentals = accidentalsFinal(randomNote);
+          });
 
           Navigator.pop(context);
 
@@ -433,6 +310,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
 
           numberOfRight = 0 ;
           wrongProblems = [];
+          wrongProblemsAccidentals = [];
           wrongProblemMode = false ;
 
           List<List<dynamic>> note_height_list_problem = getProblemListNote(
@@ -452,6 +330,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
             answerInterval = null;
             intervalNumber = null;
 
+            accidentals = accidentalsFinal(randomNote);
           });
 
           setState(() {
@@ -500,6 +379,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
             answerInterval = null;
             intervalNumber = null;
 
+            accidentals = wrongProblemsAccidentalsSave[problemNumber-1];
           });
 
           Navigator.pop(context);
@@ -518,9 +398,13 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
 
         // back up
         wrongProblemsSave = wrongProblems ;
+        wrongProblemsAccidentalsSave = wrongProblemsAccidentals;
+
         print('wrongProblemsSave $wrongProblemsSave');
         print('wrongProblems $wrongProblems');
+
         wrongProblems = [] ;
+        wrongProblemsAccidentals = [] ;
 
         setState(() {
           // 문제 적용
@@ -538,6 +422,8 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
 
           answerInterval = null;
           intervalNumber = null;
+
+          accidentals = wrongProblemsAccidentalsSave[0];
 
         });
 
@@ -945,6 +831,72 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
     }
   }
 
+  // 변화표 추가
+  Widget addAccidentals(String whatAccidental, double top, double left){
+
+    if (whatAccidental == 'none'){
+      return SizedBox();
+    } else if (whatAccidental == 'sharp'){
+      return Positioned(
+        top: top,
+        left: left,
+        child: SizedBox(
+          height: 30,
+          width: 15,
+          child: Image(
+            image: AssetImage('assets/sharp1.png',
+            ),
+            fit: BoxFit.fill,
+          ),
+        ),
+      );
+    } else if (whatAccidental == 'double sharp'){
+      return Positioned(
+        top: top,
+        left: left,
+        child: SizedBox(
+          height: 30,
+          width: 15,
+          child: Image(
+            image: AssetImage('assets/doubleSharp.png',
+            ),
+            fit: BoxFit.fill,
+          ),
+        ),
+      );
+    } else if (whatAccidental == 'flat'){
+      return Positioned(
+        top: top,
+        left: left,
+        child: SizedBox(
+          height: 30,
+          width: 15,
+          child: Image(
+            image: AssetImage('assets/flat1.png',
+            ),
+            fit: BoxFit.fill,
+          ),
+        ),
+      );
+    } else {
+      return Positioned(
+        top: top,
+        left: left,
+        child: SizedBox(
+          height: 30,
+          width: 15,
+          child: Image(
+            image: AssetImage('assets/doubleFlat.png',
+            ),
+            fit: BoxFit.fill,
+          ),
+        ),
+      );
+    }
+
+
+  }
+
 
   @override
   void initState() {
@@ -962,6 +914,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
     // randomNoteNumber.sort();
     randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
     // randomNote.sort();
+    accidentals = accidentalsFinal(randomNote);
 
   }
 
@@ -970,17 +923,20 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
 
     print('randomNote $randomNote');
 
-
     List<dynamic> randomNoteAnswerTemp = [] ;
 
-    randomNoteAnswerTemp.add(randomNote[0]);
-    randomNoteAnswerTemp.add(randomNote[1]);
+    randomNoteAnswerTemp.add(addAccidental(randomNote[0], accidentals[0]));
+    randomNoteAnswerTemp.add(addAccidental(randomNote[1], accidentals[1]));
 
     randomNoteAnswerTemp.sort();
 
     String answerRealTemp = randomNoteAnswerTemp[0].interval
-      (randomNoteAnswerTemp[1]).inverted.toString();
+      (randomNoteAnswerTemp[1])
+        .inverted
+        .toString();
     String answerRealKorTemp = '';
+
+    print('answerRealTemp $answerRealTemp');
 
     if (answerRealTemp.length==2){
       answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 1)] +
@@ -990,7 +946,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
           answerRealTemp.substring(2, 3);
     }
 
-    print('answerRealTemp $answerRealTemp');
+    // print('answerRealTemp $answerRealTemp');
     print('answerRealKorTemp $answerRealKorTemp');
 
     return Scaffold(
@@ -1048,6 +1004,8 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
                   ),
                 ),
                 addLine2(randomNote[0],130.w),
+                // accidentals
+                addAccidentals(accidentals[0],randomItems[0].h,110.w),
                 // 음표 2
                 Positioned(
                   top: randomItems[1].h,
@@ -1063,6 +1021,8 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
                   ),
                 ),
                 addLine2(randomNote[1],230.w),
+                // accidentals
+                addAccidentals(accidentals[1],randomItems[1].h,210.w),
               ],
             ),
           ),
@@ -1072,7 +1032,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
               problemNumber = 10;
             });
           }, child: Text('test')),
-          Text('자리바꿈 음정을 고르세요'),
+          Text('음정 번호를 쓰세요'),
           const SizedBox(height: 10.0,),
           SizedBox(
             child: Column(
