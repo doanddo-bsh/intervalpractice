@@ -158,12 +158,13 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             (){
           // print('정답이 이미 들어옴');
         },
-        child: Text(number),
+        child: Text(number,style: TextStyle(color: Colors.black54),),
         style: ElevatedButton.styleFrom(
           backgroundColor:
           intervalNumber==number ?
-          Color(0xffccccff) :
+          Color(0xffdcdcdc) :
           Theme.of(context).colorScheme.onTertiary,
+          foregroundColor: Color(0xff7e8d7e)
         )
     );
   }
@@ -182,12 +183,13 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             (){
               // print('정답이 이미 들어옴');
             },
-        child: Text(intervalName + intervalNumber + '도'),
+        child: Text(intervalName + intervalNumber + '도',style: TextStyle(color: Colors.black54)),
         style: ElevatedButton.styleFrom(
           backgroundColor:
           answerInterval==intervalNameKorEng[intervalName] + intervalNumber ?
           Color(0xffccccff) :
           Theme.of(context).colorScheme.onTertiary,
+            foregroundColor: Color(0xff7e8d7e)
         )
     );
   }
@@ -196,8 +198,8 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     return SizedBox(
       child: Column(
         children: [
-          Text('음정 이름을 고르세요'),
-          const SizedBox(height: 10.0,),
+          Text('음정 이름을 고르세요',style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold)),
+          const SizedBox(height: 25.0,),
           SizedBox(
             height: 30.0,
             child: Row(
@@ -787,36 +789,36 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
     return Column(
       children: [
-        Center(
-          child: Container(
-            // color: Colors.black12,
-            width: MediaQuery.of(context).size.width-15.w,
-            alignment: FractionalOffset(percent, 1 - percent),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
-              child: Container(
-                // color: Colors.red,
-                  child: Image.asset('assets/noteToProgress.png',
-                      width: 20, height: 20, fit: BoxFit.cover)
-              ),
-            ),
-          ),
-        ),
+        // Center(
+          // child: Container(
+          //   // color: Colors.black12,
+          //   width: MediaQuery.of(context).size.width-15.w,
+          //   alignment: FractionalOffset(percent, 1 - percent),
+          //   child: Padding(
+          //     padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+          //     child: Container(
+          //       // color: Colors.red,
+          //         child: Image.asset('assets/noteToProgress.png',
+          //             width: 20, height: 20, fit: BoxFit.cover)
+          //     ),
+          //   ),
+          // ),
+        // ),
         SizedBox(height: 3,),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             LinearPercentIndicator(
-              width: MediaQuery.of(context).size.width-50.w,
+              width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.zero,
               percent: percent,
               lineHeight: 20.h,
               center: wrongProblemMode?
               Text(problemNumber.toString() + '/' + wrongProblemsSave.length
-                  .toString()) :
-              Text(problemNumber.toString() + '/10') ,
+                  .toString(),style: TextStyle(fontSize: 12)) :
+              Text(problemNumber.toString() + '/10',style: TextStyle(fontSize: 12),) ,
               backgroundColor: Colors.black12,
-              progressColor: Colors.amber,
+              progressColor: Color(0xffe0805b),
             ),
           ],
         )
@@ -993,11 +995,11 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
     return Scaffold(
       appBar: AppBar(
-        title: wrongProblemMode? Text("오답 풀이 중") : Text("문제 풀이 중"),
+        title: wrongProblemMode? Text("오답문제",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)) : Text("Easy ver.", style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: Icon(Icons.arrow_back_ios),
+              icon: Icon(Icons.arrow_back_ios,size: 16,),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -1008,11 +1010,12 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
       body: Column(
         children: [
           lastRidingProgress(),
+          // SizedBox(height: 5,),
           Container(
             height: 300.h,
             width: double.infinity,
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.black)
+              // border: Border.all(color: Colors.black)
             ),
             child: Stack(
               children: [
@@ -1064,14 +1067,14 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
               ],
             ),
           ),
-          const SizedBox(height: 10.0,),
-          ElevatedButton(onPressed: (){
-            setState(() {
-              problemNumber = 10;
-            });
-          }, child: Text('test')),
-          Text('음정 번호를 쓰세요'),
-          const SizedBox(height: 10.0,),
+          // const SizedBox(height: 10.0,),
+          // ElevatedButton(onPressed: (){
+          //   setState(() {
+          //     problemNumber = 10;
+          //   });
+          // }, child: Text('test')),
+          Text('음정의 간격을 고르세요',style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold)),
+          const SizedBox(height: 25.0,),
           SizedBox(
             child: Column(
               children: [
@@ -1103,7 +1106,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
               ],
             ),
           ),
-          SizedBox(height: 30.0,),
+          SizedBox(height: 50.0,),
           showIntervalName(intervalNumber),
           SizedBox(height: 30,),
         ],
