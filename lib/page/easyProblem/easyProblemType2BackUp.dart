@@ -3,10 +3,10 @@ import 'dart:math' as math;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:lottie/lottie.dart';
-import '../easyProblemType1Func/easyProblemType1Func.dart';
-import '../easyProblemType1Func/easyProblemType1List.dart';
+import '../problemFunc/problemFunc.dart';
+import '../problemFunc/problemVarList.dart';
 import 'dart:math';
-// import '../secondePageFunc/easyProblemType1Func.dart';
+// import '../secondePageFunc/problemFunc.dart';
 
 class EasyProblemType2 extends StatefulWidget {
   const EasyProblemType2({super.key});

@@ -1,5 +1,5 @@
 import 'package:music_notes/music_notes.dart';
-import 'easyProblemType1List.dart';
+import 'problemVarList.dart';
 import 'dart:math';
 
 bool setEquals<T>(Set<T>? a, Set<T>? b) {

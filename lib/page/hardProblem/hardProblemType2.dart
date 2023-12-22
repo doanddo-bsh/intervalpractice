@@ -3,9 +3,9 @@ import 'dart:math' as math;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:lottie/lottie.dart';
-import '../easyProblemType1Func/easyProblemType1Func.dart';
-import '../easyProblemType1Func/easyProblemType1List.dart';
-// import '../secondePageFunc/easyProblemType1Func.dart';
+import '../problemFunc/problemFunc.dart';
+import '../problemFunc/problemVarList.dart';
+// import '../secondePageFunc/problemFunc.dart';
 import 'package:music_notes/music_notes.dart';
 import 'dart:math';
 

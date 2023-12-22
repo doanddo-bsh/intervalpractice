@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+// import 'package:percent_indicator/percent_indicator.dart';
 import 'package:lottie/lottie.dart';
-import '../easyProblemType1Func/easyProblemType1Func.dart';
-import '../easyProblemType1Func/easyProblemType1List.dart';
-// import '../secondePageFunc/easyProblemType1Func.dart';
+import '../problemFunc/problemFunc.dart';
+import '../problemFunc/problemVarList.dart';
+// import '../secondePageFunc/problemFunc.dart';
 import 'package:music_notes/music_notes.dart';
 import 'dart:math';
+import '../problemFunc/problemFuncDeco.dart';
 
 class EasyProblemType2 extends StatefulWidget {
   const EasyProblemType2({super.key});
@@ -48,13 +49,14 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
             (){
           // print('정답이 이미 들어옴');
         },
-        child: Text(number),
-        style: ElevatedButton.styleFrom(
-          backgroundColor:
-          intervalNumber==number ?
-          Color(0xffccccff) :
-          Theme.of(context).colorScheme.onTertiary,
-        )
+        child: Text(number, style: answerButtonTextDesign,),
+        style:answerButtonDesign(intervalNumber,number,context)
+        // ElevatedButton.styleFrom(
+        //   backgroundColor:
+        //   intervalNumber==number ?
+        //   Color(0xffccccff) :
+        //   Theme.of(context).colorScheme.onTertiary,
+        // )
     );
   }
 
@@ -561,56 +563,56 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
 
   int problemNumber = 1 ;
 
-  Widget lastRidingProgress() {
-
-    double percent =
-    wrongProblemMode?
-    double.parse((problemNumber / wrongProblemsSave.length).toStringAsFixed
-      (1)) :
-    problemNumber / 10 ;
-
-    print(percent);
-    print('problemNumber $problemNumber');
-    print('wrongProblemsSave.length ${wrongProblemsSave.length}');
-
-    return Column(
-      children: [
-        Center(
-          child: Container(
-            // color: Colors.black12,
-            width: MediaQuery.of(context).size.width-15.w,
-            alignment: FractionalOffset(percent, 1 - percent),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
-              child: Container(
-                // color: Colors.red,
-                  child: Image.asset('assets/noteToProgress.png',
-                      width: 20, height: 20, fit: BoxFit.cover)
-              ),
-            ),
-          ),
-        ),
-        SizedBox(height: 3,),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            LinearPercentIndicator(
-              width: MediaQuery.of(context).size.width-50.w,
-              padding: EdgeInsets.zero,
-              percent: percent,
-              lineHeight: 20.h,
-              center: wrongProblemMode?
-              Text(problemNumber.toString() + '/' + wrongProblemsSave.length
-                  .toString()) :
-              Text(problemNumber.toString() + '/10') ,
-              backgroundColor: Colors.black12,
-              progressColor: Colors.amber,
-            ),
-          ],
-        )
-      ],
-    );
-  }
+  // Widget lastRidingProgress() {
+  //
+  //   double percent =
+  //   wrongProblemMode?
+  //   double.parse((problemNumber / wrongProblemsSave.length).toStringAsFixed
+  //     (1)) :
+  //   problemNumber / 10 ;
+  //
+  //   print(percent);
+  //   print('problemNumber $problemNumber');
+  //   print('wrongProblemsSave.length ${wrongProblemsSave.length}');
+  //
+  //   return Column(
+  //     children: [
+  //       Center(
+  //         child: Container(
+  //           // color: Colors.black12,
+  //           width: MediaQuery.of(context).size.width-15.w,
+  //           alignment: FractionalOffset(percent, 1 - percent),
+  //           child: Padding(
+  //             padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+  //             child: Container(
+  //               // color: Colors.red,
+  //                 child: Image.asset('assets/noteToProgress.png',
+  //                     width: 20, height: 20, fit: BoxFit.cover)
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       SizedBox(height: 3,),
+  //       Row(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: [
+  //           LinearPercentIndicator(
+  //             width: MediaQuery.of(context).size.width-50.w,
+  //             padding: EdgeInsets.zero,
+  //             percent: percent,
+  //             lineHeight: 20.h,
+  //             center: wrongProblemMode?
+  //             Text(problemNumber.toString() + '/' + wrongProblemsSave.length
+  //                 .toString()) :
+  //             Text(problemNumber.toString() + '/10') ,
+  //             backgroundColor: Colors.black12,
+  //             progressColor: Colors.amber,
+  //           ),
+  //         ],
+  //       )
+  //     ],
+  //   );
+  // }
 
   Widget returnLine(double top){
     return Positioned(
@@ -792,11 +794,17 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
 
     return Scaffold(
       appBar: AppBar(
-        title: wrongProblemMode? Text("오답 풀이 중") : Text("문제 풀이 중"),
+        title: wrongProblemMode?
+        Text("오답문제",
+            style: appBarTitleStyle
+        ) :
+        Text("Easy",
+          style: appBarTitleStyle,
+        ),
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: Icon(Icons.arrow_back_ios),
+              icon: appBarIcon,
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -806,13 +814,18 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
       ),
       body: Column(
         children: [
-          lastRidingProgress(),
+          lastRidingProgress(
+            wrongProblemMode,
+            problemNumber,
+            wrongProblemsSave,
+            context,
+          ),
           Container(
             height: 300.h,
             width: double.infinity,
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.black)
-            ),
+            // decoration: BoxDecoration(
+            //     border: Border.all(color: Colors.black)
+            // ),
             child: Stack(
               children: [
                 Positioned(
@@ -864,23 +877,23 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
               ],
             ),
           ),
-          const SizedBox(height: 10.0,),
-          ElevatedButton(onPressed: (){
-            setState(() {
-              problemNumber = 10;
-            });
-          },
-              child: Text('test')
-          ),
-          Text('주어진 음정 $answerRealKorTemp'),
+          // const SizedBox(height: 10.0,),
+          // ElevatedButton(onPressed: (){
+          //   setState(() {
+          //     problemNumber = 10;
+          //   });
+          // },
+          //     child: Text('test')
+          // ),
+          Text('주어진 음정 $answerRealKorTemp',style: explainTextStyle),
           (upDown == 0)?
           (randomNoteNumber[0] < randomNoteNumber[1])?
-          Text('주어진 음정을 만들려면 필요한 아래 계이름은?'):
-          Text('주어진 음정을 만들려면 필요한 위에 계이름은?'):
+          Text('주어진 음정을 만들려면 필요한 아래 계이름은?',style: explainTextStyle):
+          Text('주어진 음정을 만들려면 필요한 위에 계이름은?',style: explainTextStyle):
           (randomNoteNumber[0] < randomNoteNumber[1])?
-          Text('주어진 음정을 만들려면 필요한 위에 계이름은?'):
-          Text('주어진 음정을 만들려면 필요한 아래 계이름은?'),
-          const SizedBox(height: 10.0,),
+          Text('주어진 음정을 만들려면 필요한 위에 계이름은?',style: explainTextStyle):
+          Text('주어진 음정을 만들려면 필요한 아래 계이름은?',style: explainTextStyle),
+          const SizedBox(height: 25.0,),
           SizedBox(
             child: Column(
               children: [
