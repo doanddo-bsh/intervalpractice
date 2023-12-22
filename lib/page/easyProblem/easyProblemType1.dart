@@ -953,6 +953,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: wrongProblemMode?
         Text("오답문제",
             style: appBarTitleStyle

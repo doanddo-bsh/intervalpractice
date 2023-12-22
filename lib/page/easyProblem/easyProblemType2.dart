@@ -794,6 +794,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: wrongProblemMode?
         Text("오답문제",
             style: appBarTitleStyle
@@ -859,7 +860,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
                   ),
                 ):Positioned(
                   top: randomItems[1].h,
-                  left: 230.w,
+                  left: 130.w,
                   child: SizedBox(
                     height: 26.5.h,
                     child: Stack(
@@ -872,7 +873,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
                 ),
                 (upDown == 0)?
                 addLine2(randomNote[0],130.w):
-                addLine2(randomNote[1],230.w)
+                addLine2(randomNote[1],130.w)
                 ,
               ],
             ),
