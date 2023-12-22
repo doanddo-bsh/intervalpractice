@@ -199,7 +199,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
     return SizedBox(
       child: Column(
         children: [
-          Text('음정 이름을 고르세요', style: explainTextStyle,),
+          Text('음정의 이름을 고르세요', style: explainTextStyle,),
           const SizedBox(height: 10.0,),
           SizedBox(
             height: 30.0,
@@ -1085,7 +1085,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
           //     problemNumber = 10;
           //   });
           // }, child: Text('test')),
-          Text('자리바꿈 음정을 고르세요',style: explainTextStyle),
+          Text('위 음정의 자리바꿈 음정을 고르세요',style: explainTextStyle),
           const SizedBox(height: 25.0,),
           SizedBox(
             child: Column(

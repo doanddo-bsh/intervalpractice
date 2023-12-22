@@ -13,6 +13,11 @@ Icon appBarIcon = Icon(Icons.arrow_back_ios,size: 16,);
 TextStyle explainTextStyle =
 TextStyle(fontSize: 14,fontWeight: FontWeight.bold);
 
+TextStyle explainTextStyle2 =
+TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.red[300]);
+
+
+
 // answer button text design
 TextStyle answerButtonTextDesign =
 TextStyle(color: Colors.black54);

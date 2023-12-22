@@ -207,7 +207,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     return SizedBox(
       child: Column(
         children: [
-          Text('음정 이름을 고르세요',style: explainTextStyle),
+          Text('음정의 이름을 고르세요',style: explainTextStyle),
           const SizedBox(height: 25.0,),
           SizedBox(
             height: 30.0,

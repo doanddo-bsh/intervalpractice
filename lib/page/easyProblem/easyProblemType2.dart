@@ -885,15 +885,17 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
           // },
           //     child: Text('test')
           // ),
-          Text('주어진 음정 $answerRealKorTemp',style: explainTextStyle),
+        // SizedBox(height: 30,),
+          Text('[ 주어진 음정 : $answerRealKorTemp'+'도 ]',style: explainTextStyle2),
+          SizedBox(height: 50,),
           (upDown == 0)?
           (randomNoteNumber[0] < randomNoteNumber[1])?
-          Text('주어진 음정을 만들려면 필요한 아래 계이름은?',style: explainTextStyle):
-          Text('주어진 음정을 만들려면 필요한 위에 계이름은?',style: explainTextStyle):
+          Text('주어진 음정을 위해 필요한 아래↓ 계이름은?',style: explainTextStyle):
+          Text('주어진 음정을 위해 필요한 위↑ 계이름은?',style: explainTextStyle):
           (randomNoteNumber[0] < randomNoteNumber[1])?
-          Text('주어진 음정을 만들려면 필요한 위에 계이름은?',style: explainTextStyle):
-          Text('주어진 음정을 만들려면 필요한 아래 계이름은?',style: explainTextStyle),
-          const SizedBox(height: 25.0,),
+          Text('주어진 음정을 위해 필요한 위↑ 계이름은?',style: explainTextStyle):
+          Text('주어진 음정을 위해 필요한 아래↓ 계이름은?',style: explainTextStyle),
+          const SizedBox(height: 30.0,),
           SizedBox(
             child: Column(
               children: [
