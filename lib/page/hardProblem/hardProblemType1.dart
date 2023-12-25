@@ -175,6 +175,19 @@ class _HardProblemType1State extends State<HardProblemType1> {
           answerReal.substring(2, 3);
     }
 
+    // Note.c.sharp.baseNote
+
+    print('showBottomResult');
+    print('randomNoteAnswer $randomNoteAnswer');
+    print('first note ${randomNoteAnswer[0].note}');
+    print('seconde note ${randomNoteAnswer[1].note}');
+    print('first note accidental ${randomNoteAnswer[0].note.accidental}');
+    print('seconde note accidental ${randomNoteAnswer[1].note.accidental}');
+    print('first note baseNote ${randomNoteAnswer[0].note.baseNote}');
+    print('seconde note baseNote ${randomNoteAnswer[1].note.baseNote}');
+    print('answerInterval $answerInterval');
+    print('answerReal $answerReal');
+
     if (answerInterval == answerReal){
 
       setState(() {

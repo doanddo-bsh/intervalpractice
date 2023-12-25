@@ -49,6 +49,33 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
           // Expanded 없으면 오류 발생
           // Horizontal viewport was given unbounded height.
           Expanded(child: _tabBarView()),
+          // _tabBarView(),
+          Container(
+            height: 190,
+            // color: Colors.black12,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(10.w, 10.h, 30.w, 30.h),
+                      child: Tooltip(
+                        triggerMode: TooltipTriggerMode.tap,
+                        showDuration: Duration(milliseconds: 2500),
+                        message:
+                        'hard 문제는 샵과 플랫 포함',
+                        child: Icon(
+                          Icons.info,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -114,8 +141,9 @@ class ListViewEasy extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: 600.h,
+          height: 480.h,
           child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               padding:const EdgeInsets.all(5),
               itemCount:mainTitleAndContentsEasy.length,
               itemBuilder: (BuildContext context, int index){
@@ -169,7 +197,7 @@ class ListViewEasy extends StatelessWidget {
                                   const SizedBox(height: 15,),
                                   Container(
                                     margin: EdgeInsets.all(10),
-                                    width: 200,
+                                    width: 200.h,
                                     child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(mainTitleAndContentsEasy[index][0],
@@ -198,23 +226,7 @@ class ListViewEasy extends StatelessWidget {
 
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(10.w, 10.h, 30.w, 30.h),
-              child: Tooltip(
-                triggerMode: TooltipTriggerMode.tap,
-                showDuration: Duration(milliseconds: 2500),
-                message:
-                'hard 문제는 샵과 플랫 포함',
-                child: Icon(
-                  Icons.info,
-                ),
-              ),
-            ),
-          ],
-        ),
+
       ],
     );
   }
@@ -237,8 +249,9 @@ class ListViewHard extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: 600.h,
+          height: 480.h,
           child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               padding:const EdgeInsets.all(5),
               itemCount:mainTitleAndContentsEasy.length,
               itemBuilder: (BuildContext context, int index){
@@ -344,23 +357,6 @@ class ListViewHard extends StatelessWidget {
               }
 
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(10.w, 10.h, 30.w, 30.h),
-              child: Tooltip(
-                triggerMode: TooltipTriggerMode.tap,
-                showDuration: Duration(milliseconds: 2500),
-                message:
-                'hard 문제는 샵과 플랫 포함',
-                child: Icon(
-                  Icons.info,
-                ),
-              ),
-            ),
-          ],
         ),
       ],
     );
