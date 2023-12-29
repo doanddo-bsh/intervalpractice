@@ -34,6 +34,68 @@ ButtonStyle answerButtonDesign(realValue,buttonValue,context){
     );
 }
 
+String classifyAccidentals(String accidentalOrigin){
+
+  if (accidentalOrigin.contains('Natural'))
+  {
+    return 'n';
+  } else if (accidentalOrigin.contains('Flat'))
+  {
+    return 'f';
+  } else if (accidentalOrigin.contains
+    ('Double flat'))
+  { return 'df';
+  } else if (accidentalOrigin.contains
+    ('Double sharp'))
+  { return 'ds';
+  } else {
+    return 's';
+  }
+}
+
+// commentary function
+List<String> commentaryKeyReturn(List<dynamic> randomNoteAnswerSorted){
+
+  // number
+  String answerReal = randomNoteAnswerSorted[0].interval(randomNoteAnswerSorted[1]).toString();
+
+  // commentary
+  // 숫자(1~8), 알파벳(c,d,e,f,g,a,b), 알파벳(c,d,e,f,g,a,b) // ex 3cg
+  String commentaryNumberTemp = answerReal.toString();
+  String commentaryAlphabat1Temp = randomNoteAnswerSorted[0].note.baseNote
+      .toString();
+  String commentaryAlphabat2Temp = randomNoteAnswerSorted[1].note.baseNote
+      .toString();
+
+  String commentaryTarget =
+      commentaryNumberTemp[commentaryNumberTemp.length - 1]
+          + commentaryAlphabat1Temp[commentaryAlphabat1Temp.length - 1]
+          + commentaryAlphabat2Temp[commentaryAlphabat2Temp.length - 1];
+
+  String commentaryFirstAccidental =
+  classifyAccidentals(randomNoteAnswerSorted[0].note.accidental.toString());
+
+  String commentarySecondAccidental =
+  classifyAccidentals(randomNoteAnswerSorted[1].note.accidental.toString());
+
+  // print('commentary target : ${commentaryTarget}');
+  //
+  // print('commentary first accidental origin : ${randomNoteAnswerSorted[0].note
+  //     .accidental.toString()}');
+  // print('commentary second accidental origin : ${randomNoteAnswerSorted[1].note
+  //     .accidental.toString()}');
+  //
+  // print('commentary first accidental : ${commentaryFirstAccidental}');
+  // print('commentary second accidental : ${commentarySecondAccidental}');
+
+  List<String> returnTarget = [commentaryTarget,commentaryFirstAccidental,
+    commentarySecondAccidental];
+
+  print('returnTarget ${returnTarget}');
+  return returnTarget;
+
+}
+
 // progress bar
 Widget lastRidingProgress(
     wrongProblemMode,
@@ -75,3 +137,79 @@ Widget lastRidingProgress(
     ],
   );
 }
+
+
+// commentary list
+Map commentaryBasic = {
+  "1cc"	:["반음이 0개이므로","음정입니다 (완전1도 음정의 기본 반음수는 0개)"],
+  "1dd"	:["반음이 0개이므로","음정입니다 (완전1도 음정의 기본 반음수는 0개)"],
+  "1ee"	:["반음이 0개이므로","음정입니다 (완전1도 음정의 기본 반음수는 0개)"],
+  "1ff"	:["반음이 0개이므로","음정입니다 (완전1도 음정의 기본 반음수는 0개)"],
+  "1gg"	:["반음이 0개이므로","음정입니다 (완전1도 음정의 기본 반음수는 0개)"],
+  "1aa"	:["반음이 0개이므로","음정입니다 (완전1도 음정의 기본 반음수는 0개)"],
+  "1bb"	:["반음이 0개이므로","음정입니다 (완전1도 음정의 기본 반음수는 0개)"],
+  "2cd"	:["반음이 0개이므로","음정입니다 (장2도 음정의 기본 반음수는 0개)"],
+  "2de"	:["반음이 0개이므로","음정입니다 (장2도 음정의 기본 반음수는 0개)"],
+  "2ef"	:["반음이 1개이므로 간격이 줄어들어","음정입니다 (장2도 음정의 기본 반음수는 0개)"],
+  "2fg"	:["반음이 0개이므로","음정입니다 (장2도 음정의 기본 반음수는 0개)"],
+  "2ga"	:["반음이 0개이므로","음정입니다 (장2도 음정의 기본 반음수는 0개)"],
+  "2ab"	:["반음이 0개이므로","음정입니다 (장2도 음정의 기본 반음수는 0개)"],
+  "2bc"	:["반음이 1개이므로 간격이 줄어들어","음정입니다 (장2도 음정의 기본 반음수는 0개)"],
+  "3ce"	:["반음이 0개이므로","음정입니다 (장3도 음정의 기본 반음수는 0개)"],
+  "3df"	:["반음이 1개이므로 간격이 줄어들어","음정입니다 (장3도 음정의 기본 반음수는 0개)"],
+  "3eg"	:["반음이 1개이므로 간격이 줄어들어","음정입니다 (장3도 음정의 기본 반음수는 0개)"],
+  "3fa"	:["반음이 0개이므로","음정입니다 (장3도 음정의 기본 반음수는 0개)"],
+  "3gb"	:["반음이 0개이므로","음정입니다 (장3도 음정의 기본 반음수는 0개)"],
+  "3ac"	:["반음이 1개이므로 간격이 줄어들어","음정입니다 (장3도 음정의 기본 반음수는 0개)"],
+  "3bd"	:["반음이 1개이므로 간격이 줄어들어","음정입니다 (장3도 음정의 기본 반음수는 0개)"],
+  "4cf"	:["반음이 1개이므로","음정입니다 (완전4도 음정의 기본 반음수는 1개)"],
+  "4dg"	:["반음이 1개이므로","음정입니다 (완전4도 음정의 기본 반음수는 1개)"],
+  "4ea"	:["반음이 1개이므로","음정입니다 (완전4도 음정의 기본 반음수는 1개)"],
+  "4fb"	:["반음이 0개이므로 간격이 늘어나","음정입니다 (완전4도 음정의 기본 반음수는 1개)"],
+  "4gc"	:["반음이 1개이므로","음정입니다 (완전4도 음정의 기본 반음수는 1개)"],
+  "4ad"	:["반음이 1개이므로","음정입니다 (완전4도 음정의 기본 반음수는 1개)"],
+  "4be"	:["반음이 1개이므로","음정입니다 (완전4도 음정의 기본 반음수는 1개)"],
+  "5cg"	:["반음이 1개이므로","음정입니다 (완전5도 음정의 기본 반음수는 1개)"],
+  "5da"	:["반음이 1개이므로","음정입니다 (완전5도 음정의 기본 반음수는 1개)"],
+  "5eb"	:["반음이 1개이므로","음정입니다 (완전5도 음정의 기본 반음수는 1개)"],
+  "5fc"	:["반음이 1개이므로","음정입니다 (완전5도 음정의 기본 반음수는 1개)"],
+  "5gd"	:["반음이 1개이므로","음정입니다 (완전5도 음정의 기본 반음수는 1개)"],
+  "5ae"	:["반음이 1개이므로","음정입니다 (완전5도 음정의 기본 반음수는 1개)"],
+  "5bf"	:["반음이 2개이므로 간격이 줄어들어","음정입니다 (완전5도 음정의 기본 반음수는 1개)"],
+  "6ca"	:["반음이 1개이므로","음정입니다 (장6도 음정의 기본 반음수는 1개)"],
+  "6db"	:["반음이 1개이므로","음정입니다 (장6도 음정의 기본 반음수는 1개)"],
+  "6ec"	:["반음이 2개이므로 간격이 줄어들어","음정입니다 (장6도 음정의 기본 반음수는 1개)"],
+  "6fd"	:["반음이 1개이므로","음정입니다 (장6도 음정의 기본 반음수는 1개)"],
+  "6ge"	:["반음이 1개이므로","음정입니다 (장6도 음정의 기본 반음수는 1개)"],
+  "6af"	:["반음이 2개이므로 간격이 줄어들어","음정입니다 (장6도 음정의 기본 반음수는 1개)"],
+  "6bg"	:["반음이 2개이므로 간격이 줄어들어","음정입니다 (장6도 음정의 기본 반음수는 1개)"],
+  "7cd"	:["반음이 1개이므로","음정입니다 (장7도 음정의 기본 반음수는 1개)"],
+  "7dc"	:["반음이 2개이므로 간격이 줄어들어","음정입니다 (장7도 음정의 기본 반음수는 1개)"],
+  "7ed"	:["반음이 2개이므로 간격이 줄어들어","음정입니다 (장7도 음정의 기본 반음수는 1개)"],
+  "7fe"	:["반음이 1개이므로","음정입니다 (장7도 음정의 기본 반음수는 1개)"],
+  "7gf"	:["반음이 2개이므로 간격이 줄어들어","음정입니다 (장7도 음정의 기본 반음수는 1개)"],
+  "7ag"	:["반음이 2개이므로 간격이 줄어들어","음정입니다 (장7도 음정의 기본 반음수는 1개)"],
+  "7ba"	:["반음이 2개이므로 간격이 줄어들어","음정입니다 (장7도 음정의 기본 반음수는 1개)"],
+  "8cc"	:["반음이 2개이므로","음정입니다 (완전8도 음정의 기본 반음수는 2개)"],
+  "8dd"	:["반음이 2개이므로","음정입니다 (완전8도 음정의 기본 반음수는 2개)"],
+  "8ee"	:["반음이 2개이므로","음정입니다 (완전8도 음정의 기본 반음수는 2개)"],
+  "8ff"	:["반음이 2개이므로","음정입니다 (완전8도 음정의 기본 반음수는 2개)"],
+  "8gg"	:["반음이 2개이므로","음정입니다 (완전8도 음정의 기본 반음수는 2개)"],
+  "8aa"	:["반음이 2개이므로","음정입니다 (완전8도 음정의 기본 반음수는 2개)"],
+  "8bb"	:["반음이 2개이므로","음정입니다 (완전8도 음정의 기본 반음수는 2개)"],
+};
+
+Map commentaryUpAccidental = {
+  "s"	:"위에 있는 음에 붙은 샵으로 인해 음정간 간격이 늘어나고",
+  "f"	:"위에 있는 음에 붙은 플렛으로 인해 음정간 간격이 줄어들고",
+  "ds"	:"위에 있는 음에 붙은 더블샵으로 인해 음정간 간격이 늘어나고",
+  "df"	:"위에 있는 음에 붙은 더블플렛으로 인해 음정간 간격이 줄어들고",
+};
+
+Map commentaryDownAccidental = {
+  "s"	:"아래에 있는 음에 붙은 샵으로 인해 음정간 간격이 줄어들고 ",
+  "f"	:"아래에 있는 음에 붙은 플렛으로 인해 음정간 간격이 늘어나고",
+  "ds"	:"아래에 있는 음에 붙은 더블샵으로 인해 음정간 간격이 줄어들고",
+  "df"	:"아래에 있는 음에 붙은 더블플렛으로 인해 음정간 간격이 늘어나고",
+};
+

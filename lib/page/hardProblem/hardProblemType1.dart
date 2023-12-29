@@ -175,18 +175,12 @@ class _HardProblemType1State extends State<HardProblemType1> {
           answerReal.substring(2, 3);
     }
 
-    // Note.c.sharp.baseNote
+    List<String> commentaryKey = commentaryKeyReturn(randomNoteAnswer);
 
-    print('showBottomResult');
-    print('randomNoteAnswer $randomNoteAnswer');
-    print('first note ${randomNoteAnswer[0].note}');
-    print('seconde note ${randomNoteAnswer[1].note}');
-    print('first note accidental ${randomNoteAnswer[0].note.accidental}');
-    print('seconde note accidental ${randomNoteAnswer[1].note.accidental}');
-    print('first note baseNote ${randomNoteAnswer[0].note.baseNote}');
-    print('seconde note baseNote ${randomNoteAnswer[1].note.baseNote}');
-    print('answerInterval $answerInterval');
-    print('answerReal $answerReal');
+    print(commentaryUpAccidental[commentaryKey[2]]);
+    print(commentaryDownAccidental[commentaryKey[1]]);
+    print('${commentaryBasic[commentaryKey[0]][0]} ${answerRealKor} '
+        '${commentaryBasic[commentaryKey[0]][1]}');
 
     if (answerInterval == answerReal){
 
@@ -957,7 +951,7 @@ class _HardProblemType1State extends State<HardProblemType1> {
     if (answerRealTemp.length==2){
       answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 1)] +
           answerRealTemp.substring(1, 2);
-    } else {
+    } else if (answerRealTemp.length==3) {
       answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 2)] +
           answerRealTemp.substring(2, 3);
     }

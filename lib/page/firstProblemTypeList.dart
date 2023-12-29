@@ -45,36 +45,34 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
     return SafeArea(
       child: Column(
         children: [
-          _tabBar(),
-          // Expanded 없으면 오류 발생
-          // Horizontal viewport was given unbounded height.
-          Expanded(child: _tabBarView()),
-          // _tabBarView(),
           Container(
-            height: 170.h,
-            // color: Colors.black12,
+            height: 540.h,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(10.w, 10.h, 30.w, 30.h),
-                      child: Tooltip(
-                        triggerMode: TooltipTriggerMode.tap,
-                        showDuration: Duration(milliseconds: 2500),
-                        message:
-                        'hard 문제는 샵과 플랫 포함',
-                        child: Icon(
-                          Icons.info,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                _tabBar(),
+                // Expanded 없으면 오류 발생
+                // Horizontal viewport was given unbounded height.
+                Expanded(child: _tabBarView()),
+                // _tabBarView(),
               ],
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(10.w, 10.h, 30.w, 30.h),
+                child: Tooltip(
+                  triggerMode: TooltipTriggerMode.tap,
+                  showDuration: Duration(milliseconds: 2500),
+                  message:
+                  'hard 문제는 샵과 플랫 포함',
+                  child: Icon(
+                    Icons.info,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -160,7 +158,7 @@ class ListViewEasy extends StatelessWidget {
                       );
                     },
                     child: Container(
-                        height: 155,
+                        height: 155.h,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(
@@ -171,13 +169,13 @@ class ListViewEasy extends StatelessWidget {
                         child:Row(
                           children: [
                             Container(
-                              width: 130,
-                              height: 130,
+                              width: 130.w,
+                              height: 130.h,
                               child: Stack(children: [
                                 Center(
                                   child: SizedBox(
-                                    height: 73,
-                                    width: 73,
+                                    height: 73.h,
+                                    width: 73.w,
                                     child: Image(
                                         image: AssetImage('assets/music_2805328.png')
                                     ),
@@ -193,7 +191,7 @@ class ListViewEasy extends StatelessWidget {
                                   const SizedBox(height: 15,),
                                   Container(
                                     margin: EdgeInsets.all(10),
-                                    width: 200.h,
+                                    width: 200.w,
                                     child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(mainTitleAndContentsEasy[index][0],
@@ -205,7 +203,7 @@ class ListViewEasy extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 10,),
                                   SizedBox(
-                                    width: 200,
+                                    width: 200.w,
                                     child: AutoSizeText(mainTitleAndContentsEasy[index][1],
                                       maxLines: 4,
                                     ),
@@ -264,7 +262,7 @@ class ListViewHard extends StatelessWidget {
                       );
                     },
                     child: Container(
-                        height: 155,
+                        height: 155.h,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(
@@ -275,13 +273,13 @@ class ListViewHard extends StatelessWidget {
                         child:Row(
                           children: [
                             Container(
-                              width: 130,
-                              height: 130,
+                              width: 130.w,
+                              height: 130.h,
                               child: Stack(children: [
                                 Center(
                                   child: SizedBox(
-                                    height: 73,
-                                    width: 73,
+                                    height: 73.h,
+                                    width: 73.w,
                                     child: Image(
                                         image: AssetImage('assets/music_2805328.png')
                                     ),
@@ -291,8 +289,8 @@ class ListViewHard extends StatelessWidget {
                                   top: 30,
                                   left: 24,
                                   child: SizedBox(
-                                    height: 30,
-                                    width: 15,
+                                    height: 30.h,
+                                    width: 15.w,
                                     child: Image(
                                         image: AssetImage('assets/sharp1.png',
                                         ),
@@ -304,8 +302,8 @@ class ListViewHard extends StatelessWidget {
                                   top: 70,
                                   left: 10,
                                   child: SizedBox(
-                                    height: 30,
-                                    width: 30,
+                                    height: 30.h,
+                                    width: 30.w,
                                     child: Image(
                                         image: AssetImage('assets/flat1.png')
                                     ),
@@ -325,7 +323,7 @@ class ListViewHard extends StatelessWidget {
                                   const SizedBox(height: 15,),
                                   Container(
                                     margin: EdgeInsets.all(10),
-                                    width: 200,
+                                    width: 200.w,
                                     child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(mainTitleAndContentsEasy[index][0],
@@ -337,7 +335,7 @@ class ListViewHard extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 10,),
                                   SizedBox(
-                                    width: 200,
+                                    width: 200.w,
                                     child: AutoSizeText(mainTitleAndContentsEasy[index][1],
                                       maxLines: 4,
                                     ),
