@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intervalpractice/page/problemFunc/colorList.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:lottie/lottie.dart';
 import '../problemFunc/problemFunc.dart';
@@ -163,7 +164,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           number,
           style: answerButtonTextDesign,
         ),
-        style: answerButtonDesign(intervalNumber,number,context)
+        style: answerButtonDesign(intervalNumber,number,'easy',context)
         // ElevatedButton.styleFrom(
         //   backgroundColor:
         //   intervalNumber==number ?
@@ -192,7 +193,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             intervalName + intervalNumber + '도',
             style: answerButtonTextDesign
         ),
-        style: answerButtonDesign(answerInterval,intervalNameKorEng[intervalName] + intervalNumber,context)
+        style: answerButtonDesign(answerInterval,intervalNameKorEng[intervalName] + intervalNumber,'easy',context)
         // ElevatedButton.styleFrom(
         //   backgroundColor:
         //   answerInterval==intervalNameKorEng[intervalName] + intervalNumber ?
@@ -229,7 +230,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
               ],
             ),
           ),
-          const SizedBox(height: 10.0,),
+          const SizedBox(height: 13.0,),
           SizedBox(
             height: 30.0,
             child: Row(
@@ -296,29 +297,38 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
       });
 
       showModalBottomSheet<void>(
+        backgroundColor: color5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15.0),
+            topRight: Radius.circular(15.0)
+          )
+        ),
         isDismissible:false,
         context: context,
         builder: (BuildContext context) {
           return Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            height: 200,
+            height: 140,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  SizedBox(height: 7),
                   Text(answerRealKor + '도',
                       style: TextStyle(
+                        color: color4,
                         fontSize : 20.0,
                         fontWeight: FontWeight.bold,
                       ),
                   ),
-                  const Text('정답입니다.'),
+                  SizedBox(height: 7,),
+                  Text('정답입니다!',
+                          style: TextStyle(
+                            color: color4,
+                            fontWeight: FontWeight.bold
+                          ),),
+                  SizedBox(height: 7,),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
                   wrongProblemNextProblem('다음문제') :
@@ -341,16 +351,17 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
       print('wrongProblems $wrongProblems');
 
       showModalBottomSheet<void>(
+        backgroundColor: Color(0xffd7b1b1),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0)
+            )
+        ),
         isDismissible:false,
         context: context,
         builder: (BuildContext context) {
           return Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
             height: 200,
             child: Center(
               child: Column(
@@ -430,7 +441,11 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
           Navigator.pop(context);
 
-        }, child: Text(buttonText)
+        },
+      style: nextProblemButtonStyle('easy'),
+      child: Text(buttonText,
+        style: nextProblemButtonTextStyle,
+      ),
     );
   }
 
@@ -486,7 +501,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
   Widget wrongProblemNextProblem(String buttonText){
     return ElevatedButton(
-
         onPressed: (){
 
           setState(() {
@@ -513,7 +527,11 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
           Navigator.pop(context);
 
-        }, child: Text(buttonText)
+        },
+        style: nextProblemButtonStyle('easy'),
+        child: Text(buttonText,
+          style: nextProblemButtonTextStyle,
+        ),
     );
   }
 
@@ -524,7 +542,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
         onPressed: (wrongProblems.isEmpty) ? null:(){
 
           numberOfRight = 0 ;
-
           // back up
           wrongProblemsSave = wrongProblems ;
           print('wrongProblemsSave $wrongProblemsSave');
@@ -978,6 +995,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             wrongProblemMode,
             problemNumber,
             wrongProblemsSave,
+            'easy',
             context,
           ),
           // SizedBox(height: 5,),
@@ -1060,7 +1078,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 10.0,),
+                const SizedBox(height: 13.0,),
                 SizedBox(
                   height: 30.0,
                   child: Row(

@@ -50,7 +50,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
           // print('정답이 이미 들어옴');
         },
         child: Text(number, style: answerButtonTextDesign,),
-        style:answerButtonDesign(intervalNumber,number,context)
+        style:answerButtonDesign(intervalNumber,number,'easy',context)
         // ElevatedButton.styleFrom(
         //   backgroundColor:
         //   intervalNumber==number ?
@@ -819,6 +819,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
             wrongProblemMode,
             problemNumber,
             wrongProblemsSave,
+            'easy',
             context,
           ),
           Container(

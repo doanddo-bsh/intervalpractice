@@ -160,7 +160,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
           // print('정답이 이미 들어옴');
         },
         child: Text(number, style: answerButtonTextDesign,),
-        style: answerButtonDesign(intervalNumber,number,context)
+        style: answerButtonDesign(intervalNumber,number,'easy',context)
         // ElevatedButton.styleFrom(
         //   backgroundColor:
         //   intervalNumber==number ?
@@ -185,7 +185,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
           // print('정답이 이미 들어옴');
         },
         child: Text(intervalName + intervalNumber + '도', style: answerButtonTextDesign,),
-        style: answerButtonDesign(answerInterval,intervalNameKorEng[intervalName] + intervalNumber,context)
+        style: answerButtonDesign(answerInterval,intervalNameKorEng[intervalName] + intervalNumber,'easy',context)
         // ElevatedButton.styleFrom(
         //   backgroundColor:
         //   answerInterval==intervalNameKorEng[intervalName] + intervalNumber ?
@@ -1023,6 +1023,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
             wrongProblemMode,
             problemNumber,
             wrongProblemsSave,
+            'easy',
             context,
           ),
           Container(

@@ -48,7 +48,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
           // 정답이 null 이 아닐때?
         },
         child: Text(number, style: explainTextStyle,),
-        style: answerButtonDesign(intervalNumber,number,context)
+        style: answerButtonDesign(intervalNumber,number,'hard',context)
         // ElevatedButton.styleFrom(
         //   backgroundColor:
         //   intervalNumber==number ?
@@ -72,7 +72,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
           // ('정답이 이미 들어옴')?;
         },
         child: Text(intervalName + intervalNumber + '도', style: explainTextStyle,),
-        style: answerButtonDesign(answerInterval,intervalNameKorEng[intervalName] + intervalNumber,context)
+        style: answerButtonDesign(answerInterval,intervalNameKorEng[intervalName] + intervalNumber,'hard',context)
         // ElevatedButton.styleFrom(
         //   backgroundColor:
         //   answerInterval==intervalNameKorEng[intervalName] + intervalNumber ?
@@ -979,6 +979,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
             wrongProblemMode,
             problemNumber,
             wrongProblemsSave,
+            'hard',
             context,
           ),
           Container(
