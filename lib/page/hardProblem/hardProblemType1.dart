@@ -51,7 +51,7 @@ class _HardProblemType1State extends State<HardProblemType1> {
           number,
           style: answerButtonTextDesign,
         ),
-        style: answerButtonDesign(intervalNumber,number,context)
+        style: answerButtonDesign(intervalNumber,number,'hard',context)
         // ElevatedButton.styleFrom(
         //   backgroundColor:
         //   intervalNumber==number ?
@@ -79,7 +79,7 @@ class _HardProblemType1State extends State<HardProblemType1> {
             intervalName + intervalNumber + '도',
             style: answerButtonTextDesign
         ),
-        style:answerButtonDesign(answerInterval,intervalNameKorEng[intervalName] + intervalNumber,context)
+        style:answerButtonDesign(answerInterval,intervalNameKorEng[intervalName] + intervalNumber,'hard',context)
         // ElevatedButton.styleFrom(
         //   backgroundColor:
         //   answerInterval==intervalNameKorEng[intervalName] + intervalNumber ?
@@ -986,6 +986,7 @@ class _HardProblemType1State extends State<HardProblemType1> {
             wrongProblemMode,
             problemNumber,
             wrongProblemsSave,
+            'hard',
             context,
           ),
           Container(

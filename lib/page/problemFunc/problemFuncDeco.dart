@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'colorList.dart';
 
 // appBar title style
 TextStyle appBarTitleStyle =
@@ -16,21 +17,40 @@ TextStyle(fontSize: 14,fontWeight: FontWeight.bold);
 TextStyle explainTextStyle2 =
 TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.red[300]);
 
+// next problem button style
+ButtonStyle nextProblemButtonStyle(easyOrHard){
+  return ElevatedButton.styleFrom(
+      backgroundColor: (easyOrHard=='easy')? Color(0xff74bb6d): color2,
+      foregroundColor: (easyOrHard=='easy')? color1 : color2,
+      elevation: 3
+  );
+}
+
+// next problem button text style
+TextStyle nextProblemButtonTextStyle =
+TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.white54)
+;
+
+
 
 
 // answer button text design
 TextStyle answerButtonTextDesign =
-TextStyle(color: Colors.black54);
+TextStyle(color: color3);
 
 // answer button design
-ButtonStyle answerButtonDesign(realValue,buttonValue,context){
+ButtonStyle answerButtonDesign(realValue,buttonValue,easyOrHard,context){
   return
     ElevatedButton.styleFrom(
         backgroundColor:
         realValue==buttonValue ?
-        Color(0xffdcdcdc) :
+        Color(0xffdadada) :
         Theme.of(context).colorScheme.onTertiary,
-        foregroundColor: Color(0xff7e8d7e)
+        foregroundColor: (easyOrHard=='easy')? color1 : color2,
+        shape:RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8)
+        ) 
+
     );
 }
 
@@ -101,6 +121,7 @@ Widget lastRidingProgress(
     wrongProblemMode,
     problemNumber,
     wrongProblemsSave,
+    easyOrHard,
     context,
     ) {
 
@@ -130,7 +151,7 @@ Widget lastRidingProgress(
                 .toString(),style: TextStyle(fontSize: 12)) :
             Text(problemNumber.toString() + '/10',style: TextStyle(fontSize: 12),) ,
             backgroundColor: Colors.black12,
-            progressColor: Color(0xffe0805b),
+            progressColor: (easyOrHard=='easy')? color1 : color2,
           ),
         ],
       )

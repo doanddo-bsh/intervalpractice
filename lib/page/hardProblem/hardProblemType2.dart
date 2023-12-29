@@ -58,7 +58,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
           // 정답이 null 이 아닐때?
         },
         child: Text(number, style: answerButtonTextDesign,),
-        style: answerButtonDesign(intervalNumber,number,context)
+        style: answerButtonDesign(intervalNumber,number,'hard',context)
     );
   }
 
@@ -101,7 +101,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
           // ('정답이 이미 들어옴')?;
         },
         child: Text(intervalName, style: answerButtonTextDesign,),
-        style:answerButtonDesign(answerNote,answerCheck,context)
+        style:answerButtonDesign(answerNote,answerCheck,'hard',context)
         // ElevatedButton.styleFrom(
         //   backgroundColor:
         //   answerNote==answerCheck ?
@@ -1029,6 +1029,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
             wrongProblemMode,
             problemNumber,
             wrongProblemsSave,
+            'hard',
             context,
           ),
           Container(
