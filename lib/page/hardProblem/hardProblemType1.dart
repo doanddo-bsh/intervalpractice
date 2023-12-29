@@ -157,6 +157,7 @@ class _HardProblemType1State extends State<HardProblemType1> {
 
   void showBottomResult(String answerInterval){
 
+
     List<dynamic> randomNoteAnswer = [] ;
 
     randomNoteAnswer.add(addAccidental(randomNote[0], accidentals[0]));
