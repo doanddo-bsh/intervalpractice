@@ -51,7 +51,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
           Expanded(child: _tabBarView()),
           // _tabBarView(),
           Container(
-            height: 190,
+            height: 170.h,
             // color: Colors.black12,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -183,12 +183,8 @@ class ListViewEasy extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                              ],),
-                              // decoration: BoxDecoration(
-                              //   image: DecorationImage(
-                              //     image: AssetImage('assets/music_2805328.png'),
-                              //   ),
-                              // ),
+                              ],
+                              ),
                             ),
                             // SizedBox(width: 10,),
                             Column(
