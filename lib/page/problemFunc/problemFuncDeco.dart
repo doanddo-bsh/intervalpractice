@@ -74,7 +74,7 @@ String classifyAccidentals(String accidentalOrigin){
 }
 
 // commentary function
-List<String> commentaryKeyReturn(List<dynamic> randomNoteAnswerSorted){
+String commentaryKeyReturn(List<dynamic> randomNoteAnswerSorted, String answerRealKor){
 
   // number
   String answerReal = randomNoteAnswerSorted[0].interval(randomNoteAnswerSorted[1]).toString();
@@ -111,8 +111,31 @@ List<String> commentaryKeyReturn(List<dynamic> randomNoteAnswerSorted){
   List<String> returnTarget = [commentaryTarget,commentaryFirstAccidental,
     commentarySecondAccidental];
 
-  print('returnTarget ${returnTarget}');
-  return returnTarget;
+  // print('returnTarget ${returnTarget}');
+  // return returnTarget;
+
+  String? commentaryUpAccidentalResult =
+  commentaryUpAccidental[returnTarget[2]];
+  String? commentaryDownAccidentalResult =
+  commentaryDownAccidental[returnTarget[1]];
+  String commentaryBasicResult =
+      '${commentaryBasic[returnTarget[0]][0]} ${answerRealKor} '
+      '${commentaryBasic[returnTarget[0]][1]}'
+  ;
+
+  if ((commentaryUpAccidentalResult==null)&(commentaryDownAccidentalResult==null)){
+    return commentaryBasicResult;
+  } else if (commentaryUpAccidentalResult==null){
+    return commentaryDownAccidentalResult! + ' ' + commentaryBasicResult;
+  } else if (commentaryDownAccidentalResult==null){
+    return commentaryUpAccidentalResult! + ' ' + commentaryBasicResult;
+  } else {
+    return commentaryDownAccidentalResult! + ' ' +
+        commentaryUpAccidentalResult! + ' ' +
+        commentaryBasicResult;
+  }
+
+
 
 }
 

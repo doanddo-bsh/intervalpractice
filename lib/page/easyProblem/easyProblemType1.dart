@@ -290,6 +290,13 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           answerReal.substring(2, 3);
     }
 
+
+    // 해석 해설
+    String commentaryResult = commentaryKeyReturn(randomNoteAnswer,
+        answerRealKor);
+
+    print('commentaryResult $commentaryResult');
+
     if (answerInterval == answerReal){
 
       setState(() {
@@ -387,7 +394,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                   ),
                   SizedBox(height: 7,),
                   // Text('정답은 ${answerRealKor} 입니다.'),
-                  const Text('풀이 : ...'),
+                  Text('풀이 : $commentaryResult'),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
                   wrongProblemNextProblem('다음문제','wrong') :
