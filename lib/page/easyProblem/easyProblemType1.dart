@@ -314,28 +314,29 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  SizedBox(height: 7),
-                  Text(answerRealKor + '도',
-                      style: TextStyle(
-                        color: color4,
-                        fontSize : 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                  ),
                   SizedBox(height: 7,),
                   Text('정답입니다!',
                           style: TextStyle(
                             color: color4,
-                            fontWeight: FontWeight.bold
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0
                           ),),
+                  SizedBox(height: 7,),
+                  Text('정답 : ' + answerRealKor + '도',
+                    style: TextStyle(
+                      color: color4,
+                      fontSize : 13.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   SizedBox(height: 7,),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
-                  wrongProblemNextProblem('다음문제') :
-                  showResult() :
+                  wrongProblemNextProblem('다음문제','right') :
+                  showResult('right') :
                   (problemNumber!=10)?
-                  nextProblem('다음문제') :
-                  showResult(),
+                  nextProblem('다음문제','right') :
+                  showResult('right'),
                   // (problemNumber!=10)? nextProblem('다음문제') : showResult()
                 ],
               ),
@@ -362,28 +363,38 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
         context: context,
         builder: (BuildContext context) {
           return Container(
-            height: 200,
+            height: 180,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(answerRealKor + '도',
+                  // SizedBox(height: 7),
+                  const Text('오답입니다',
                     style: TextStyle(
-                      fontSize : 20.0,
+                        color: Color(0xff79474e),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0
+                    ),
+                  ),
+                  SizedBox(height: 7,),
+                  Text('정답 : ' + answerRealKor + '도',
+                    style: TextStyle(
+                      color: Color(0xff79474e),
+                      fontSize : 13.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Text('오답입니다.'),
-                  Text('정답은 ${answerRealKor} 입니다.'),
+                  SizedBox(height: 7,),
+                  // Text('정답은 ${answerRealKor} 입니다.'),
                   const Text('풀이 : ...'),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
-                  wrongProblemNextProblem('다음문제') :
-                  showResult() :
+                  wrongProblemNextProblem('다음문제','wrong') :
+                  showResult('wrong') :
                   (problemNumber!=10)?
-                  nextProblem('다음문제') :
-                  showResult(),
+                  nextProblem('다음문제','wrong') :
+                  showResult('wrong'),
                   // (problemNumber!=10)? nextProblem('다음문제') : showResult()
                 ],
               ),
@@ -394,7 +405,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     }
   }
 
-  Widget nextProblem(String buttonText){
+  Widget nextProblem(String buttonText,String right_wrong){
     return ElevatedButton(
 
         onPressed: (){
@@ -442,7 +453,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           Navigator.pop(context);
 
         },
-      style: nextProblemButtonStyle('easy'),
+      style: nextProblemButtonStyle('easy',right_wrong),
       child: Text(buttonText,
         style: nextProblemButtonTextStyle,
       ),
@@ -499,7 +510,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
   }
 
 
-  Widget wrongProblemNextProblem(String buttonText){
+  Widget wrongProblemNextProblem(String buttonText, String right_wrong){
     return ElevatedButton(
         onPressed: (){
 
@@ -528,7 +539,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           Navigator.pop(context);
 
         },
-        style: nextProblemButtonStyle('easy'),
+        style: nextProblemButtonStyle('easy',right_wrong),
         child: Text(buttonText,
           style: nextProblemButtonTextStyle,
         ),
@@ -585,7 +596,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     );
   }
 
-  Widget showResult(){
+  Widget showResult(String right_wrong){
 
     // Navigator.pop(context);
 
@@ -795,7 +806,10 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             },
           );
         },
-        child: Text('결과보기')
+        style: nextProblemButtonStyle('easy',right_wrong),
+        child: Text('결과보기',
+          style: nextProblemButtonTextStyle,
+        ),
     );
   }
 

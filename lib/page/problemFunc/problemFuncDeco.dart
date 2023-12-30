@@ -18,10 +18,10 @@ TextStyle explainTextStyle2 =
 TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.red[300]);
 
 // next problem button style
-ButtonStyle nextProblemButtonStyle(easyOrHard){
+ButtonStyle nextProblemButtonStyle(String easyOrHard,String right_wrong){
   return ElevatedButton.styleFrom(
-      backgroundColor: (easyOrHard=='easy')? Color(0xff74bb6d): color2,
-      foregroundColor: (easyOrHard=='easy')? color1 : color2,
+      backgroundColor: (right_wrong=='right')? color1: color2,
+      foregroundColor: (right_wrong=='right')? color1 : color2,
       elevation: 3
   );
 }
