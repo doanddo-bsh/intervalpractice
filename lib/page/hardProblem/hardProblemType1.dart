@@ -176,12 +176,10 @@ class _HardProblemType1State extends State<HardProblemType1> {
           answerReal.substring(2, 3);
     }
 
-    List<String> commentaryKey = commentaryKeyReturn(randomNoteAnswer);
+    String commentaryResult = commentaryKeyReturn(randomNoteAnswer,
+        answerRealKor);
 
-    print(commentaryUpAccidental[commentaryKey[2]]);
-    print(commentaryDownAccidental[commentaryKey[1]]);
-    print('${commentaryBasic[commentaryKey[0]][0]} ${answerRealKor} '
-        '${commentaryBasic[commentaryKey[0]][1]}');
+    print('commentaryResult $commentaryResult');
 
     if (answerInterval == answerReal){
 
