@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intervalpractice/page/problemFunc/colorList.dart';
 import 'thirdPageProblem.dart';
 import 'easyProblem/easyProblemType1.dart';
 import 'easyProblem/easyProblemType2.dart';
@@ -46,7 +47,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
       child: Column(
         children: [
           Container(
-            height: 650.h,
+            height: 610.h,
             child: Column(
               children: [
                 _tabBar(),
@@ -63,12 +64,16 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
               Padding(
                 padding: EdgeInsets.fromLTRB(10.w, 10.h, 30.w, 30.h),
                 child: Tooltip(
+                  textStyle: TextStyle(color: Colors.black54),
+                  decoration: BoxDecoration(color: Color(0xffeeeeee),
+                  borderRadius: BorderRadius.circular(10)),
                   triggerMode: TooltipTriggerMode.tap,
                   showDuration: Duration(milliseconds: 2500),
                   message:
-                  'hard 문제는 샵과 플랫 포함',
+                  'Easy는 임시표가 없는 기본 계이름입니다\nHard는 여러종류의 임시표를 포함하고 있습니다',
                   child: Icon(
-                    Icons.info,
+                    Icons.info_outline,
+                    size: 18,
                   ),
                 ),
               ),
@@ -84,6 +89,11 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
       controller: tabController,
       labelColor: Colors.orangeAccent,
       unselectedLabelColor: Colors.blue,
+      indicatorColor: Colors.red,
+      indicator: UnderlineTabIndicator(
+        borderSide: BorderSide(width: 2),
+        insets: EdgeInsets.symmetric(horizontal: 120)
+      ),
       labelStyle: const TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
@@ -92,7 +102,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
         fontSize: 16,
       ),
       tabs: const [
-        Tab(child: Text('easy',
+        Tab(child: Text('Easy',
                         style: TextStyle(
                             color: Color(0xff377a46),
                             fontWeight: FontWeight.bold,
@@ -100,7 +110,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
                         ),
                       ),
         ),
-        Tab(child: Text('hard',
+        Tab(child: Text('Hard',
                       style: TextStyle(
                           color: Color(0xff873a32),
                           fontWeight: FontWeight.bold,
@@ -127,9 +137,9 @@ class ListViewEasy extends StatelessWidget {
   ListViewEasy({Key? key}) : super(key: key);
 
   List<List<String>> mainTitleAndContentsEasy = [
-    ['음정 문제1','악보 위의 음정을 계산하여\n정답을 맞춰보세요.'],
-    ['음정 문제2','주어진 음정을 보고\n빈칸에 들어갈 계이름을\n맞춰보세요.'],
-    ['음정 문제3','주어진 음정의\n자리바꿈 음정을 계산하여\n정답을 맞춰보세요.'],
+    ['음정 문제 1','악보 위의 음정을 계산하여\n정답을 맞춰보세요'],
+    ['음정 문제 2','주어진 음정을 보고 알맞은\n계이름을 계산하여 맞춰보세요'],
+    ['음정 문제 3','주어진 음정의 자리바꿈 음정을\n계산하여 정답을 맞춰보세요'],
   ];
 
   List problemPage = [EasyProblemType1(),EasyProblemType2(),EasyProblemType3()];
@@ -142,11 +152,11 @@ class ListViewEasy extends StatelessWidget {
           height: 550.h,
           child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
-              padding:const EdgeInsets.all(13),
+              padding:const EdgeInsets.all(10),
               itemCount:mainTitleAndContentsEasy.length,
               itemBuilder: (BuildContext context, int index){
                 return Padding(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(7.5),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -162,16 +172,16 @@ class ListViewEasy extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(
-                              color: Colors.grey,
-                              width: 2.0
+                              color: Color(0xffdedede),
+                              width: 2.3
                           ),
                           borderRadius: BorderRadius.circular(17.0),
                         ),
                         child:Row(
                           children: [
                             Container(
-                              width: 130.w,
-                              height: 130.h,
+                              width: 105.w,
+                              height: 105.h,
                               child: Stack(children: [
                                 Center(
                                   child: SizedBox(
@@ -189,6 +199,7 @@ class ListViewEasy extends StatelessWidget {
                             Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children:[
+                                  SizedBox(height: 7,),
                                   // const SizedBox(height: 15,),
                                   Container(
                                     margin: EdgeInsets.all(10),
@@ -202,7 +213,7 @@ class ListViewEasy extends StatelessWidget {
                                           ),)
                                     ),
                                   ),
-                                  const SizedBox(height: 10,),
+                                  // const SizedBox(height: 5,),
                                   SizedBox(
                                     width: 180.w,
                                     child: AutoSizeText(mainTitleAndContentsEasy[index][1],

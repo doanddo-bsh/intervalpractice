@@ -332,7 +332,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                   Text('정답 : ' + answerRealKor + '도',
                     style: TextStyle(
                       color: color4,
-                      fontSize : 13.0,
+                      fontSize : 14.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -377,9 +377,9 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   // SizedBox(height: 7),
-                  const Text('오답입니다',
+                  Text('오답입니다',
                     style: TextStyle(
-                        color: Color(0xff79474e),
+                        color:color6,
                         fontWeight: FontWeight.bold,
                         fontSize: 20.0
                     ),
@@ -387,14 +387,22 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                   SizedBox(height: 7,),
                   Text('정답 : ' + answerRealKor + '도',
                     style: TextStyle(
-                      color: Color(0xff79474e),
-                      fontSize : 13.0,
+                      color: color6,
+                      fontSize : 14.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(height: 7,),
                   // Text('정답은 ${answerRealKor} 입니다.'),
-                  Text('풀이 : $commentaryResult'),
+                  Container(
+                    height: 40,
+                    width: 300,
+                    child: Text('풀이 : $commentaryResult',
+                      style: TextStyle(
+                        color: color6,
+                        fontWeight: FontWeight.bold
+                      ),),
+                  ),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
                   wrongProblemNextProblem('다음문제','wrong') :
