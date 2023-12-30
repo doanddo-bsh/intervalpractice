@@ -46,7 +46,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
       child: Column(
         children: [
           Container(
-            height: 540.h,
+            height: 600.h,
             child: Column(
               children: [
                 _tabBar(),
