@@ -183,6 +183,27 @@ Widget lastRidingProgress(
   );
 }
 
+// commentary Tooltip
+Widget commentaryToolTip(String commentaryResult){
+  return
+    Padding(
+      padding: EdgeInsets.fromLTRB(10.w, 0.h, 30.w, 0.h),
+      child: Tooltip(
+        textStyle: TextStyle(color: Colors.black54),
+        decoration: BoxDecoration(color: Color(0xffeeeeee),
+            borderRadius: BorderRadius.circular(10)),
+        triggerMode: TooltipTriggerMode.tap,
+        showDuration: Duration(milliseconds: 2500),
+        message:
+        commentaryResult,
+        child: Icon(
+          Icons.info_outline,
+          size: 18,
+        ),
+      ),
+    );
+}
+
 
 // commentary list
 Map commentaryBasic = {
@@ -284,5 +305,6 @@ List<dynamic> getResultAll(List<dynamic> randomNote){
 
   return [randomNoteAnswer, answerReal, answerRealKor];
 }
+
 
 

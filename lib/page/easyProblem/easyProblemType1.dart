@@ -176,28 +176,25 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   SizedBox(height: 7,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  Stack(
                     children: [
-                      SizedBox(),
-                      Text('정답입니다!',
-                              style: TextStyle(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('정답입니다!',
+                            style: TextStyle(
                                 color: color4,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20.0
-                              ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0.w, 0.h, 0.w, 0.h),
-                        child: Tooltip(
-                          triggerMode: TooltipTriggerMode.tap,
-                          showDuration: Duration(milliseconds: 2500),
-                          message:
-                          'hard 문제는 샵과 플랫 포함',
-                          child: Icon(
-                            Icons.info,
+                            ),
                           ),
-                        ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          commentaryToolTip(commentaryResult),
+                        ],
                       ),
                     ],
                   ),
@@ -250,12 +247,27 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   // SizedBox(height: 7),
-                  Text('오답입니다',
-                    style: TextStyle(
-                        color:color6,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0
-                    ),
+                  Stack(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('오답입니다',
+                            style: TextStyle(
+                                color:color6,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          commentaryToolTip(commentaryResult),
+                        ],
+                      ),
+                    ],
                   ),
                   SizedBox(height: 7,),
                   Text('정답 : ' + answerRealKor + '도',
@@ -267,7 +279,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                   ),
                   SizedBox(height: 7,),
                   // Text('정답은 ${answerRealKor} 입니다.'),
-                  Text('풀이 : $commentaryResult'),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
                   wrongProblemNextProblem('다음문제','wrong') :

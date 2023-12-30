@@ -70,6 +70,9 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
     String answerReal = resultAll[1] ;
     String answerRealKor = resultAll[2] ;
 
+    print('randomNoteAnswer $randomNoteAnswer');
+    print('answerRealKor $answerRealKor');
+
     // 해석 해설
     String commentaryResult = commentaryKeyReturn(randomNoteAnswer,
         answerRealKor);
@@ -107,12 +110,27 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   SizedBox(height: 7,),
-                  Text('정답입니다!',
-                    style: TextStyle(
-                        color: color4,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0
-                    ),
+                  Stack(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('정답입니다!',
+                            style: TextStyle(
+                                color: color4,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          commentaryToolTip(commentaryResult),
+                        ],
+                      ),
+                    ],
                   ),
                   SizedBox(height: 7,),
                   Text('정답 : ' + ptichNameRealKr,
@@ -164,12 +182,27 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text('오답입니다',
-                    style: TextStyle(
-                        color: Color(0xff79474e),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0
-                    ),
+                  Stack(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('오답입니다',
+                            style: TextStyle(
+                                color:color6,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          commentaryToolTip(commentaryResult),
+                        ],
+                      ),
+                    ],
                   ),
                   SizedBox(height: 7,),
                   Text('정답 : ' + ptichNameRealKr,
