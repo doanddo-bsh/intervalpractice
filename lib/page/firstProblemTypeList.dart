@@ -36,7 +36,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.white,
       body: _body()
     );
   }
@@ -46,7 +46,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
       child: Column(
         children: [
           Container(
-            height: 600.h,
+            height: 650.h,
             child: Column(
               children: [
                 _tabBar(),
@@ -82,8 +82,8 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
   Widget _tabBar() {
     return TabBar(
       controller: tabController,
-      labelColor: Colors.black,
-      unselectedLabelColor: Colors.grey,
+      labelColor: Colors.orangeAccent,
+      unselectedLabelColor: Colors.blue,
       labelStyle: const TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
@@ -128,8 +128,8 @@ class ListViewEasy extends StatelessWidget {
 
   List<List<String>> mainTitleAndContentsEasy = [
     ['음정 문제1','악보 위의 음정을 계산하여\n정답을 맞춰보세요.'],
-    ['음정 문제2','주어진 음정을 보고 빈칸에 들어갈 \n계이름을 맞춰보세요.'],
-    ['음정 문제3','주어진 음정의 자리바꿈 음정을 \n계산하여 정답을 맞춰보세요.'],
+    ['음정 문제2','주어진 음정을 보고\n빈칸에 들어갈 계이름을\n맞춰보세요.'],
+    ['음정 문제3','주어진 음정의\n자리바꿈 음정을 계산하여\n정답을 맞춰보세요.'],
   ];
 
   List problemPage = [EasyProblemType1(),EasyProblemType2(),EasyProblemType3()];
@@ -139,14 +139,14 @@ class ListViewEasy extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: 530.h,
+          height: 550.h,
           child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
-              padding:const EdgeInsets.all(5),
+              padding:const EdgeInsets.all(13),
               itemCount:mainTitleAndContentsEasy.length,
               itemBuilder: (BuildContext context, int index){
                 return Padding(
-                  padding: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.all(10),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -162,9 +162,10 @@ class ListViewEasy extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(
-                              color: Colors.white
+                              color: Colors.grey,
+                              width: 2.0
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(17.0),
                         ),
                         child:Row(
                           children: [
@@ -188,10 +189,10 @@ class ListViewEasy extends StatelessWidget {
                             Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children:[
-                                  const SizedBox(height: 15,),
+                                  // const SizedBox(height: 15,),
                                   Container(
                                     margin: EdgeInsets.all(10),
-                                    width: 200.w,
+                                    width: 180.w,
                                     child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(mainTitleAndContentsEasy[index][0],
@@ -203,7 +204,7 @@ class ListViewEasy extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 10,),
                                   SizedBox(
-                                    width: 200.w,
+                                    width: 180.w,
                                     child: AutoSizeText(mainTitleAndContentsEasy[index][1],
                                       maxLines: 4,
                                     ),
@@ -266,9 +267,10 @@ class ListViewHard extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(
-                              color: Colors.white
+                              color: Colors.grey,
+                              width: 2.0
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(17.0),
                         ),
                         child:Row(
                           children: [
