@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // color list
-Color color1 =Color(0xff63af5b) ; // easy 진행바, easy 버튼 눌렀을 때 반응색, 정답 화면에서 다음 문제 버튼 눌렀을 때 반응색
+Color color1 = Color(0xff63af5b) ; // easy 진행바, easy 버튼 눌렀을 때 반응색, 정답 화면에서 다음 문제 버튼 눌렀을 때 반응색
 Color color2 = Color(0xffe36d3f) ; // hard 진행바, hard 버튼 눌렀을 때 반응색, 정답 화면에서 다음 문제 버튼 눌렀을 때 반응색
 Color color3 = Colors.black54 ; // 정답 버튼 안에 있는 숫자 글자 색상
 
