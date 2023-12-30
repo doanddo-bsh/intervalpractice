@@ -243,7 +243,7 @@ class ListViewHard extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: 480.h,
+          height: 530.h,
           child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               padding:const EdgeInsets.all(5),
