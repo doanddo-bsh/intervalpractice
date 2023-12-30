@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:percent_indicator/percent_indicator.dart';
 import 'package:lottie/lottie.dart';
-import '../problemFunc/problemFunc.dart';
-import '../problemFunc/problemVarList.dart';
-// import '../secondePageFunc/problemFunc.dart';
 import 'package:music_notes/music_notes.dart';
 import 'dart:math';
+import '../problemFunc/problemFunc.dart';
 import '../problemFunc/problemFuncDeco.dart';
+import '../problemFunc/problemVarList.dart';
+import 'package:intervalpractice/page/problemFunc/colorList.dart';
 
 class EasyProblemType2 extends StatefulWidget {
   const EasyProblemType2({super.key});
@@ -30,7 +28,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
 
   int numberOfRight = 0 ;
 
-  // 위에음 보여줄지 아래음 보여줄지?
+  // 위에음 보여줄지 아래음 보여줄지? // type2 전용
   int upDown = 0 ;
   List<int> upDownWorngList = [];
   List<int> upDownWorngListSave = [];
@@ -43,29 +41,42 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
             (){
           setState(() {
             intervalNumber = number;
+            // type2는 여기서 결과를 보여줌
             showBottomResult(intervalNumber!);
           });
         } :
             (){
           // print('정답이 이미 들어옴');
         },
-        child: Text(number, style: answerButtonTextDesign,),
+        child: Text(number
+          , style: answerButtonTextDesign,
+        ),
         style:answerButtonDesign(intervalNumber,number,'easy',context)
-        // ElevatedButton.styleFrom(
-        //   backgroundColor:
-        //   intervalNumber==number ?
-        //   Color(0xffccccff) :
-        //   Theme.of(context).colorScheme.onTertiary,
-        // )
     );
   }
+
+  // type2는 음정이름 보여주는 부분이 삭제됨
+  // 삭제 //
 
   String? answerInterval = null;
 
   void showBottomResult(String answerPitchName){
 
-    print('randomNote $randomNote');
+    // 정답 계산
+    List<dynamic> resultAll = getResultAll(randomNote);
 
+    // 정답 배분/입력
+    List<dynamic> randomNoteAnswer = resultAll[0] ;
+    String answerReal = resultAll[1] ;
+    String answerRealKor = resultAll[2] ;
+
+    // 해석 해설
+    String commentaryResult = commentaryKeyReturn(randomNoteAnswer,
+        answerRealKor);
+
+    print('commentaryResult $commentaryResult');
+
+    // type2는 화면에서 보여주지 않은 음이 정답임
     var ptichNameReal = (upDown != 0)?
     randomNote[0]:randomNote[1];
 
@@ -78,36 +89,47 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
       });
 
       showModalBottomSheet<void>(
+        backgroundColor: color5,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0)
+            )
+        ),
         isDismissible:false,
         context: context,
         builder: (BuildContext context) {
           return Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            height: 200,
+            height: 140,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(ptichNameRealKr,
+                  SizedBox(height: 7,),
+                  Text('정답입니다!',
                     style: TextStyle(
-                      fontSize : 20.0,
+                        color: color4,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0
+                    ),
+                  ),
+                  SizedBox(height: 7,),
+                  Text('정답 : ' + ptichNameRealKr,
+                    style: TextStyle(
+                      color: color4,
+                      fontSize : 13.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Text('정답입니다.'),
+                  SizedBox(height: 7,),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
-                  wrongProblemNextProblem('다음문제') :
-                  showResult() :
+                  wrongProblemNextProblem('다음문제','right') :
+                  showResult('right') :
                   (problemNumber!=10)?
-                  nextProblem('다음문제') :
-                  showResult(),
+                  nextProblem('다음문제','right') :
+                  showResult('right'),
                   // (problemNumber!=10)? nextProblem('다음문제') : showResult()
                 ],
               ),
@@ -125,38 +147,47 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
       print('upDownWorngList $upDownWorngList');
 
       showModalBottomSheet<void>(
+        backgroundColor: Color(0xffd7b1b1),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0)
+            )
+        ),
         isDismissible:false,
         context: context,
         builder: (BuildContext context) {
           return Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            height: 200,
+            height: 180,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(ptichNameRealKr,
+                  Text('오답입니다',
                     style: TextStyle(
-                      fontSize : 20.0,
+                        color: Color(0xff79474e),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0
+                    ),
+                  ),
+                  SizedBox(height: 7,),
+                  Text('정답 : ' + ptichNameRealKr,
+                    style: TextStyle(
+                      color: Color(0xff79474e),
+                      fontSize : 13.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Text('오답입니다.'),
-                  Text('정답은 ${ptichNameRealKr} 입니다.'),
-                  const Text('풀이 : ...'),
+                  SizedBox(height: 7,),
+                  // const Text('풀이 : ...'),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
-                  wrongProblemNextProblem('다음문제') :
-                  showResult() :
+                  wrongProblemNextProblem('다음문제','wrong') :
+                  showResult('wrong') :
                   (problemNumber!=10)?
-                  nextProblem('다음문제') :
-                  showResult(),
+                  nextProblem('다음문제','wrong') :
+                  showResult('wrong'),
                   // (problemNumber!=10)? nextProblem('다음문제') : showResult()
                 ],
               ),
@@ -167,7 +198,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
     }
   }
 
-  Widget nextProblem(String buttonText){
+  Widget nextProblem(String buttonText, String right_wrong){
     return ElevatedButton(
 
         onPressed: (){
@@ -201,7 +232,11 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
 
           Navigator.pop(context);
 
-        }, child: Text(buttonText)
+        },
+        style: nextProblemButtonStyle('easy',right_wrong),
+        child: Text(buttonText,
+          style: nextProblemButtonTextStyle,
+        ),
     );
   }
 
@@ -257,7 +292,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
   }
 
 
-  Widget wrongProblemNextProblem(String buttonText){
+  Widget wrongProblemNextProblem(String buttonText, String right_wrong){
     return ElevatedButton(
 
         onPressed: (){
@@ -284,7 +319,11 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
 
           Navigator.pop(context);
 
-        }, child: Text(buttonText)
+        },
+        style: nextProblemButtonStyle('easy',right_wrong),
+        child: Text(buttonText,
+          style: nextProblemButtonTextStyle,
+        ),
     );
   }
 
@@ -346,7 +385,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
     );
   }
 
-  Widget showResult(){
+  Widget showResult(String right_wrong){
 
     // Navigator.pop(context);
 
@@ -557,7 +596,10 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
             },
           );
         },
-        child: Text('결과보기')
+        style: nextProblemButtonStyle('easy',right_wrong),
+        child: Text('결과보기',
+          style: nextProblemButtonTextStyle,
+        ),
     );
   }
 

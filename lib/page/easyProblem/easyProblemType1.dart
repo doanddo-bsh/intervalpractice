@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intervalpractice/page/problemFunc/colorList.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:lottie/lottie.dart';
-import '../problemFunc/problemFunc.dart';
-import '../problemFunc/problemVarList.dart';
-// import '../secondePageFunc/problemFunc.dart';
 import 'package:music_notes/music_notes.dart';
+import 'dart:math';
+import '../problemFunc/problemFunc.dart';
 import '../problemFunc/problemFuncDeco.dart';
+import '../problemFunc/problemVarList.dart';
+import 'package:intervalpractice/page/problemFunc/colorList.dart';
 
 class EasyProblemType1 extends StatefulWidget {
   const EasyProblemType1({super.key});
@@ -19,8 +17,6 @@ class EasyProblemType1 extends StatefulWidget {
 
 class _EasyProblemType1State extends State<EasyProblemType1> {
 
-
-  // List<double> note_height_list = [31,42,55,67.5,81,94.5,108,121.5];
   List<double> randomItems = [];
   late List<int> randomNoteNumber ;
   late List<dynamic> randomNote ;
@@ -30,124 +26,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
   bool wrongProblemMode = false ;
 
-  // double downNoteLeft = 180.0;
-
   int numberOfRight = 0 ;
-
-  // 도 에서 추가 줄 만들기
-  Widget addLineDown(int noteNumber1,int noteNumber2){
-    if (
-    ((noteNumber1==11)&(noteNumber2==13))
-    |((noteNumber1==12)&(noteNumber2==14))
-    |((noteNumber1==11)&(noteNumber2==14))
-    |((noteNumber1==12)&(noteNumber2==13))
-    ){
-      return Positioned(
-        top: 172.h,
-        left: 180.w,
-        child: SizedBox(
-          width: 50.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    } else if (
-    ((noteNumber1==13)&(noteNumber2==14))
-    ){
-      return Positioned(
-        top: 172.h,
-        left: 170.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/five_long.png'),
-        ),
-      );
-    } else if (
-    ((noteNumber2==13))
-    ){
-      return Positioned(
-        top: 172.h,
-        left: 155.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    }  else if (
-    ((noteNumber2==14))
-    ){
-      return Positioned(
-        top: 172.h,
-        left: 155.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    } else if (
-    (noteNumber1==0)&(noteNumber2==3)
-    |(noteNumber1==1)&(noteNumber2==3)
-    |(noteNumber1==0)&(noteNumber2==2)
-    // |(noteNumber1==0)&(noteNumber2==1)
-    // |(noteNumber1==1)&(noteNumber2==2)
-    ) {
-      return Positioned(
-        top: 17.h,
-        left: 180.w,
-        child: SizedBox(
-          width: 50.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    } else if ((noteNumber1==1)&(noteNumber2==2)) {
-      return Positioned(
-        top: 17.h,
-        left: 207.w,
-        child: SizedBox(
-          width: 50.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    } else if ((noteNumber1==0)&(noteNumber2==1)) {
-      return Positioned(
-        top: 17.h,
-        left: 170.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/five_long.png'),
-        ),
-      );
-    } else if ((noteNumber1==1)) {
-      return Positioned(
-        top: 17.h,
-        left: 155.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    } else if ((noteNumber1==0)) {
-      return Positioned(
-        top: 17.h,
-        left: 155.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    }
-    else {
-      return const SizedBox();
-    }
-  }
 
   String? intervalNumber = null;
 
@@ -165,13 +44,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           style: answerButtonTextDesign,
         ),
         style: answerButtonDesign(intervalNumber,number,'easy',context)
-        // ElevatedButton.styleFrom(
-        //   backgroundColor:
-        //   intervalNumber==number ?
-        //   Color(0xffdcdcdc) :
-        //   Theme.of(context).colorScheme.onTertiary,
-        //   foregroundColor: Color(0xff7e8d7e)
-        // )
     );
   }
 
@@ -194,13 +66,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             style: answerButtonTextDesign
         ),
         style: answerButtonDesign(answerInterval,intervalNameKorEng[intervalName] + intervalNumber,'easy',context)
-        // ElevatedButton.styleFrom(
-        //   backgroundColor:
-        //   answerInterval==intervalNameKorEng[intervalName] + intervalNumber ?
-        //   Color(0xffccccff) :
-        //   Theme.of(context).colorScheme.onTertiary,
-        //     foregroundColor: Color(0xff7e8d7e)
-        // )
     );
   }
 
@@ -272,24 +137,13 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
   void showBottomResult(String answerInterval){
 
-    List<dynamic> randomNoteAnswer = [] ;
+    // 정답 계산
+    List<dynamic> resultAll = getResultAll(randomNote);
 
-    randomNoteAnswer.add(randomNote[0]);
-    randomNoteAnswer.add(randomNote[1]);
-
-    randomNoteAnswer.sort();
-
-    String answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1]).toString();
-    String answerRealKor = '';
-
-    if (answerReal.length==2){
-      answerRealKor = intervalNameEngKor[answerReal.substring(0, 1)] +
-          answerReal.substring(1, 2);
-    } else {
-      answerRealKor = intervalNameEngKor[answerReal.substring(0, 2)] +
-          answerReal.substring(2, 3);
-    }
-
+    // 정답 배분/입력
+    List<dynamic> randomNoteAnswer = resultAll[0] ;
+    String answerReal = resultAll[1] ;
+    String answerRealKor = resultAll[2] ;
 
     // 해석 해설
     String commentaryResult = commentaryKeyReturn(randomNoteAnswer,
@@ -322,12 +176,31 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   SizedBox(height: 7,),
-                  Text('정답입니다!',
-                          style: TextStyle(
-                            color: color4,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0
-                          ),),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(),
+                      Text('정답입니다!',
+                              style: TextStyle(
+                                color: color4,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0
+                              ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0.w, 0.h, 0.w, 0.h),
+                        child: Tooltip(
+                          triggerMode: TooltipTriggerMode.tap,
+                          showDuration: Duration(milliseconds: 2500),
+                          message:
+                          'hard 문제는 샵과 플랫 포함',
+                          child: Icon(
+                            Icons.info,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   SizedBox(height: 7,),
                   Text('정답 : ' + answerRealKor + '도',
                     style: TextStyle(
@@ -394,7 +267,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                   ),
                   SizedBox(height: 7,),
                   // Text('정답은 ${answerRealKor} 입니다.'),
-                  Text('풀이 : $commentaryResult'),
+                  // Text('풀이 : $commentaryResult'),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
                   wrongProblemNextProblem('다음문제','wrong') :
@@ -441,21 +314,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
             problemNumber += 1;
           });
-
-          // if ((randomNoteNumber[0]-randomNoteNumber[1]).abs()==1){
-          //   setState(() {
-          //     downNoteLeft = 207;
-          //   });
-          // } else if ((randomNoteNumber[0]-randomNoteNumber[1
-          // ]).abs()==0){
-          //   setState(() {
-          //     downNoteLeft = 207;
-          //   });
-          // } else {
-          //   setState(() {
-          //     downNoteLeft = 180;
-          //   });
-          // }
 
           Navigator.pop(context);
 
