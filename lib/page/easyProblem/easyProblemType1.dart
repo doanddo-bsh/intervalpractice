@@ -193,7 +193,8 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          commentaryToolTip(commentaryResult),
+                          commentaryToolTip(commentaryResult,
+                          ),
                         ],
                       ),
                     ],
@@ -240,7 +241,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
         context: context,
         builder: (BuildContext context) {
           return Container(
-            height: 180,
+            height: 140,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
