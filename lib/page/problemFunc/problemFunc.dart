@@ -169,6 +169,9 @@ Widget returnLine(double top){
 // 덧줄용1
 Widget addLine1(PositionedNote randomNote){
 
+  print('addLine1 2.0.h ${2.0.h}');
+  print('addLine1 50.w ${50.w}');
+
   // middle line
   List<PositionedNote> middleLine = [
     Note.a.inOctave(5),
@@ -231,6 +234,9 @@ Widget addLine1(PositionedNote randomNote){
 
 // 덧줄용2
 Widget addLine2(PositionedNote randomNote, double left){
+
+  print('addLine2 2.0.h ${2.0.h}');
+  print('addLine2 50.w ${50.w}');
 
   // highhigh line
   List<PositionedNote> highHighLine = [
