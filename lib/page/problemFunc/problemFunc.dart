@@ -220,6 +220,7 @@ Widget addLine1(PositionedNote randomNote){
   } else if (highLine.contains(randomNote)){
     return
       Positioned(
+        top: 0.0.h,
         child: addLineBasic(),
       );
   }
