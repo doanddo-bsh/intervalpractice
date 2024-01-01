@@ -689,124 +689,124 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
   //   );
   // }
 
-  Widget returnLine(double top){
-    return Positioned(
-        top: top.h,
-        left: 10.w,
-        right: 10.w,
-        child:
-        Container(
-          color: Colors.black,
-          width: double.infinity,
-          height: 2.0.h,
-        )
-    );
-  }
-
-  // 덧줄용1
-  Widget addLine1(PositionedNote randomNote){
-
-    // middle line
-    List<PositionedNote> middleLine = [
-      Note.a.inOctave(5),
-      Note.f.inOctave(5),
-      Note.d.inOctave(5),
-      Note.b.inOctave(4),
-      Note.g.inOctave(4),
-      Note.e.inOctave(4),
-      Note.c.inOctave(4),
-      Note.a.inOctave(3),
-      Note.c.inOctave(6),
-    ];
-    // low line
-    List<PositionedNote> lowLine = [
-      Note.b.inOctave(5),
-      Note.d.inOctave(6),
-    ];
-
-    // high line
-    List<PositionedNote> highLine = [
-      Note.b.inOctave(3),
-      Note.g.inOctave(3)
-    ];
-
-    if (middleLine.contains(randomNote)){
-      return
-        Positioned(
-          top: 12.75.h,
-          child: Container(
-            color: Colors.black,
-            height: 2.0.h,
-            width: 50.w,
-          ),
-        );
-    } else if (lowLine.contains(randomNote)) {
-      return
-        Positioned(
-          top: 24.5.h,
-          child: Container(
-            color: Colors.black,
-            height: 2.0.h,
-            width: 50.w,
-          ),
-        );
-    } else if (highLine.contains(randomNote)){
-      return
-        Positioned(
-          child: Container(
-            color: Colors.black,
-            height: 2.0.h,
-            width: 50.w,
-          ),
-        );
-    }
-    else {
-      return SizedBox();
-    }
-  }
-
-
-  // 덧줄용2
-  Widget addLine2(PositionedNote randomNote, double left){
-
-    // highhigh line
-    List<PositionedNote> highHighLine = [
-      Note.d.inOctave(6),
-      Note.c.inOctave(6),
-    ];
-    // lowlow line
-    List<PositionedNote> lowLowLine = [
-      Note.a.inOctave(3),
-      Note.g.inOctave(3),
-    ];
-
-    if (highHighLine.contains(randomNote)){
-      return
-        Positioned(
-          top: 63.5.h,
-          left: left,
-          child: Container(
-            color: Colors.black,
-            height: 2.0.h,
-            width: 50.w,
-          ),
-        );
-    } else if (lowLowLine.contains(randomNote)) {
-      return
-        Positioned(
-          top: 222.5.h,
-          left: left,
-          child: Container(
-            color: Colors.black,
-            height: 2.0.h,
-            width: 50.w,
-          ),
-        );
-    }
-    else {
-      return SizedBox();
-    }
-  }
+  // Widget returnLine(double top){
+  //   return Positioned(
+  //       top: top.h,
+  //       left: 10.w,
+  //       right: 10.w,
+  //       child:
+  //       Container(
+  //         color: Colors.black,
+  //         width: double.infinity,
+  //         height: 2.0.h,
+  //       )
+  //   );
+  // }
+  //
+  // // 덧줄용1
+  // Widget addLine1(PositionedNote randomNote){
+  //
+  //   // middle line
+  //   List<PositionedNote> middleLine = [
+  //     Note.a.inOctave(5),
+  //     Note.f.inOctave(5),
+  //     Note.d.inOctave(5),
+  //     Note.b.inOctave(4),
+  //     Note.g.inOctave(4),
+  //     Note.e.inOctave(4),
+  //     Note.c.inOctave(4),
+  //     Note.a.inOctave(3),
+  //     Note.c.inOctave(6),
+  //   ];
+  //   // low line
+  //   List<PositionedNote> lowLine = [
+  //     Note.b.inOctave(5),
+  //     Note.d.inOctave(6),
+  //   ];
+  //
+  //   // high line
+  //   List<PositionedNote> highLine = [
+  //     Note.b.inOctave(3),
+  //     Note.g.inOctave(3)
+  //   ];
+  //
+  //   if (middleLine.contains(randomNote)){
+  //     return
+  //       Positioned(
+  //         top: 12.75.h,
+  //         child: Container(
+  //           color: Colors.black,
+  //           height: 2.0.h,
+  //           width: 50.w,
+  //         ),
+  //       );
+  //   } else if (lowLine.contains(randomNote)) {
+  //     return
+  //       Positioned(
+  //         top: 24.5.h,
+  //         child: Container(
+  //           color: Colors.black,
+  //           height: 2.0.h,
+  //           width: 50.w,
+  //         ),
+  //       );
+  //   } else if (highLine.contains(randomNote)){
+  //     return
+  //       Positioned(
+  //         child: Container(
+  //           color: Colors.black,
+  //           height: 2.0.h,
+  //           width: 50.w,
+  //         ),
+  //       );
+  //   }
+  //   else {
+  //     return SizedBox();
+  //   }
+  // }
+  //
+  //
+  // // 덧줄용2
+  // Widget addLine2(PositionedNote randomNote, double left){
+  //
+  //   // highhigh line
+  //   List<PositionedNote> highHighLine = [
+  //     Note.d.inOctave(6),
+  //     Note.c.inOctave(6),
+  //   ];
+  //   // lowlow line
+  //   List<PositionedNote> lowLowLine = [
+  //     Note.a.inOctave(3),
+  //     Note.g.inOctave(3),
+  //   ];
+  //
+  //   if (highHighLine.contains(randomNote)){
+  //     return
+  //       Positioned(
+  //         top: 63.5.h,
+  //         left: left,
+  //         child: Container(
+  //           color: Colors.black,
+  //           height: 2.0.h,
+  //           width: 50.w,
+  //         ),
+  //       );
+  //   } else if (lowLowLine.contains(randomNote)) {
+  //     return
+  //       Positioned(
+  //         top: 222.5.h,
+  //         left: left,
+  //         child: Container(
+  //           color: Colors.black,
+  //           height: 2.0.h,
+  //           width: 50.w,
+  //         ),
+  //       );
+  //   }
+  //   else {
+  //     return SizedBox();
+  //   }
+  // }
 
 
   @override
