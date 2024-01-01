@@ -166,6 +166,14 @@ Widget returnLine(double top){
   );
 }
 
+Widget addLineBasic(){
+  return Container(
+    color: Colors.black,
+    height: 2.0.h,
+    width: 50.w,
+  );
+}
+
 // 덧줄용1
 Widget addLine1(PositionedNote randomNote){
 
@@ -201,29 +209,86 @@ Widget addLine1(PositionedNote randomNote){
     return
       Positioned(
         top: 12.75.h,
-        child: Container(
-          color: Colors.black,
-          height: 2.0.h,
-          width: 50.w,
-        ),
+        child: addLineBasic(),
       );
   } else if (lowLine.contains(randomNote)) {
     return
       Positioned(
         top: 24.5.h,
-        child: Container(
-          color: Colors.black,
-          height: 2.0.h,
-          width: 50.w,
-        ),
+        child: addLineBasic(),
       );
   } else if (highLine.contains(randomNote)){
     return
       Positioned(
-        child: Container(
-          color: Colors.black,
-          height: 2.0.h,
-          width: 50.w,
+        child: addLineBasic(),
+      );
+  }
+  else {
+    return SizedBox();
+  }
+}
+
+// 덧줄용3
+Widget addLine3(PositionedNote randomNote, double left){
+
+  // 위의 도 레 거나 high line
+  List<PositionedNote> highLine = [
+    Note.d.inOctave(6),
+    Note.c.inOctave(6),
+  ];
+  // 아래의 라 솔 인 경우 low line
+  List<PositionedNote> lowLine = [
+    Note.a.inOctave(3),
+    Note.g.inOctave(3),
+  ];
+
+  if (highLine.contains(randomNote)){
+    return
+      Positioned(
+        top: 50.75.h, // [50.75,3,Note.a.inOctave(5)],
+        left: left,
+        child: SizedBox(
+          height: 26.5.h,
+          child: Stack(
+            children: [
+              // ColorFiltered(
+              //   colorFilter:
+              //   ColorFilter.mode(Colors.white, BlendMode.color),
+              //   child: Image.asset('assets/whole_note_lean.png'),
+              // ),
+              // Container(
+              //   color: Colors.red,
+              //   child: Image.asset('assets/whole_note_lean.png'),
+              // ),
+              Image.asset('assets/whole_note_lean_all_white.png'),
+              Positioned(
+                top: 12.75.h,
+                child: addLineBasic(),
+              )
+            ],
+          ),
+        ),
+      );
+      Positioned(
+        top: 12.75.h,
+        child: addLineBasic(),
+      );
+  } else if (lowLine.contains(randomNote)) {
+    return
+      Positioned(
+        top: 209.75.h, // [50.75,3,Note.a.inOctave(5)],
+        left: left,
+        child: SizedBox(
+          height: 26.5.h,
+          child: Stack(
+            children: [
+              Image.asset('assets/whole_note_lean_all_white.png'),
+              Positioned(
+                top: 12.75.h,
+                child: addLineBasic(),
+              )
+            ],
+          ),
         ),
       );
   }
@@ -257,22 +322,14 @@ Widget addLine2(PositionedNote randomNote, double left){
       Positioned(
         top: 63.5.h,
         left: left,
-        child: Container(
-          color: Colors.black,
-          height: 2.0.h,
-          width: 50.w,
-        ),
+        child: addLineBasic(),
       );
   } else if (lowLowLine.contains(randomNote)) {
     return
       Positioned(
         top: 222.5.h,
         left: left,
-        child: Container(
-          color: Colors.black,
-          height: 2.0.h,
-          width: 50.w,
-        ),
+        child: addLineBasic(),
       );
   }
   else {

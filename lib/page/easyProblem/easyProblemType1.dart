@@ -809,7 +809,21 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                     ),
                   ),
                 ),
-                addLine2(randomNote[0],130.w),
+                addLine3(randomNote[0],130.w),
+                // Positioned(
+                //   top: 50.75.h, // [50.75,3,Note.a.inOctave(5)],
+                //   left: 130.w,
+                //   child: SizedBox(
+                //     height: 26.5.h,
+                //     child: Stack(
+                //       children: [
+                //         // Image.asset('assets/whole_note_lean.png'),
+                //         addLine1(randomNote[0]),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                // addLine2(randomNote[0],130.w),
                 // 음표 2
                 Positioned(
                   top: randomItems[1].h,
@@ -824,7 +838,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                     ),
                   ),
                 ),
-                addLine2(randomNote[1],230.w),
+                addLine3(randomNote[1],230.w),
               ],
             ),
           ),
