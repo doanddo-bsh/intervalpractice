@@ -112,6 +112,8 @@ String commentaryKeyReturn(List<dynamic> randomNoteAnswerSorted, String answerRe
   List<String> returnTarget = [commentaryTarget,commentaryFirstAccidental,
     commentarySecondAccidental];
 
+  print('returnTarget $returnTarget');
+
   // print('returnTarget ${returnTarget}');
   // return returnTarget;
 
