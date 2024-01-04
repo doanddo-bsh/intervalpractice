@@ -487,12 +487,12 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             isScrollControlled: true,
             builder: (BuildContext context) {
               return Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                ),
+                // decoration: const BoxDecoration(
+                //   borderRadius: BorderRadius.only(
+                //     topLeft: Radius.circular(30),
+                //     topRight: Radius.circular(30),
+                //   ),
+                // ),
                 height: MediaQuery.of(context).size.height * 1.0,
                 child: Center(
                   child:
@@ -518,6 +518,17 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                                           height: 450.h,
                                           color: Colors.lightGreen.withOpacity(0.4),
                                         ),),
+                                    ),
+                                    Positioned.fill(
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Container(decoration: BoxDecoration(
+                                            color: Colors.red,
+                                            borderRadius: BorderRadius.all(Radius.circular(20))
+                                        ),
+                                          height: 40,
+                                          width: 200,),
+                                      ),
                                     ),
                                     Center(
                                       child: Container(
@@ -844,11 +855,11 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             ),
           ),
           // const SizedBox(height: 10.0,),
-          // ElevatedButton(onPressed: (){
-          //   setState(() {
-          //     problemNumber = 10;
-          //   });
-          // }, child: Text('test')),
+          ElevatedButton(onPressed: (){
+            setState(() {
+              problemNumber = 10;
+            });
+          }, child: Text('test')),
           Text('음정의 간격을 고르세요',style: explainTextStyle),
           const SizedBox(height: 25.0,),
           SizedBox(

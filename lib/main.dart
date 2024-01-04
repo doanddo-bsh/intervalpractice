@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
         title: 'itervalpractice',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
           useMaterial3: true,
         ),
         builder: (context, child){
