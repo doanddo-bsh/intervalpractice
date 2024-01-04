@@ -176,7 +176,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
         context: context,
         builder: (BuildContext context) {
           return Container(
-            height: 180,
+            height: 140,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -948,8 +948,8 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
                   ),
                 ),
                 (upDown == 0)?
-                addLine2(randomNote[0],130.w):
-                addLine2(randomNote[1],130.w)
+                addLine3(randomNote[0],130.w):
+                addLine3(randomNote[1],130.w)
                 ,
               ],
             ),

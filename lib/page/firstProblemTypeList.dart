@@ -87,13 +87,13 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
   Widget _tabBar() {
     return TabBar(
       controller: tabController,
-      labelColor: Colors.orangeAccent,
-      unselectedLabelColor: Colors.blue,
+      labelColor: Colors.orangeAccent, // 클릭한 텍스트 강조 컬러
+      unselectedLabelColor: Colors.blue, // 클릭 안된 텍스트 컬러
       indicatorColor: Colors.red,
-      indicator: UnderlineTabIndicator(
-        borderSide: BorderSide(width: 2),
-        insets: EdgeInsets.symmetric(horizontal: 120)
-      ),
+      // indicator: UnderlineTabIndicator(
+      //   borderSide: BorderSide(width: 2),
+      //   insets: EdgeInsets.symmetric(horizontal: 120)
+      // ),
       labelStyle: const TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
@@ -104,17 +104,17 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
       tabs: const [
         Tab(child: Text('Easy',
                         style: TextStyle(
-                            color: Color(0xff377a46),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15
+                            // color: Color(0xff377a46),
+                            // fontWeight: FontWeight.bold,
+                            // fontSize: 15,
                         ),
                       ),
         ),
         Tab(child: Text('Hard',
                       style: TextStyle(
-                          color: Color(0xff873a32),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15
+                          // color: Color(0xff873a32),
+                          // fontWeight: FontWeight.bold,
+                          // fontSize: 15
                       ),
                     )
         ),

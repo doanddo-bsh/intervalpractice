@@ -1019,7 +1019,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
                     ),
                   ),
                 ),
-                addLine2(randomNote[0],130.w),
+                addLine3(randomNote[0],130.w),
                 // accidentals
                 addAccidentals(accidentals[0],randomItems[0].h,110.w),
                 // 음표 2
@@ -1036,7 +1036,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
                     ),
                   ),
                 ),
-                addLine2(randomNote[1],230.w),
+                addLine3(randomNote[1],230.w),
                 // accidentals
                 addAccidentals(accidentals[1],randomItems[1].h,210.w),
               ],

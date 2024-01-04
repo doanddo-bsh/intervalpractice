@@ -1083,8 +1083,8 @@ class _HardProblemType2State extends State<HardProblemType2> {
                   ),
                 ),
                 (upDown == 0)?
-                addLine2(randomNote[0],130.w):
-                addLine2(randomNote[1],130.w)
+                addLine3(randomNote[0],130.w):
+                addLine3(randomNote[1],130.w)
                 ,
                 (upDown == 0)?
                 addAccidentals(accidentals[0],randomItems[0].h,110.w):

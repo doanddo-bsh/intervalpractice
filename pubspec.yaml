@@ -41,6 +41,7 @@ dependencies:
   percent_indicator: ^4.2.3
   lottie: ^2.6.0
   avatar_glow: ^2.0.2
+  just_the_tooltip: ^0.0.12
 
 dev_dependencies:
   flutter_test:

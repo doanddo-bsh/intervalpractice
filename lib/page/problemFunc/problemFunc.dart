@@ -341,6 +341,9 @@ Widget addLine2(PositionedNote randomNote, double left){
 // 변화표 추가
 Widget addAccidentals(String whatAccidental, double top, double left){
 
+  double height = 25.h;
+  double weight = 20.w;
+
   if (whatAccidental == 'none'){
     return SizedBox();
   } else if (whatAccidental == 'sharp'){
@@ -348,8 +351,8 @@ Widget addAccidentals(String whatAccidental, double top, double left){
       top: top,
       left: left,
       child: SizedBox(
-        height: 30,
-        width: 15,
+        height: height,
+        width: weight,
         child: Image(
           image: AssetImage('assets/sharp1.png',
           ),
@@ -362,8 +365,8 @@ Widget addAccidentals(String whatAccidental, double top, double left){
       top: top,
       left: left,
       child: SizedBox(
-        height: 30,
-        width: 15,
+        height: height,
+        width: weight,
         child: Image(
           image: AssetImage('assets/doubleSharp.png',
           ),
@@ -376,8 +379,8 @@ Widget addAccidentals(String whatAccidental, double top, double left){
       top: top,
       left: left,
       child: SizedBox(
-        height: 30,
-        width: 15,
+        height: height,
+        width: weight,
         child: Image(
           image: AssetImage('assets/flat1.png',
           ),
@@ -390,8 +393,8 @@ Widget addAccidentals(String whatAccidental, double top, double left){
       top: top,
       left: left,
       child: SizedBox(
-        height: 30,
-        width: 15,
+        height: height,
+        width: weight,
         child: Image(
           image: AssetImage('assets/doubleFlat.png',
           ),
@@ -400,8 +403,6 @@ Widget addAccidentals(String whatAccidental, double top, double left){
       ),
     );
   }
-
-
 }
 
 // List<List<dynamic>> getProblemListNoteInit(

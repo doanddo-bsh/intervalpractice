@@ -1063,7 +1063,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
                     ),
                   ),
                 ),
-                addLine2(randomNote[0],130.w),
+                addLine3(randomNote[0],130.w),
                 // 음표 2
                 Positioned(
                   top: randomItems[1].h,
@@ -1078,7 +1078,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
                     ),
                   ),
                 ),
-                addLine2(randomNote[1],230.w),
+                addLine3(randomNote[1],230.w),
               ],
             ),
           ),

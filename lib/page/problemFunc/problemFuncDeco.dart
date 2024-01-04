@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'colorList.dart';
 import 'problemVarList.dart';
+import 'package:just_the_tooltip/just_the_tooltip.dart';
 
 // appBar title style
 TextStyle appBarTitleStyle =
