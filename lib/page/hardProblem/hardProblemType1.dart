@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:lottie/lottie.dart';
 import '../problemFunc/problemFunc.dart';
 import '../problemFunc/problemVarList.dart';
-// import '../secondePageFunc/problemFunc.dart';
 import 'package:music_notes/music_notes.dart';
 import '../problemFunc/problemFuncDeco.dart';
+import '../problemFunc/colorList.dart';
 
 class HardProblemType1 extends StatefulWidget {
   const HardProblemType1({super.key});
@@ -18,21 +16,21 @@ class HardProblemType1 extends StatefulWidget {
 
 class _HardProblemType1State extends State<HardProblemType1> {
 
-  // List<double> note_height_list = [31,42,55,67.5,81,94.5,108,121.5];
+  // 변수 초기화
   List<double> randomItems = [];
   late List<int> randomNoteNumber ;
   late List<PositionedNote> randomNote ;
+  // hard - accidentals 추가
   List<String> accidentals = [];
 
   List<List<int>> wrongProblems = [];
   List<List<int>> wrongProblemsSave = [];
 
+  // hard - accidentals 추가
   List<List<String>> wrongProblemsAccidentals = [];
   List<List<String>> wrongProblemsAccidentalsSave = [];
 
   bool wrongProblemMode = false ;
-
-  // double downNoteLeft = 180.0;
 
   int numberOfRight = 0 ;
 
@@ -52,12 +50,6 @@ class _HardProblemType1State extends State<HardProblemType1> {
           style: answerButtonTextDesign,
         ),
         style: answerButtonDesign(intervalNumber,number,'hard',context)
-        // ElevatedButton.styleFrom(
-        //   backgroundColor:
-        //   intervalNumber==number ?
-        //   Color(0xffccccff) :
-        //   Theme.of(context).colorScheme.onTertiary,
-        // )
     );
   }
 
@@ -80,12 +72,6 @@ class _HardProblemType1State extends State<HardProblemType1> {
             style: answerButtonTextDesign
         ),
         style:answerButtonDesign(answerInterval,intervalNameKorEng[intervalName] + intervalNumber,'hard',context)
-        // ElevatedButton.styleFrom(
-        //   backgroundColor:
-        //   answerInterval==intervalNameKorEng[intervalName] + intervalNumber ?
-        //   Color(0xffccccff) :
-        //   Theme.of(context).colorScheme.onTertiary,
-        // )
     );
   }
 
@@ -115,7 +101,7 @@ class _HardProblemType1State extends State<HardProblemType1> {
               ],
             ),
           ),
-          const SizedBox(height: 10.0,),
+          const SizedBox(height: 13.0,),
           SizedBox(
             height: 30.0,
             child: Row(
@@ -157,25 +143,15 @@ class _HardProblemType1State extends State<HardProblemType1> {
 
   void showBottomResult(String answerInterval){
 
+    // 정답 계산
+    List<dynamic> resultAll = getResultAllHard(randomNote,accidentals);
 
-    List<dynamic> randomNoteAnswer = [] ;
+    // 정답 배분/입력
+    List<dynamic> randomNoteAnswer = resultAll[0] ;
+    String answerReal = resultAll[1] ;
+    String answerRealKor = resultAll[2] ;
 
-    randomNoteAnswer.add(addAccidental(randomNote[0], accidentals[0]));
-    randomNoteAnswer.add(addAccidental(randomNote[1], accidentals[1]));
-
-    randomNoteAnswer.sort();
-
-    String answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1]).toString();
-    String answerRealKor = '';
-
-    if (answerReal.length==2){
-      answerRealKor = intervalNameEngKor[answerReal.substring(0, 1)] +
-          answerReal.substring(1, 2);
-    } else {
-      answerRealKor = intervalNameEngKor[answerReal.substring(0, 2)] +
-          answerReal.substring(2, 3);
-    }
-
+    // 해석 해설
     String commentaryResult = commentaryKeyReturn(randomNoteAnswer,
         answerRealKor);
 
@@ -188,36 +164,63 @@ class _HardProblemType1State extends State<HardProblemType1> {
       });
 
       showModalBottomSheet<void>(
+        backgroundColor: color5,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0)
+            )
+        ),
         isDismissible:false,
         context: context,
         builder: (BuildContext context) {
           return Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            height: 200,
+            height: 140,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(answerRealKor + '도',
+                  SizedBox(height: 7,),
+                  Stack(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('정답입니다!',
+                            style: TextStyle(
+                                color: color4,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          commentaryToolTip(commentaryResult,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 7,),
+                  Text('정답 : ' + answerRealKor + '도',
                     style: TextStyle(
-                      fontSize : 20.0,
+                      color: color4,
+                      fontSize : 14.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Text('정답입니다.'),
+                  SizedBox(height: 7,),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
-                  wrongProblemNextProblem('다음문제') :
-                  showResult() :
+                  wrongProblemNextProblem('다음문제','right') :
+                  showResult('right') :
                   (problemNumber!=10)?
-                  nextProblem('다음문제') :
-                  showResult(),
+                  nextProblem('다음문제','right') :
+                  showResult('right'),
                   // (problemNumber!=10)? nextProblem('다음문제') : showResult()
                 ],
               ),
@@ -235,39 +238,63 @@ class _HardProblemType1State extends State<HardProblemType1> {
       print('wrongProblemsAccidentals $wrongProblemsAccidentals');
 
       showModalBottomSheet<void>(
+        backgroundColor: Color(0xffd7b1b1),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0)
+            )
+        ),
         isDismissible:false,
         context: context,
         builder: (BuildContext context) {
           return Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            height: 200,
+            height: 140,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(answerRealKor + '도',
+                  // SizedBox(height: 7),
+                  Stack(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('오답입니다',
+                            style: TextStyle(
+                                color:color6,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          commentaryToolTip(commentaryResult),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 7,),
+                  Text('정답 : ' + answerRealKor + '도',
                     style: TextStyle(
-                      fontSize : 20.0,
+                      color: color6,
+                      fontSize : 14.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Text('오답입니다.'),
-                  Text('정답은 ${answerRealKor} 입니다.'),
-                  const Text('풀이 : ...'),
+                  SizedBox(height: 7,),
+                  // Text('정답은 ${answerRealKor} 입니다.'),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
-                  wrongProblemNextProblem('다음문제') :
-                  showResult() :
+                  wrongProblemNextProblem('다음문제','wrong') :
+                  showResult('wrong') :
                   (problemNumber!=10)?
-                  nextProblem('다음문제') :
-                  showResult(),
-                  // (problemNumber!=10)? nextProblem('다음문제') : showResult()
+                  nextProblem('다음문제','wrong') :
+                  showResult('wrong'),
                 ],
               ),
             ),
@@ -277,7 +304,7 @@ class _HardProblemType1State extends State<HardProblemType1> {
     }
   }
 
-  Widget nextProblem(String buttonText){
+  Widget nextProblem(String buttonText,String right_wrong){
     return ElevatedButton(
 
         onPressed: (){
@@ -311,7 +338,11 @@ class _HardProblemType1State extends State<HardProblemType1> {
 
           Navigator.pop(context);
 
-        }, child: Text(buttonText)
+        },
+      style: nextProblemButtonStyle('hard',right_wrong),
+      child: Text(buttonText,
+        style: nextProblemButtonTextStyle,
+      ),
     );
   }
 
@@ -367,7 +398,7 @@ class _HardProblemType1State extends State<HardProblemType1> {
   }
 
 
-  Widget wrongProblemNextProblem(String buttonText){
+  Widget wrongProblemNextProblem(String buttonText, String right_wrong){
     return ElevatedButton(
 
         onPressed: (){
@@ -397,7 +428,11 @@ class _HardProblemType1State extends State<HardProblemType1> {
 
           Navigator.pop(context);
 
-        }, child: Text(buttonText)
+        },
+        style: nextProblemButtonStyle('hard',right_wrong),
+        child: Text(buttonText,
+          style: nextProblemButtonTextStyle,
+        ),
     );
   }
 
@@ -458,7 +493,7 @@ class _HardProblemType1State extends State<HardProblemType1> {
     );
   }
 
-  Widget showResult(){
+  Widget showResult(String right_wrong){
 
     // Navigator.pop(context);
 
@@ -472,12 +507,12 @@ class _HardProblemType1State extends State<HardProblemType1> {
             isScrollControlled: true,
             builder: (BuildContext context) {
               return Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                ),
+                // decoration: const BoxDecoration(
+                //   borderRadius: BorderRadius.only(
+                //     topLeft: Radius.circular(30),
+                //     topRight: Radius.circular(30),
+                //   ),
+                // ),
                 height: MediaQuery.of(context).size.height * 1.0,
                 child: Center(
                   child:
@@ -503,6 +538,17 @@ class _HardProblemType1State extends State<HardProblemType1> {
                                           height: 450.h,
                                           color: Colors.lightGreen.withOpacity(0.4),
                                         ),),
+                                    ),
+                                    Positioned.fill(
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Container(decoration: BoxDecoration(
+                                            color: Colors.red,
+                                            borderRadius: BorderRadius.all(Radius.circular(20))
+                                        ),
+                                          height: 40,
+                                          width: 200,),
+                                      ),
                                     ),
                                     Center(
                                       child: Container(
@@ -668,7 +714,10 @@ class _HardProblemType1State extends State<HardProblemType1> {
             },
           );
         },
-        child: Text('결과보기')
+        style: nextProblemButtonStyle('hard',right_wrong),
+        child: Text('결과보기',
+          style: nextProblemButtonTextStyle,
+        ),
     );
   }
 
@@ -934,29 +983,19 @@ class _HardProblemType1State extends State<HardProblemType1> {
   @override
   Widget build(BuildContext context) {
 
-    print('randomNote $randomNote');
+    // 정답 계산
+    List<dynamic> resultAll = getResultAllHard(randomNote,accidentals);
 
-    List<dynamic> randomNoteAnswerTemp = [] ;
+    // 정답 배분/입력
+    List<dynamic> randomNoteAnswer = resultAll[0] ;
+    String answerReal = resultAll[1] ;
+    String answerRealKor = resultAll[2] ;
 
-    randomNoteAnswerTemp.add(addAccidental(randomNote[0], accidentals[0]));
-    randomNoteAnswerTemp.add(addAccidental(randomNote[1], accidentals[1]));
+    // 해석 해설
+    String commentaryResult = commentaryKeyReturn(randomNoteAnswer,
+        answerRealKor);
 
-    randomNoteAnswerTemp.sort();
-
-    String answerRealTemp = randomNoteAnswerTemp[0].interval
-      (randomNoteAnswerTemp[1]).toString();
-    String answerRealKorTemp = '';
-
-    if (answerRealTemp.length==2){
-      answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 1)] +
-          answerRealTemp.substring(1, 2);
-    } else if (answerRealTemp.length==3) {
-      answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 2)] +
-          answerRealTemp.substring(2, 3);
-    }
-
-    print('answerRealTemp $answerRealTemp');
-    print('answerRealKorTemp $answerRealKorTemp');
+    print('commentaryResult $commentaryResult');
 
     return Scaffold(
       appBar: AppBar(

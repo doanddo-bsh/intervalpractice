@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'colorList.dart';
 import 'problemVarList.dart';
-import 'package:just_the_tooltip/just_the_tooltip.dart';
+import '../problemFunc/problemFunc.dart';
 
 // appBar title style
 TextStyle appBarTitleStyle =
@@ -289,7 +289,7 @@ Map commentaryDownAccidental = {
 // showBottomResult 내부에서
 // 음을 sort 한 뒤, 간격 및 한글 결과 내뱉는 함수
 // List<dynamic> randomNote
-List<dynamic> getResultAll(List<dynamic> randomNote){
+List<dynamic> getResultAllEasy(List<dynamic> randomNote){
 
   List<dynamic> randomNoteAnswer = [] ;
 
@@ -305,6 +305,29 @@ List<dynamic> getResultAll(List<dynamic> randomNote){
     answerRealKor = intervalNameEngKor[answerReal.substring(0, 1)] +
         answerReal.substring(1, 2);
   } else {
+    answerRealKor = intervalNameEngKor[answerReal.substring(0, 2)] +
+        answerReal.substring(2, 3);
+  }
+
+  return [randomNoteAnswer, answerReal, answerRealKor];
+}
+
+List<dynamic> getResultAllHard(List<dynamic> randomNote,List<dynamic> accidentals){
+
+  List<dynamic> randomNoteAnswer = [] ;
+
+  randomNoteAnswer.add(addAccidental(randomNote[0], accidentals[0]));
+  randomNoteAnswer.add(addAccidental(randomNote[1], accidentals[1]));
+
+  randomNoteAnswer.sort();
+
+  String answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1]).toString();
+  String answerRealKor = '';
+
+  if (answerReal.length==2){
+    answerRealKor = intervalNameEngKor[answerReal.substring(0, 1)] +
+        answerReal.substring(1, 2);
+  } else if (answerReal.length==3) {
     answerRealKor = intervalNameEngKor[answerReal.substring(0, 2)] +
         answerReal.substring(2, 3);
   }

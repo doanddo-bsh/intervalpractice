@@ -17,9 +17,10 @@ class EasyProblemType1 extends StatefulWidget {
 
 class _EasyProblemType1State extends State<EasyProblemType1> {
 
+  // 변수 초기화
   List<double> randomItems = [];
   late List<int> randomNoteNumber ;
-  late List<dynamic> randomNote ;
+  late List<PositionedNote> randomNote ;
 
   List<List<int>> wrongProblems = [];
   List<List<int>> wrongProblemsSave = [];
@@ -54,7 +55,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             () {
                 setState(() {
                   answerInterval = intervalNameKorEng[intervalName] + intervalNumber;
-
                   showBottomResult(answerInterval!);
                 });
               }:
@@ -138,7 +138,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
   void showBottomResult(String answerInterval){
 
     // 정답 계산
-    List<dynamic> resultAll = getResultAll(randomNote);
+    List<dynamic> resultAll = getResultAllEasy(randomNote);
 
     // 정답 배분/입력
     List<dynamic> randomNoteAnswer = resultAll[0] ;
