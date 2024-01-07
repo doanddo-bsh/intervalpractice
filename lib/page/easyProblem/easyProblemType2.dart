@@ -63,7 +63,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
   void showBottomResult(String answerPitchName){
 
     // 정답 계산
-    List<dynamic> resultAll = getResultAllEasy(randomNote);
+    List<dynamic> resultAll = getResultAllEasy(randomNote, false);
 
     // 정답 배분/입력
     List<dynamic> randomNoteAnswer = resultAll[0] ;

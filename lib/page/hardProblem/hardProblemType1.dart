@@ -144,7 +144,7 @@ class _HardProblemType1State extends State<HardProblemType1> {
   void showBottomResult(String answerInterval){
 
     // 정답 계산
-    List<dynamic> resultAll = getResultAllHard(randomNote,accidentals);
+    List<dynamic> resultAll = getResultAllHard(randomNote,accidentals, false);
 
     // 정답 배분/입력
     List<dynamic> randomNoteAnswer = resultAll[0] ;
@@ -984,7 +984,7 @@ class _HardProblemType1State extends State<HardProblemType1> {
   Widget build(BuildContext context) {
 
     // 정답 계산
-    List<dynamic> resultAll = getResultAllHard(randomNote,accidentals);
+    List<dynamic> resultAll = getResultAllHard(randomNote,accidentals, false);
 
     // 정답 배분/입력
     List<dynamic> randomNoteAnswer = resultAll[0] ;

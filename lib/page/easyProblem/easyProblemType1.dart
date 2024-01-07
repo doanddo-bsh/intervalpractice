@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:music_notes/music_notes.dart';
-import 'dart:math';
 import '../problemFunc/problemFunc.dart';
 import '../problemFunc/problemFuncDeco.dart';
 import '../problemFunc/problemVarList.dart';
@@ -138,7 +137,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
   void showBottomResult(String answerInterval){
 
     // 정답 계산
-    List<dynamic> resultAll = getResultAllEasy(randomNote);
+    List<dynamic> resultAll = getResultAllEasy(randomNote, false);
 
     // 정답 배분/입력
     List<dynamic> randomNoteAnswer = resultAll[0] ;
@@ -247,7 +246,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  // SizedBox(height: 7),
                   Stack(
                     children: [
                       Row(
@@ -372,7 +370,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
           Navigator.pop(context);
 
-
         },  style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10)
@@ -487,12 +484,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             isScrollControlled: true,
             builder: (BuildContext context) {
               return Container(
-                // decoration: const BoxDecoration(
-                //   borderRadius: BorderRadius.only(
-                //     topLeft: Radius.circular(30),
-                //     topRight: Radius.circular(30),
-                //   ),
-                // ),
                 height: MediaQuery.of(context).size.height * 1.0,
                 child: Center(
                   child:
@@ -702,9 +693,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
   }
 
   int problemNumber = 1 ;
-
-
-
 
   @override
   void initState() {

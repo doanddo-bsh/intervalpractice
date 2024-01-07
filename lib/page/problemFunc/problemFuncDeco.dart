@@ -289,7 +289,7 @@ Map commentaryDownAccidental = {
 // showBottomResult 내부에서
 // 음을 sort 한 뒤, 간격 및 한글 결과 내뱉는 함수
 // List<dynamic> randomNote
-List<dynamic> getResultAllEasy(List<dynamic> randomNote){
+List<dynamic> getResultAllEasy(List<dynamic> randomNote, bool inverseTF){
 
   List<dynamic> randomNoteAnswer = [] ;
 
@@ -298,7 +298,18 @@ List<dynamic> getResultAllEasy(List<dynamic> randomNote){
 
   randomNoteAnswer.sort();
 
-  String answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1]).toString();
+  String answerReal;
+
+  if (inverseTF){
+    // inverse True
+    answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
+        .inverted.toString();
+  } else {
+    // inverse False
+    answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
+        .toString();
+  }
+
   String answerRealKor = '';
 
   if (answerReal.length==2){
@@ -312,7 +323,7 @@ List<dynamic> getResultAllEasy(List<dynamic> randomNote){
   return [randomNoteAnswer, answerReal, answerRealKor];
 }
 
-List<dynamic> getResultAllHard(List<dynamic> randomNote,List<dynamic> accidentals){
+List<dynamic> getResultAllHard(List<dynamic> randomNote,List<dynamic> accidentals, bool inverseTF){
 
   List<dynamic> randomNoteAnswer = [] ;
 
@@ -321,7 +332,18 @@ List<dynamic> getResultAllHard(List<dynamic> randomNote,List<dynamic> accidental
 
   randomNoteAnswer.sort();
 
-  String answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1]).toString();
+  String answerReal;
+
+  if (inverseTF){
+    // inverse True
+    answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
+        .inverted.toString();
+  } else {
+    // inverse False
+    answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
+        .toString();
+  }
+
   String answerRealKor = '';
 
   if (answerReal.length==2){
@@ -334,6 +356,3 @@ List<dynamic> getResultAllHard(List<dynamic> randomNote,List<dynamic> accidental
 
   return [randomNoteAnswer, answerReal, answerRealKor];
 }
-
-
-

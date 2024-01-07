@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:lottie/lottie.dart';
-import '../problemFunc/problemFunc.dart';
-import '../problemFunc/problemVarList.dart';
-// import '../secondePageFunc/problemFunc.dart';
 import 'package:music_notes/music_notes.dart';
+import '../problemFunc/problemFunc.dart';
 import '../problemFunc/problemFuncDeco.dart';
+import '../problemFunc/problemVarList.dart';
+import 'package:intervalpractice/page/problemFunc/colorList.dart';
 
 class EasyProblemType3 extends StatefulWidget {
   const EasyProblemType3({super.key});
@@ -18,135 +16,17 @@ class EasyProblemType3 extends StatefulWidget {
 
 class _EasyProblemType3State extends State<EasyProblemType3> {
 
-
-  // List<double> note_height_list = [31,42,55,67.5,81,94.5,108,121.5];
+  // 변수 초기
   List<double> randomItems = [];
   late List<int> randomNoteNumber ;
-  late List<dynamic> randomNote ;
+  late List<PositionedNote> randomNote ;
 
   List<List<int>> wrongProblems = [];
   List<List<int>> wrongProblemsSave = [];
 
   bool wrongProblemMode = false ;
 
-  // double downNoteLeft = 180.0;
-
   int numberOfRight = 0 ;
-
-  // 도 에서 추가 줄 만들기
-  Widget addLineDown(int noteNumber1,int noteNumber2){
-    if (
-    ((noteNumber1==11)&(noteNumber2==13))
-    |((noteNumber1==12)&(noteNumber2==14))
-    |((noteNumber1==11)&(noteNumber2==14))
-    |((noteNumber1==12)&(noteNumber2==13))
-    ){
-      return Positioned(
-        top: 172.h,
-        left: 180.w,
-        child: SizedBox(
-          width: 50.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    } else if (
-    ((noteNumber1==13)&(noteNumber2==14))
-    ){
-      return Positioned(
-        top: 172.h,
-        left: 170.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/five_long.png'),
-        ),
-      );
-    } else if (
-    ((noteNumber2==13))
-    ){
-      return Positioned(
-        top: 172.h,
-        left: 155.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    }  else if (
-    ((noteNumber2==14))
-    ){
-      return Positioned(
-        top: 172.h,
-        left: 155.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    } else if (
-    (noteNumber1==0)&(noteNumber2==3)
-    |(noteNumber1==1)&(noteNumber2==3)
-    |(noteNumber1==0)&(noteNumber2==2)
-    // |(noteNumber1==0)&(noteNumber2==1)
-    // |(noteNumber1==1)&(noteNumber2==2)
-    ) {
-      return Positioned(
-        top: 17.h,
-        left: 180.w,
-        child: SizedBox(
-          width: 50.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    } else if ((noteNumber1==1)&(noteNumber2==2)) {
-      return Positioned(
-        top: 17.h,
-        left: 207.w,
-        child: SizedBox(
-          width: 50.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    } else if ((noteNumber1==0)&(noteNumber2==1)) {
-      return Positioned(
-        top: 17.h,
-        left: 170.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/five_long.png'),
-        ),
-      );
-    } else if ((noteNumber1==1)) {
-      return Positioned(
-        top: 17.h,
-        left: 155.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    } else if ((noteNumber1==0)) {
-      return Positioned(
-        top: 17.h,
-        left: 155.w,
-        child: SizedBox(
-          width: 100.w,
-          height: 50.h,
-          child: Image.asset('assets/music_five_line_one.png'),
-        ),
-      );
-    }
-    else {
-      return const SizedBox();
-    }
-  }
 
   String? intervalNumber = null;
 
@@ -159,14 +39,11 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
             (){
           // print('정답이 이미 들어옴');
         },
-        child: Text(number, style: answerButtonTextDesign,),
+        child: Text(
+          number,
+          style: answerButtonTextDesign,
+        ),
         style: answerButtonDesign(intervalNumber,number,'easy',context)
-        // ElevatedButton.styleFrom(
-        //   backgroundColor:
-        //   intervalNumber==number ?
-        //   Color(0xffccccff) :
-        //   Theme.of(context).colorScheme.onTertiary,
-        // )
     );
   }
 
@@ -177,21 +54,17 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
             () {
           setState(() {
             answerInterval = intervalNameKorEng[intervalName] + intervalNumber;
-
             showBottomResult(answerInterval!);
           });
         }:
             (){
           // print('정답이 이미 들어옴');
         },
-        child: Text(intervalName + intervalNumber + '도', style: answerButtonTextDesign,),
+        child: Text(
+          intervalName + intervalNumber + '도',
+          style: answerButtonTextDesign,
+        ),
         style: answerButtonDesign(answerInterval,intervalNameKorEng[intervalName] + intervalNumber,'easy',context)
-        // ElevatedButton.styleFrom(
-        //   backgroundColor:
-        //   answerInterval==intervalNameKorEng[intervalName] + intervalNumber ?
-        //   Color(0xffccccff) :
-        //   Theme.of(context).colorScheme.onTertiary,
-        // )
     );
   }
 
@@ -200,7 +73,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
       child: Column(
         children: [
           Text('음정의 이름을 고르세요', style: explainTextStyle,),
-          const SizedBox(height: 10.0,),
+          const SizedBox(height: 25.0,),
           SizedBox(
             height: 30.0,
             child: Row(
@@ -221,7 +94,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
               ],
             ),
           ),
-          const SizedBox(height: 10.0,),
+          const SizedBox(height: 13.0,),
           SizedBox(
             height: 30.0,
             child: Row(
@@ -263,25 +136,19 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
 
   void showBottomResult(String answerInterval){
 
-    List<dynamic> randomNoteAnswer = [] ;
+    // 정답 계산
+    List<dynamic> resultAll = getResultAllEasy(randomNote, true);
 
-    randomNoteAnswer.add(randomNote[0]);
-    randomNoteAnswer.add(randomNote[1]);
+    // 정답 배분/입력
+    List<dynamic> randomNoteAnswer = resultAll[0] ;
+    String answerReal = resultAll[1] ;
+    String answerRealKor = resultAll[2] ;
 
-    randomNoteAnswer.sort();
+    // 해석 해설
+    String commentaryResult = commentaryKeyReturn(randomNoteAnswer,
+        answerRealKor);
 
-    // 자리바꿈 음정
-    String answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
-      .inverted.toString();
-    String answerRealKor = '';
-
-    if (answerReal.length==2){
-      answerRealKor = intervalNameEngKor[answerReal.substring(0, 1)] +
-          answerReal.substring(1, 2);
-    } else {
-      answerRealKor = intervalNameEngKor[answerReal.substring(0, 2)] +
-          answerReal.substring(2, 3);
-    }
+    print('commentaryResult $commentaryResult');
 
     if (answerInterval == answerReal){
 
@@ -290,36 +157,63 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
       });
 
       showModalBottomSheet<void>(
+        backgroundColor: color5,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0)
+            )
+        ),
         isDismissible:false,
         context: context,
         builder: (BuildContext context) {
           return Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            height: 200,
+            height: 140,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(answerRealKor + '도',
+                  SizedBox(height: 7,),
+                  Stack(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('정답입니다!',
+                            style: TextStyle(
+                                color: color4,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          commentaryToolTip(commentaryResult,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 7,),
+                  Text('정답 : ' + answerRealKor + '도',
                     style: TextStyle(
-                      fontSize : 20.0,
+                      color: color4,
+                      fontSize : 14.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Text('정답입니다.'),
+                  SizedBox(height: 7,),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
-                  wrongProblemNextProblem('다음문제') :
-                  showResult() :
+                  wrongProblemNextProblem('다음문제','right') :
+                  showResult('right') :
                   (problemNumber!=10)?
-                  nextProblem('다음문제') :
-                  showResult(),
+                  nextProblem('다음문제','right') :
+                  showResult('right'),
                   // (problemNumber!=10)? nextProblem('다음문제') : showResult()
                 ],
               ),
@@ -335,38 +229,62 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
       print('wrongProblems $wrongProblems');
 
       showModalBottomSheet<void>(
+        backgroundColor: Color(0xffd7b1b1),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0)
+            )
+        ),
         isDismissible:false,
         context: context,
         builder: (BuildContext context) {
           return Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            height: 200,
+            height: 140,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(answerRealKor + '도',
+                  Stack(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('오답입니다',
+                            style: TextStyle(
+                                color:color6,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          commentaryToolTip(commentaryResult),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 7,),
+                  Text('정답 : ' + answerRealKor + '도',
                     style: TextStyle(
-                      fontSize : 20.0,
+                      color: color6,
+                      fontSize : 14.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Text('오답입니다.'),
-                  Text('정답은 ${answerRealKor} 입니다.'),
-                  const Text('풀이 : ...'),
+                  SizedBox(height: 7,),
+                  // Text('정답은 ${answerRealKor} 입니다.'),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
-                  wrongProblemNextProblem('다음문제') :
-                  showResult() :
+                  wrongProblemNextProblem('다음문제','wrong') :
+                  showResult('wrong') :
                   (problemNumber!=10)?
-                  nextProblem('다음문제') :
-                  showResult(),
+                  nextProblem('다음문제','wrong') :
+                  showResult('wrong'),
                   // (problemNumber!=10)? nextProblem('다음문제') : showResult()
                 ],
               ),
@@ -377,7 +295,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
     }
   }
 
-  Widget nextProblem(String buttonText){
+  Widget nextProblem(String buttonText,String right_wrong){
     return ElevatedButton(
 
         onPressed: (){
@@ -407,24 +325,13 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
             problemNumber += 1;
           });
 
-          // if ((randomNoteNumber[0]-randomNoteNumber[1]).abs()==1){
-          //   setState(() {
-          //     downNoteLeft = 207;
-          //   });
-          // } else if ((randomNoteNumber[0]-randomNoteNumber[1
-          // ]).abs()==0){
-          //   setState(() {
-          //     downNoteLeft = 207;
-          //   });
-          // } else {
-          //   setState(() {
-          //     downNoteLeft = 180;
-          //   });
-          // }
-
           Navigator.pop(context);
 
-        }, child: Text(buttonText)
+        },
+      style: nextProblemButtonStyle('easy',right_wrong),
+      child: Text(buttonText,
+        style: nextProblemButtonTextStyle,
+      ),
     );
   }
 
@@ -463,7 +370,6 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
 
           Navigator.pop(context);
 
-
         },  style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10)
@@ -478,9 +384,8 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
   }
 
 
-  Widget wrongProblemNextProblem(String buttonText){
+  Widget wrongProblemNextProblem(String buttonText, String right_wrong){
     return ElevatedButton(
-
         onPressed: (){
 
           setState(() {
@@ -507,7 +412,11 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
 
           Navigator.pop(context);
 
-        }, child: Text(buttonText)
+        },
+        style: nextProblemButtonStyle('easy',right_wrong),
+        child: Text(buttonText,
+          style: nextProblemButtonTextStyle,
+        ),
     );
   }
 
@@ -518,7 +427,6 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
       onPressed: (wrongProblems.isEmpty) ? null:(){
 
         numberOfRight = 0 ;
-
         // back up
         wrongProblemsSave = wrongProblems ;
         print('wrongProblemsSave $wrongProblemsSave');
@@ -562,7 +470,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
     );
   }
 
-  Widget showResult(){
+  Widget showResult(String right_wrong){
 
     // Navigator.pop(context);
 
@@ -772,182 +680,14 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
             },
           );
         },
-        child: Text('결과보기')
+        style: nextProblemButtonStyle('easy',right_wrong),
+        child: Text('결과보기',
+          style: nextProblemButtonTextStyle,
+        ),
     );
   }
 
   int problemNumber = 1 ;
-  //
-  // Widget lastRidingProgress() {
-  //
-  //   double percent =
-  //   wrongProblemMode?
-  //   double.parse((problemNumber / wrongProblemsSave.length).toStringAsFixed
-  //     (1)) :
-  //   problemNumber / 10 ;
-  //
-  //   print(percent);
-  //   print('problemNumber $problemNumber');
-  //   print('wrongProblemsSave.length ${wrongProblemsSave.length}');
-  //
-  //   return Column(
-  //     children: [
-  //       Center(
-  //         child: Container(
-  //           // color: Colors.black12,
-  //           width: MediaQuery.of(context).size.width-15.w,
-  //           alignment: FractionalOffset(percent, 1 - percent),
-  //           child: Padding(
-  //             padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
-  //             child: Container(
-  //               // color: Colors.red,
-  //                 child: Image.asset('assets/noteToProgress.png',
-  //                     width: 20, height: 20, fit: BoxFit.cover)
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       SizedBox(height: 3,),
-  //       Row(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         children: [
-  //           LinearPercentIndicator(
-  //             width: MediaQuery.of(context).size.width-50.w,
-  //             padding: EdgeInsets.zero,
-  //             percent: percent,
-  //             lineHeight: 20.h,
-  //             center: wrongProblemMode?
-  //             Text(problemNumber.toString() + '/' + wrongProblemsSave.length
-  //                 .toString()) :
-  //             Text(problemNumber.toString() + '/10') ,
-  //             backgroundColor: Colors.black12,
-  //             progressColor: Colors.amber,
-  //           ),
-  //         ],
-  //       )
-  //     ],
-  //   );
-  // }
-
-  // Widget returnLine(double top){
-  //   return Positioned(
-  //       top: top.h,
-  //       left: 10.w,
-  //       right: 10.w,
-  //       child:
-  //       Container(
-  //         color: Colors.black,
-  //         width: double.infinity,
-  //         height: 2.0.h,
-  //       )
-  //   );
-  // }
-  //
-  // // 덧줄용1
-  // Widget addLine1(PositionedNote randomNote){
-  //
-  //   // middle line
-  //   List<PositionedNote> middleLine = [
-  //     Note.a.inOctave(5),
-  //     Note.f.inOctave(5),
-  //     Note.d.inOctave(5),
-  //     Note.b.inOctave(4),
-  //     Note.g.inOctave(4),
-  //     Note.e.inOctave(4),
-  //     Note.c.inOctave(4),
-  //     Note.a.inOctave(3),
-  //     Note.c.inOctave(6),
-  //   ];
-  //   // low line
-  //   List<PositionedNote> lowLine = [
-  //     Note.b.inOctave(5),
-  //     Note.d.inOctave(6),
-  //   ];
-  //
-  //   // high line
-  //   List<PositionedNote> highLine = [
-  //     Note.b.inOctave(3),
-  //     Note.g.inOctave(3)
-  //   ];
-  //
-  //   if (middleLine.contains(randomNote)){
-  //     return
-  //       Positioned(
-  //         top: 12.75.h,
-  //         child: Container(
-  //           color: Colors.black,
-  //           height: 2.0.h,
-  //           width: 50.w,
-  //         ),
-  //       );
-  //   } else if (lowLine.contains(randomNote)) {
-  //     return
-  //       Positioned(
-  //         top: 24.5.h,
-  //         child: Container(
-  //           color: Colors.black,
-  //           height: 2.0.h,
-  //           width: 50.w,
-  //         ),
-  //       );
-  //   } else if (highLine.contains(randomNote)){
-  //     return
-  //       Positioned(
-  //         child: Container(
-  //           color: Colors.black,
-  //           height: 2.0.h,
-  //           width: 50.w,
-  //         ),
-  //       );
-  //   }
-  //   else {
-  //     return SizedBox();
-  //   }
-  // }
-  //
-  //
-  // // 덧줄용2
-  // Widget addLine2(PositionedNote randomNote, double left){
-  //
-  //   // highhigh line
-  //   List<PositionedNote> highHighLine = [
-  //     Note.d.inOctave(6),
-  //     Note.c.inOctave(6),
-  //   ];
-  //   // lowlow line
-  //   List<PositionedNote> lowLowLine = [
-  //     Note.a.inOctave(3),
-  //     Note.g.inOctave(3),
-  //   ];
-  //
-  //   if (highHighLine.contains(randomNote)){
-  //     return
-  //       Positioned(
-  //         top: 63.5.h,
-  //         left: left,
-  //         child: Container(
-  //           color: Colors.black,
-  //           height: 2.0.h,
-  //           width: 50.w,
-  //         ),
-  //       );
-  //   } else if (lowLowLine.contains(randomNote)) {
-  //     return
-  //       Positioned(
-  //         top: 222.5.h,
-  //         left: left,
-  //         child: Container(
-  //           color: Colors.black,
-  //           height: 2.0.h,
-  //           width: 50.w,
-  //         ),
-  //       );
-  //   }
-  //   else {
-  //     return SizedBox();
-  //   }
-  // }
-
 
   @override
   void initState() {

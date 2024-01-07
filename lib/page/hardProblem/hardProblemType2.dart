@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:lottie/lottie.dart';
-import '../problemFunc/problemFunc.dart';
-import '../problemFunc/problemVarList.dart';
-// import '../secondePageFunc/problemFunc.dart';
 import 'package:music_notes/music_notes.dart';
 import 'dart:math';
+import '../problemFunc/problemFunc.dart';
 import '../problemFunc/problemFuncDeco.dart';
+import '../problemFunc/problemVarList.dart';
+import 'package:intervalpractice/page/problemFunc/colorList.dart';
 
 class HardProblemType2 extends StatefulWidget {
   const HardProblemType2({super.key});
@@ -19,7 +17,6 @@ class HardProblemType2 extends StatefulWidget {
 
 class _HardProblemType2State extends State<HardProblemType2> {
 
-  // List<double> note_height_list = [31,42,55,67.5,81,94.5,108,121.5];
   List<double> randomItems = [];
   late List<int> randomNoteNumber ;
   late List<PositionedNote> randomNote ;
@@ -32,8 +29,6 @@ class _HardProblemType2State extends State<HardProblemType2> {
   List<List<String>> wrongProblemsAccidentalsSave = [];
 
   bool wrongProblemMode = false ;
-
-  // double downNoteLeft = 180.0;
 
   int numberOfRight = 0 ;
 
@@ -52,12 +47,15 @@ class _HardProblemType2State extends State<HardProblemType2> {
             (){
           setState(() {
             intervalNumber = number;
+            // hard라서 accidental까지 골라야함
           });
         } :
             (){
           // 정답이 null 이 아닐때?
         },
-        child: Text(number, style: answerButtonTextDesign,),
+        child: Text(number
+          , style: answerButtonTextDesign,
+        ),
         style: answerButtonDesign(intervalNumber,number,'hard',context)
     );
   }
@@ -102,12 +100,6 @@ class _HardProblemType2State extends State<HardProblemType2> {
         },
         child: Text(intervalName, style: answerButtonTextDesign,),
         style:answerButtonDesign(answerNote,answerCheck,'hard',context)
-        // ElevatedButton.styleFrom(
-        //   backgroundColor:
-        //   answerNote==answerCheck ?
-        //   Color(0xffccccff) :
-        //   Theme.of(context).colorScheme.onTertiary,
-        // )
     );
   }
 
@@ -115,8 +107,8 @@ class _HardProblemType2State extends State<HardProblemType2> {
     return SizedBox(
       child: Column(
         children: [
-          Text('변화표를 고르세요'),
-          const SizedBox(height: 10.0,),
+          Text('변화표를 고르세요',style: explainTextStyle),
+          const SizedBox(height: 25.0,),
           SizedBox(
             height: 30.0,
             child: Row(
@@ -134,6 +126,15 @@ class _HardProblemType2State extends State<HardProblemType2> {
                     '더블샵',
                     intervalNumber
                 ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 13.0,),
+          SizedBox(
+            height: 30.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
                 secondeElevatedButton(
                     '플랫',
                     intervalNumber
@@ -158,29 +159,20 @@ class _HardProblemType2State extends State<HardProblemType2> {
     }
   }
 
-
-
   void showBottomResult(Note answerNote){
 
-    print('randomNote $randomNote');
+    // 정답 계산 for 해석
+    List<dynamic> resultAll = getResultAllHard(randomNote, accidentals, false);
 
-    // List<dynamic> randomNoteAnswer = [] ;
-    //
-    // randomNoteAnswer.add(addAccidental(randomNote[0], accidentals[0]));
-    // randomNoteAnswer.add(addAccidental(randomNote[1], accidentals[1]));
-    //
-    // randomNoteAnswer.sort();
-    //
-    // String answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1]).toString();
-    // String answerRealKor = '';
-    //
-    // if (answerReal.length==2){
-    //   answerRealKor = intervalNameEngKor[answerReal.substring(0, 1)] +
-    //       answerReal.substring(1, 2);
-    // } else {
-    //   answerRealKor = intervalNameEngKor[answerReal.substring(0, 2)] +
-    //       answerReal.substring(2, 3);
-    // }
+    // 정답 배분/입력
+    List<dynamic> randomNoteAnswer = resultAll[0] ;
+    String answerRealKor = resultAll[2] ;
+
+    // 해석 해설
+    String commentaryResult = commentaryKeyReturn(randomNoteAnswer,
+        answerRealKor);
+
+    // 진짜 정답 계산
 
     PositionedNote realNote = (upDown != 0)?
     randomNote[0]:randomNote[1];
@@ -209,36 +201,63 @@ class _HardProblemType2State extends State<HardProblemType2> {
       });
 
       showModalBottomSheet<void>(
+        backgroundColor: color5,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0)
+            )
+        ),
         isDismissible:false,
         context: context,
         builder: (BuildContext context) {
           return Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            height: 200,
+            height: 140,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(realNoteAccidental.toString(),
+                  SizedBox(height: 7,),
+                  Stack(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('정답입니다!',
+                            style: TextStyle(
+                                color: color4,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          commentaryToolTip(commentaryResult,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 7,),
+                  Text('정답 : ' + answerRealKor + '도',
                     style: TextStyle(
-                      fontSize : 20.0,
+                      color: color4,
+                      fontSize : 14.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Text('정답입니다.'),
+                  SizedBox(height: 7,),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
-                  wrongProblemNextProblem('다음문제') :
-                  showResult() :
+                  wrongProblemNextProblem('다음문제','right') :
+                  showResult('right') :
                   (problemNumber!=10)?
-                  nextProblem('다음문제') :
-                  showResult(),
+                  nextProblem('다음문제','right') :
+                  showResult('right'),
                   // (problemNumber!=10)? nextProblem('다음문제') : showResult()
                 ],
               ),
@@ -259,38 +278,62 @@ class _HardProblemType2State extends State<HardProblemType2> {
       print('upDownWorngList $upDownWorngList');
 
       showModalBottomSheet<void>(
+        backgroundColor: Color(0xffd7b1b1),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+                topRight: Radius.circular(15.0)
+            )
+        ),
         isDismissible:false,
         context: context,
         builder: (BuildContext context) {
           return Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            height: 200,
+            height: 140,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(realNoteAccidental.toString(),
+                  Stack(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('오답입니다',
+                            style: TextStyle(
+                                color:color6,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          commentaryToolTip(commentaryResult),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 7,),
+                  Text('정답 : ' + answerRealKor + '도',
                     style: TextStyle(
-                      fontSize : 20.0,
+                      color: color6,
+                      fontSize : 14.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Text('오답입니다.'),
-                  Text('정답은 ${realNoteAccidental.toString()} 입니다.'),
-                  const Text('풀이 : ...'),
+                  SizedBox(height: 7,),
+                  // Text('정답은 ${answerRealKor} 입니다.'),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
-                  wrongProblemNextProblem('다음문제') :
-                  showResult() :
+                  wrongProblemNextProblem('다음문제','wrong') :
+                  showResult('wrong') :
                   (problemNumber!=10)?
-                  nextProblem('다음문제') :
-                  showResult(),
+                  nextProblem('다음문제','wrong') :
+                  showResult('wrong'),
                   // (problemNumber!=10)? nextProblem('다음문제') : showResult()
                 ],
               ),
@@ -301,7 +344,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
     }
   }
 
-  Widget nextProblem(String buttonText){
+  Widget nextProblem(String buttonText,String right_wrong){
     return ElevatedButton(
 
         onPressed: (){
@@ -337,7 +380,11 @@ class _HardProblemType2State extends State<HardProblemType2> {
 
           Navigator.pop(context);
 
-        }, child: Text(buttonText)
+        },
+      style: nextProblemButtonStyle('easy',right_wrong),
+      child: Text(buttonText,
+        style: nextProblemButtonTextStyle,
+      ),
     );
   }
 
@@ -395,7 +442,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
   }
 
 
-  Widget wrongProblemNextProblem(String buttonText){
+  Widget wrongProblemNextProblem(String buttonText, String right_wrong){
     return ElevatedButton(
 
         onPressed: (){
@@ -426,7 +473,11 @@ class _HardProblemType2State extends State<HardProblemType2> {
 
           Navigator.pop(context);
 
-        }, child: Text(buttonText)
+        },
+        style: nextProblemButtonStyle('easy',right_wrong),
+        child: Text(buttonText,
+          style: nextProblemButtonTextStyle,
+        ),
     );
   }
 
@@ -493,7 +544,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
     );
   }
 
-  Widget showResult(){
+  Widget showResult(String right_wrong){
 
     // Navigator.pop(context);
 
@@ -704,7 +755,10 @@ class _HardProblemType2State extends State<HardProblemType2> {
             },
           );
         },
-        child: Text('결과보기')
+        style: nextProblemButtonStyle('easy',right_wrong),
+        child: Text('결과보기',
+          style: nextProblemButtonTextStyle,
+        ),
     );
   }
 
