@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
-List<String> resultPageComment = [
-  '정말 멋져요! 내가 바로 음정박사🎉',
-  '잘 했어요! 나는 이제 음정석사🎉',
-  '힘을 내요! 나는 아직 음정학사🎉'
-];
+
 
 Widget resultPage(context,
     bool wrongProblemMode,
@@ -17,6 +13,37 @@ Widget resultPage(context,
     Widget wrongProblemSolveStart,
     onPressed_no,
     ){
+
+  int scoreResult ;
+
+  if (wrongProblemMode){
+    scoreResult =
+      (numberOfRight/wrongProblemsSave.length * 100).round();
+  } else {
+    scoreResult =
+    (numberOfRight/10 *
+        100).round();
+  }
+
+  List<String> resultPageCommentList = [
+    '정말 멋져요! 내가 바로 음정박사🎉',
+    '잘 했어요! 나는 이제 음정석사🎉',
+    '힘을 내요! 나는 아직 음정학사🎉'
+  ];
+
+  String resultPageComment ;
+
+  if (scoreResult>=70){
+    resultPageComment =
+        resultPageCommentList[0];
+  } else if (scoreResult>=30){
+    resultPageComment =
+    resultPageCommentList[1];
+  } else {
+    resultPageComment =
+    resultPageCommentList[2];
+  }
+
   return Container(
     color: Colors.white,
     height: MediaQuery.of(context).size.height * 1.0,
@@ -32,7 +59,7 @@ Widget resultPage(context,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 40,),
+                    SizedBox(height: 40.h,),
                     Stack(
                       children: [
                         Padding(
@@ -62,15 +89,15 @@ Widget resultPage(context,
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 5
                                 ),),
-                              height: 50,
-                              width: 200,),
+                              height: 65.h,
+                              width: 200.w,),
                           ),
                         ),
                         Center(
                           child: Container(
                             child: Column(
                                 children: [
-                                  SizedBox(height: 80,),
+                                  SizedBox(height: 100.h,),
                                   Container(
                                       child: Text('이번 문제의 점수는',
                                         style: TextStyle(
@@ -79,26 +106,25 @@ Widget resultPage(context,
                                             color: Colors.grey[700],
                                             decoration: TextDecoration.none,
                                         ),)),
-                                  // SizedBox(height: 30,),
+                                  SizedBox(height: 25.h,),
                                   Stack(
                                     children:[
                                       Container(
                                         child: Lottie.asset
                                           ('assets/animation/star2.json'),
-                                        height: 160,
+                                        height: 180.h,
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(15, 35, 0,0),
-                                        child: Container(
+                                        Container(
                                           child:
                                           wrongProblemMode?
                                           Column(
                                             children: [
                                               Container(
+                                                alignment: Alignment.centerRight,
+                                                width: 130.w,
+                                                height:100.h,
                                                 child: Text
-                                                  ('${
-                                                    (numberOfRight/wrongProblemsSave.length *
-                                                        100).round()}점',
+                                                  ('${scoreResult}점',
                                                     style: TextStyle(
                                                         color: Colors.black87,
                                                         decoration: TextDecoration.none,
@@ -107,73 +133,46 @@ Widget resultPage(context,
                                                     )
                                                 ),
                                               ),
+                                              SizedBox(height: 8.h,),
                                               Text('(${numberOfRight}/${wrongProblemsSave.length})',
-                                                style: TextStyle(fontSize: 15),)
+                                                style: TextStyle(fontSize: 20),
+                                              )
                                             ],
                                           ):Column(
                                             children: [
-                                              Text
-                                                ('${
-                                                  (numberOfRight/10 *
-                                                      100).round()}점',
-                                                  style: TextStyle(
-                                                      fontSize: 60,
-                                                      fontWeight: FontWeight.bold
-                                                  )
+                                              Container(
+                                                alignment: Alignment.centerRight,
+                                                width: 130.w,
+                                                height:100.h,
+                                                child: Text
+                                                  ('${scoreResult}점',
+                                                    style: TextStyle(
+                                                        fontSize: 60,
+                                                        fontWeight: FontWeight.bold
+                                                    )
+                                                ),
                                               ),
-                                              Text('(${numberOfRight}/10)',style: TextStyle(fontSize: 15),)
+                                              SizedBox(height: 8.h,),
+                                              Text('(${numberOfRight}/10)',
+                                                style: TextStyle(fontSize: 20),
+                                              )
                                             ],
                                           )
-                                          // Text
-                                          //   ('${
-                                          //     (numberOfRight/10 *
-                                          //         100).round()}점',
-                                          //     style: TextStyle(
-                                          //         fontSize: 60,
-                                          //         fontWeight: FontWeight.bold
-                                          //     )
-                                          // ),
-                                        ),
                                       ),
                                     ],),
-                                  SizedBox(height: 30,),
+                                  SizedBox(height: 17.h,),
                                   Container(
-                                      //
-                                      child: Text('정말 멋져요! 내가바로 음정고수🎉',
+                                      child: Text(resultPageComment,
                                           style: TextStyle(
                                               decoration: TextDecoration.none,
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.grey[700]
                                           ))),
-                                  SizedBox(height: 5,),
-                                  // Container(
-                                  //     child: wrongProblemMode?
-                                  //     Text
-                                  //       ('${wrongProblemsSave.length
-                                  //         .toString()}문제중에서 '
-                                  //         '${numberOfRight}문제를 '
-                                  //         '맞췄습니다',
-                                  //         style:
-                                  //         TextStyle(
-                                  //             fontSize: 20,
-                                  //             fontWeight: FontWeight.bold
-                                  //         )
-                                  //     ) : Text
-                                  //       ('10문제중에서 '
-                                  //         '${numberOfRight}문제를 '
-                                  //         '맞췄습니다',
-                                  //         style:
-                                  //         TextStyle(
-                                  //             fontSize: 20,
-                                  //             fontWeight: FontWeight.bold
-                                  //         )
-                                  //     )
-                                  // ),
-                                  SizedBox(height: 20,),
+                                  SizedBox(height: 30.h,),
                                   Container(
-                                    height: 40,
-                                    width: 300,
+                                    height: 56.h,
+                                    width: 300.w,
                                     child: wrongProblemSolveStart,
                                       // ('틀린 문제 다시 풀기'),
                                   )
@@ -187,7 +186,7 @@ Widget resultPage(context,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 1, 0, 2),
+                padding: EdgeInsets.fromLTRB(0, 1.h, 0, 1.h),
                 child: Divider(thickness: 1,
                   indent: 7,
                   endIndent: 7,),
@@ -200,8 +199,8 @@ Widget resultPage(context,
                       ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: Container(
-                          width: 600,
-                          height: 400,
+                          width: 600.w,
+                          height: 400.h,
                           color: Colors.grey[300],
                         ),),
                       Container(
@@ -216,13 +215,13 @@ Widget resultPage(context,
                                   fontWeight: FontWeight.bold
                               ),),
                             ),
-                            SizedBox(height: 15,),
+                            SizedBox(height: 17.h,),
                             Center(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   nextProblemResult,
-                                  SizedBox(width: 40,),
+                                  SizedBox(width: 40.w,),
                                   ElevatedButton(
                                     onPressed: onPressed_no,
                                     // onPressed: (){

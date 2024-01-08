@@ -824,16 +824,20 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
             ),
           ),
           // const SizedBox(height: 10.0,),
-          ElevatedButton(onPressed: (){
-            setState(() {
-              problemNumber = 10;
-            });
-          },
-              child: Text('test')
-          ),
-        // SizedBox(height: 30,),
+
           Text('[ 주어진 음정 : $answerRealKorTemp'+'도 ]',style: explainTextStyle2),
-          SizedBox(height: 50,),
+          Stack(
+              children:[
+                SizedBox(height: 55.h,),
+                // ElevatedButton(onPressed: (){
+                //   setState(() {
+                //     problemNumber = 10;
+                //   });
+                // },
+                //     child: Text('test')
+                // ),
+              ]
+          ),
           (upDown == 0)?
           (randomNoteNumber[0] < randomNoteNumber[1])?
           Text('주어진 음정을 위해 필요한 아래↓ 계이름은?',style: explainTextStyle):
@@ -841,12 +845,12 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
           (randomNoteNumber[0] < randomNoteNumber[1])?
           Text('주어진 음정을 위해 필요한 위↑ 계이름은?',style: explainTextStyle):
           Text('주어진 음정을 위해 필요한 아래↓ 계이름은?',style: explainTextStyle),
-          const SizedBox(height: 30.0,),
+          SizedBox(height: 30.0.h,),
           SizedBox(
             child: Column(
               children: [
                 SizedBox(
-                  height: 30.0,
+                  height: 40.0.h,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -857,9 +861,9 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 10.0,),
+                SizedBox(height: 13.0.h,),
                 SizedBox(
-                  height: 30.0,
+                  height: 40.0.h,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
