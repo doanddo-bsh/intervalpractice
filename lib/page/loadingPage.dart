@@ -30,7 +30,7 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffe8d3d6),
+      backgroundColor: Color(0xffd1e0ba),
       body: Stack(
           children: [
             Positioned(
@@ -57,7 +57,8 @@ class _LoadingPageState extends State<LoadingPage> {
                 child: Text('음 정 박 사',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20
+                      fontSize: 20,
+                      color: Color(0xff373f2c),
                   ),
                 )
             )
