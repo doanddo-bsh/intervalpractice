@@ -10,6 +10,8 @@ import 'hardProblem/hardProblemType1.dart';
 import 'hardProblem/hardProblemType2.dart';
 import 'hardProblem/hardProblemType3.dart';
 import 'easyProblem/resultTestPage.dart';
+import 'problemFunc/colorList.dart';
+
 
 class FirstProblemTypeList extends StatefulWidget {
   const FirstProblemTypeList({Key? key}) : super(key: key);
@@ -88,24 +90,25 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
   Widget _tabBar() {
     return TabBar(
       controller: tabController,
-      labelColor: Colors.orangeAccent, // 클릭한 텍스트 강조 컬러
-      unselectedLabelColor: Colors.blue, // 클릭 안된 텍스트 컬러
-      indicatorColor: Colors.red,
-      // indicator: UnderlineTabIndicator(
-      //   borderSide: BorderSide(width: 2),
-      //   insets: EdgeInsets.symmetric(horizontal: 120)
-      // ),
+      // labelColor: Colors.orangeAccent, // 클릭한 텍스트 강조 컬러
+      // unselectedLabelColor: Colors.blue, // 클릭 안된 텍스트 컬러
+      indicatorColor: Colors.black38,
+      indicator: UnderlineTabIndicator(
+        borderSide: BorderSide(width: 2),
+        insets: EdgeInsets.symmetric(horizontal: 40)
+      ),
       labelStyle: const TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
       ),
       unselectedLabelStyle: const TextStyle(
-        fontSize: 16,
+        fontSize: 15,
+        fontWeight: FontWeight.bold
       ),
-      tabs: const [
+      tabs:  [
         Tab(child: Text('Easy',
                         style: TextStyle(
-                            // color: Color(0xff377a46),
+                            color: Color(0xff3f8a36),
                             // fontWeight: FontWeight.bold,
                             // fontSize: 15,
                         ),
@@ -113,7 +116,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
         ),
         Tab(child: Text('Hard',
                       style: TextStyle(
-                          // color: Color(0xff873a32),
+                          color: Color(0xffc94040),
                           // fontWeight: FontWeight.bold,
                           // fontSize: 15
                       ),
@@ -303,34 +306,34 @@ class ListViewHard extends StatelessWidget {
                                     height: 73.h,
                                     width: 73.w,
                                     child: Image(
-                                        image: AssetImage('assets/music_2805328.png')
+                                        image: AssetImage('assets/musichard.png')
                                     ),
                                   ),
                                 ),
-                                Positioned(
-                                  top: 30,
-                                  left: 24,
-                                  child: SizedBox(
-                                    height: 30.h,
-                                    width: 15.w,
-                                    child: Image(
-                                        image: AssetImage('assets/sharp1.png',
-                                        ),
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 70,
-                                  left: 10,
-                                  child: SizedBox(
-                                    height: 30.h,
-                                    width: 30.w,
-                                    child: Image(
-                                        image: AssetImage('assets/flat1.png')
-                                    ),
-                                  ),
-                                ),
+                                // Positioned(
+                                //   top: 30,
+                                //   left: 24,
+                                //   child: SizedBox(
+                                //     height: 30.h,
+                                //     width: 15.w,
+                                //     child: Image(
+                                //         image: AssetImage('assets/sharp1.png',
+                                //         ),
+                                //       fit: BoxFit.fill,
+                                //     ),
+                                //   ),
+                                // ),
+                                // Positioned(
+                                //   top: 70,
+                                //   left: 10,
+                                //   child: SizedBox(
+                                //     height: 30.h,
+                                //     width: 30.w,
+                                //     child: Image(
+                                //         image: AssetImage('assets/flat1.png')
+                                //     ),
+                                //   ),
+                                // ),
                               ],),
                             ),
                             // SizedBox(width: 10,),

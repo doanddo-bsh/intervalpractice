@@ -98,7 +98,7 @@ class _ResultTestPageState extends State<ResultTestPage> {
                                   style: TextStyle(
                                       decoration: TextDecoration.none,
                                       color: Colors.white,
-                                      fontSize: 33,
+                                      fontSize: 30,
                                       fontWeight: FontWeight.bold,
                                     letterSpacing: 5
                                 ),),
