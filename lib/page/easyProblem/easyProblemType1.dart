@@ -496,7 +496,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                   wrongProblemMode = false ;
                   numberOfRight = 0 ;
                   Navigator.popUntil
-                    (context, ModalRoute.withName(Navigator.defaultRouteName));
+                    (context, ModalRoute.withName("/FirstProblemTypeList"));
                 },
               );
               //   Container(

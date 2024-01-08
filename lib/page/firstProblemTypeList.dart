@@ -11,8 +11,6 @@ import 'hardProblem/hardProblemType2.dart';
 import 'hardProblem/hardProblemType3.dart';
 import 'easyProblem/resultTestPage.dart';
 
-
-
 class FirstProblemTypeList extends StatefulWidget {
   const FirstProblemTypeList({Key? key}) : super(key: key);
 

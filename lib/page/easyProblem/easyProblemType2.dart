@@ -441,10 +441,11 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
               wrongProblemSolveStart('틀린 문제 다시 풀기'),
               (){
                 wrongProblems = [];
+                upDownWorngList = [];
                 wrongProblemMode = false ;
                 numberOfRight = 0 ;
                 Navigator.popUntil
-                  (context, ModalRoute.withName(Navigator.defaultRouteName));
+                  (context, ModalRoute.withName("/FirstProblemTypeList"));
               },
             );
           },

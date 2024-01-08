@@ -1,8 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'dart:async';
+import 'firstProblemTypeList.dart';
 
-class LoadingPage extends StatelessWidget {
+class LoadingPage extends StatefulWidget {
   const LoadingPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoadingPage> createState() => _LoadingPageState();
+}
+
+class _LoadingPageState extends State<LoadingPage> {
+
+  @override
+  void initState() {
+    super.initState();
+    Timer(
+        Duration(milliseconds: 1500),
+        () => Navigator.pushReplacement(
+            context,
+           MaterialPageRoute(
+               settings: RouteSettings(name: "/FirstProblemTypeList"),
+               builder: (context) => FirstProblemTypeList()
+           ),
+        ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,24 +38,17 @@ class LoadingPage extends StatelessWidget {
               left: MediaQuery.of(context).size.width/2-5 ,
               child: Container(
                 // color: Colors.grey,
-                child: Image.asset('assets/images/note11.png',
+                child: Image.asset('assets/note11.png',
                   fit: BoxFit.contain,
                   height: 80,
                   width: 80,),
               ),
             ),
-            // Positioned(
-            //   top: 0,
-            //   left: 0,
-            //   child:Container(
-            //     alignment: Alignment.center,
-            //     child: Lottie.asset('assets/images/Animation - 1700747597611.json'),
-            //   ),
-            // ),
             Center(
               child: Container(
                 alignment: Alignment.center,
-                child: Lottie.asset('assets/images/Animation - 1700747597611.json'),
+                child: Lottie.asset('assets/animation/Animation - 1700747597611'
+                    '.json'),
               ),
             ),
             Positioned(
