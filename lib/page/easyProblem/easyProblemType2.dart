@@ -850,7 +850,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 40.0.h,
+                  height: buttonSizeBasic,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -863,7 +863,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
                 ),
                 SizedBox(height: 13.0.h,),
                 SizedBox(
-                  height: 40.0.h,
+                  height: buttonSizeBasic,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

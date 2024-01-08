@@ -109,9 +109,9 @@ class _HardProblemType2State extends State<HardProblemType2> {
       child: Column(
         children: [
           Text('변화표를 고르세요',style: explainTextStyle),
-          SizedBox(height: 30.0.h,),
+          SizedBox(height: 20.0.h,),
           SizedBox(
-            height: 40.0.h,
+            height: buttonSizeBasic,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -132,7 +132,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
           ),
           SizedBox(height: 13.0.h,),
           SizedBox(
-            height: 40.0.h,
+            height: buttonSizeBasic,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -1171,7 +1171,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
           // }, child: Text('test')
           // ),
           Text('[ 주어진 음정 : $answerRealKorTemp'+'도 ]',style: explainTextStyle2),
-          SizedBox(height: 50.h,),
+          SizedBox(height: 30.h,),
           (upDown == 0)?
           (randomNoteNumber[0] < randomNoteNumber[1])?
           Text('주어진 음정을 위해 필요한 아래↓ 계이름은?',style: explainTextStyle):
@@ -1184,7 +1184,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 40.0.h,
+                  height: buttonSizeBasic,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -1197,7 +1197,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
                 ),
                 SizedBox(height: 13.0.h,),
                 SizedBox(
-                  height: 40.0.h,
+                  height: buttonSizeBasic,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -1211,7 +1211,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
               ],
             ),
           ),
-          SizedBox(height: 50.0.h,),
+          SizedBox(height: 30.0.h,),
           showIntervalName(intervalNumber),
           // SizedBox(height: 30,),
         ],

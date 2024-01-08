@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:async';
 import 'firstProblemTypeList.dart';
@@ -40,8 +41,8 @@ class _LoadingPageState extends State<LoadingPage> {
                 // color: Colors.grey,
                 child: Image.asset('assets/note11.png',
                   fit: BoxFit.contain,
-                  height: 80,
-                  width: 80,),
+                  height: 80.h,
+                  width: 80.w,),
               ),
             ),
             Center(

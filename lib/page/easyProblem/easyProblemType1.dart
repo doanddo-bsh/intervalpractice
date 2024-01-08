@@ -76,7 +76,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           Text('음정의 이름을 고르세요',style: explainTextStyle),
           SizedBox(height: 30.0.h,),
           SizedBox(
-            height: 40.0.h,
+            height: buttonSizeBasic,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -97,7 +97,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           ),
           SizedBox(height: 13.0.h,),
           SizedBox(
-            height: 40.0.h,
+            height: buttonSizeBasic,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -866,19 +866,19 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           Stack(
               children: [
                 SizedBox(height: 25.0.h,),
-                // ElevatedButton(onPressed: (){
-                //   setState(() {
-                //     problemNumber = 10;
-                //   });
-                // }, child: Text('test')
-                // ),
+                ElevatedButton(onPressed: (){
+                  setState(() {
+                    problemNumber = 10;
+                  });
+                }, child: Text('test')
+                ),
               ]
           ),
           SizedBox(
             child: Column(
               children: [
                 SizedBox(
-                  height: 40.0.h,
+                  height: buttonSizeBasic,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -891,7 +891,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                 ),
                 SizedBox(height: 13.0.h,),
                 SizedBox(
-                  height: 40.0.h,
+                  height: buttonSizeBasic,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

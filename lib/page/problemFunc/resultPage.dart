@@ -51,7 +51,7 @@ Widget resultPage(context,
       child:
       SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(2.0),
+          padding: EdgeInsets.fromLTRB(5.w,40.h,5.w,5.h),
           child: Column(
             children: [
               Container(
@@ -89,7 +89,7 @@ Widget resultPage(context,
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 5
                                 ),),
-                              height: 65.h,
+                              height: 57.h,
                               width: 200.w,),
                           ),
                         ),
@@ -134,8 +134,14 @@ Widget resultPage(context,
                                                 ),
                                               ),
                                               SizedBox(height: 8.h,),
-                                              Text('(${numberOfRight}/${wrongProblemsSave.length})',
-                                                style: TextStyle(fontSize: 20),
+                                              Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                children: [
+                                                  Text('(${numberOfRight}/${wrongProblemsSave.length})',
+                                                    style: TextStyle(fontSize: 20),
+                                                  ),
+                                                ],
                                               )
                                             ],
                                           ):Column(
@@ -153,8 +159,14 @@ Widget resultPage(context,
                                                 ),
                                               ),
                                               SizedBox(height: 8.h,),
-                                              Text('(${numberOfRight}/10)',
-                                                style: TextStyle(fontSize: 20),
+                                              Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                children: [
+                                                  Text('(${numberOfRight}/10)',
+                                                    style: TextStyle(fontSize: 20),
+                                                  ),
+                                                ],
                                               )
                                             ],
                                           )

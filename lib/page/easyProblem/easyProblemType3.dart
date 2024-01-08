@@ -76,7 +76,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
           Text('음정의 이름을 고르세요', style: explainTextStyle,),
           SizedBox(height: 30.0.h,),
           SizedBox(
-            height: 40.0.h,
+            height: buttonSizeBasic,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -97,7 +97,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
           ),
           SizedBox(height: 13.0.h,),
           SizedBox(
-            height: 40.0.h,
+            height: buttonSizeBasic,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -656,7 +656,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 40.0.h,
+                  height: buttonSizeBasic,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -669,7 +669,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
                 ),
                 SizedBox(height: 10.0.h,),
                 SizedBox(
-                  height: 40.0.h,
+                  height: buttonSizeBasic,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
