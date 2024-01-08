@@ -10,3 +10,5 @@ Color color5 = Color(0xffacd0a8) ; // 정답 창 안에 정답일 때 배경 색
 Color color6 = Color(0xff79474e) ; // 정답 창 안에 오답일 때 글자 색
 Color color7 = Color(0xffacd0a8) ; // 정답 창 안에 오답일 때 배경 색
 
+Color color8 = Color(0xffdedede) ; // firstProblemTypeList 의 타일의 테두리 색
+

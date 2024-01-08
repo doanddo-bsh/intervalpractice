@@ -991,33 +991,33 @@ class _HardProblemType3State extends State<HardProblemType3> {
   @override
   Widget build(BuildContext context) {
 
-    print('randomNote $randomNote');
-
-    List<dynamic> randomNoteAnswerTemp = [] ;
-
-    randomNoteAnswerTemp.add(addAccidental(randomNote[0], accidentals[0]));
-    randomNoteAnswerTemp.add(addAccidental(randomNote[1], accidentals[1]));
-
-    randomNoteAnswerTemp.sort();
-
-    String answerRealTemp = randomNoteAnswerTemp[0].interval
-      (randomNoteAnswerTemp[1])
-        .inverted
-        .toString();
-    String answerRealKorTemp = '';
-
-    print('answerRealTemp $answerRealTemp');
-
-    if (answerRealTemp.length==2){
-      answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 1)] +
-          answerRealTemp.substring(1, 2);
-    } else {
-      answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 2)] +
-          answerRealTemp.substring(2, 3);
-    }
-
+    // print('randomNote $randomNote');
+    //
+    // List<dynamic> randomNoteAnswerTemp = [] ;
+    //
+    // randomNoteAnswerTemp.add(addAccidental(randomNote[0], accidentals[0]));
+    // randomNoteAnswerTemp.add(addAccidental(randomNote[1], accidentals[1]));
+    //
+    // randomNoteAnswerTemp.sort();
+    //
+    // String answerRealTemp = randomNoteAnswerTemp[0].interval
+    //   (randomNoteAnswerTemp[1])
+    //     .inverted
+    //     .toString();
+    // String answerRealKorTemp = '';
+    //
     // print('answerRealTemp $answerRealTemp');
-    print('answerRealKorTemp $answerRealKorTemp');
+    //
+    // if (answerRealTemp.length==2){
+    //   answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 1)] +
+    //       answerRealTemp.substring(1, 2);
+    // } else {
+    //   answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 2)] +
+    //       answerRealTemp.substring(2, 3);
+    // }
+    //
+    // // print('answerRealTemp $answerRealTemp');
+    // print('answerRealKorTemp $answerRealKorTemp');
 
     return Scaffold(
       appBar: AppBar(

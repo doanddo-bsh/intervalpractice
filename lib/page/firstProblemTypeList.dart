@@ -11,6 +11,8 @@ import 'hardProblem/hardProblemType2.dart';
 import 'hardProblem/hardProblemType3.dart';
 import 'easyProblem/resultTestPage.dart';
 
+
+
 class FirstProblemTypeList extends StatefulWidget {
   const FirstProblemTypeList({Key? key}) : super(key: key);
 
@@ -138,9 +140,9 @@ class ListViewEasy extends StatelessWidget {
   ListViewEasy({Key? key}) : super(key: key);
 
   List<List<String>> mainTitleAndContentsEasy = [
-    ['음정 문제 1','악보 위의 음정을 계산하여\n정답을 맞춰보세요'],
-    ['음정 문제 2','주어진 음정을 보고 알맞은\n계이름을 계산하여 맞춰보세요'],
-    ['음정 문제 3','주어진 음정의 자리바꿈 음정을\n계산하여 정답을 맞춰보세요'],
+    ['음정 문제 1','악보 위의 음정을 계산하여','정답을 맞춰보세요'],
+    ['음정 문제 2','주어진 음정을 보고 알맞은','계이름을 계산하여 맞춰보세요'],
+    ['음정 문제 3','주어진 음정의 자리바꿈 음정을','계산하여 정답을 맞춰보세요'],
   ];
 
   // List problemPage = [EasyProblemType1(),EasyProblemType2(),EasyProblemType3()];
@@ -174,7 +176,7 @@ class ListViewEasy extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(
-                              color: Color(0xffdedede),
+                              color: color8,
                               width: 2.3
                           ),
                           borderRadius: BorderRadius.circular(17.0),
@@ -201,8 +203,8 @@ class ListViewEasy extends StatelessWidget {
                             Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children:[
-                                  SizedBox(height: 7,),
-                                  // const SizedBox(height: 15,),
+                                  // SizedBox(height: 7,),
+                                  SizedBox(height: 15.h,),
                                   Container(
                                     margin: EdgeInsets.all(10),
                                     width: 180.w,
@@ -219,7 +221,14 @@ class ListViewEasy extends StatelessWidget {
                                   SizedBox(
                                     width: 180.w,
                                     child: AutoSizeText(mainTitleAndContentsEasy[index][1],
-                                      maxLines: 4,
+                                      maxLines: 1,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 180.w,
+                                    child: AutoSizeText
+                                      (mainTitleAndContentsEasy[index][2],
+                                      maxLines: 1,
                                     ),
                                   ),
                                 ]
@@ -245,9 +254,9 @@ class ListViewHard extends StatelessWidget {
   ListViewHard({Key? key}) : super(key: key);
 
   List<List<String>> mainTitleAndContentsEasy = [
-    ['음정 문제1','악보 위의 음정을 계산하여\n정답을 맞춰보세요.'],
-    ['음정 문제2','주어진 음정을 보고 빈칸에 들어갈 \n계이름을 맞춰보세요.'],
-    ['음정 문제3','주어진 음정의 자리바꿈 음정을 \n계산하여 정답을 맞춰보세요.'],
+    ['음정 문제 1','악보 위의 음정을 계산하여','정답을 맞춰보세요'],
+    ['음정 문제 2','주어진 음정을 보고 알맞은','계이름을 계산하여 맞춰보세요'],
+    ['음정 문제 3','주어진 음정의 자리바꿈 음정을','계산하여 정답을 맞춰보세요'],
   ];
 
   List problemPage = [HardProblemType1(),HardProblemType2(),HardProblemType3()];
@@ -257,14 +266,14 @@ class ListViewHard extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: 530.h,
+          height: 550.h,
           child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
-              padding:const EdgeInsets.all(5),
+              padding:const EdgeInsets.all(10),
               itemCount:mainTitleAndContentsEasy.length,
               itemBuilder: (BuildContext context, int index){
                 return Padding(
-                  padding: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.all(7.5),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -280,8 +289,8 @@ class ListViewHard extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(
-                              color: Colors.grey,
-                              width: 2.0
+                              color: color8,
+                              width: 2.3
                           ),
                           borderRadius: BorderRadius.circular(17.0),
                         ),
@@ -325,20 +334,15 @@ class ListViewHard extends StatelessWidget {
                                   ),
                                 ),
                               ],),
-                              // decoration: BoxDecoration(
-                              //   image: DecorationImage(
-                              //     image: AssetImage('assets/music_2805328.png'),
-                              //   ),
-                              // ),
                             ),
                             // SizedBox(width: 10,),
                             Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children:[
-                                  const SizedBox(height: 15,),
+                                  SizedBox(height: 15.h,),
                                   Container(
                                     margin: EdgeInsets.all(10),
-                                    width: 200.w,
+                                    width: 180.w,
                                     child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(mainTitleAndContentsEasy[index][0],
@@ -348,11 +352,18 @@ class ListViewHard extends StatelessWidget {
                                           ),)
                                     ),
                                   ),
-                                  const SizedBox(height: 10,),
+                                  // const SizedBox(height: 7,),
                                   SizedBox(
-                                    width: 200.w,
+                                    width: 180.w,
                                     child: AutoSizeText(mainTitleAndContentsEasy[index][1],
-                                      maxLines: 4,
+                                      maxLines: 1,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 180.w,
+                                    child: AutoSizeText
+                                      (mainTitleAndContentsEasy[index][2],
+                                      maxLines: 1,
                                     ),
                                   ),
                                 ]
