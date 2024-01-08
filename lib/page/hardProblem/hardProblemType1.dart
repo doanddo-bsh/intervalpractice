@@ -80,9 +80,9 @@ class _HardProblemType1State extends State<HardProblemType1> {
       child: Column(
         children: [
           Text('음정의 이름을 고르세요', style: explainTextStyle,),
-          const SizedBox(height: 25.0,),
+          SizedBox(height: 30.0.h,),
           SizedBox(
-            height: 30.0,
+            height: 40.0.h,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -101,9 +101,9 @@ class _HardProblemType1State extends State<HardProblemType1> {
               ],
             ),
           ),
-          const SizedBox(height: 13.0,),
+          SizedBox(height: 13.0.h,),
           SizedBox(
-            height: 30.0,
+            height:40.0.h,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -133,7 +133,7 @@ class _HardProblemType1State extends State<HardProblemType1> {
 
   Widget showIntervalName(String? intervalNumber){
     if (intervalNumber == null){
-      return SizedBox(height: 100,);
+      return SizedBox(height: 10.h,);
     } else {
       return showIntervalNameBefore(intervalNumber);
     }
@@ -1095,12 +1095,12 @@ class _HardProblemType1State extends State<HardProblemType1> {
           // }, child: Text('test')
           // ),
           Text('음정의 간격을 고르세요',style: explainTextStyle),
-          const SizedBox(height: 25.0,),
+          SizedBox(height: 25.0.h,),
           SizedBox(
             child: Column(
               children: [
                 SizedBox(
-                  height: 30.0,
+                  height: 40.0.h,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -1111,9 +1111,9 @@ class _HardProblemType1State extends State<HardProblemType1> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 10.0,),
+                SizedBox(height: 13.0.h,),
                 SizedBox(
-                  height: 30.0,
+                  height:  40.0.h,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -1127,9 +1127,9 @@ class _HardProblemType1State extends State<HardProblemType1> {
               ],
             ),
           ),
-          SizedBox(height: 50.0,),
+          SizedBox(height: 60.0.h,),
           showIntervalName(intervalNumber),
-          SizedBox(height: 30,),
+          // SizedBox(height: 30,),
         ],
       ),
     );
