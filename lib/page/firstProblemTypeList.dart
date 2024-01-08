@@ -145,8 +145,8 @@ class ListViewEasy extends StatelessWidget {
     ['음정 문제 3','주어진 음정의 자리바꿈 음정을','계산하여 정답을 맞춰보세요'],
   ];
 
-  // List problemPage = [EasyProblemType1(),EasyProblemType2(),EasyProblemType3()];
-  List problemPage = [ResultTestPage(),EasyProblemType2(),EasyProblemType3()];
+  List problemPage = [EasyProblemType1(),EasyProblemType2(),EasyProblemType3()];
+  // List problemPage = [ResultTestPage(),EasyProblemType2(),EasyProblemType3()];
 
   @override
   Widget build(BuildContext context) {
