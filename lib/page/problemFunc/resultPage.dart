@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
+List<String> resultPageComment = [
+  '정말 멋져요! 내가 바로 음정박사🎉',
+  '잘 했어요! 나는 이제 음정석사🎉',
+  '힘을 내요! 나는 아직 음정학사🎉'
+];
+
 Widget resultPage(context,
     bool wrongProblemMode,
     int numberOfRight,
@@ -56,7 +62,7 @@ Widget resultPage(context,
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 5
                                 ),),
-                              height: 46,
+                              height: 50,
                               width: 200,),
                           ),
                         ),
@@ -69,6 +75,7 @@ Widget resultPage(context,
                                       child: Text('이번 문제의 점수는',
                                         style: TextStyle(
                                             fontSize: 25,
+                                            fontWeight: FontWeight.bold,
                                             color: Colors.grey[700],
                                             decoration: TextDecoration.none,
                                         ),)),
@@ -87,16 +94,18 @@ Widget resultPage(context,
                                           wrongProblemMode?
                                           Column(
                                             children: [
-                                              Text
-                                                ('${
-                                                  (numberOfRight/wrongProblemsSave.length *
-                                                      100).round()}점',
-                                                  style: TextStyle(
-                                                      color: Colors.black87,
-                                                      decoration: TextDecoration.none,
-                                                      fontSize: 60,
-                                                      fontWeight: FontWeight.bold
-                                                  )
+                                              Container(
+                                                child: Text
+                                                  ('${
+                                                    (numberOfRight/wrongProblemsSave.length *
+                                                        100).round()}점',
+                                                    style: TextStyle(
+                                                        color: Colors.black87,
+                                                        decoration: TextDecoration.none,
+                                                        fontSize: 60,
+                                                        fontWeight: FontWeight.bold
+                                                    )
+                                                ),
                                               ),
                                               Text('(${numberOfRight}/${wrongProblemsSave.length})',
                                                 style: TextStyle(fontSize: 15),)
@@ -127,12 +136,14 @@ Widget resultPage(context,
                                         ),
                                       ),
                                     ],),
-                                  SizedBox(height: 15,),
+                                  SizedBox(height: 30,),
                                   Container(
+                                      //
                                       child: Text('정말 멋져요! 내가바로 음정고수🎉',
                                           style: TextStyle(
                                               decoration: TextDecoration.none,
                                               fontSize: 18,
+                                              fontWeight: FontWeight.bold,
                                               color: Colors.grey[700]
                                           ))),
                                   SizedBox(height: 5,),
@@ -201,11 +212,11 @@ Widget resultPage(context,
                             Container(child:
                             Text('계속해서 문제를 푸시겠습니까?',
                               style: TextStyle(
-                                  fontSize: 17,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold
                               ),),
                             ),
-                            SizedBox(height: 13,),
+                            SizedBox(height: 15,),
                             Center(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,

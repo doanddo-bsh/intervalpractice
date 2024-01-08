@@ -465,6 +465,8 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
       ),
         child: Text('틀린 문제 다시 풀기',
           style: TextStyle(
+              fontSize: 13.5,
+              fontWeight: FontWeight.bold,
               color: Colors.grey[700]
           ),
         ),
