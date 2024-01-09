@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 
 
 Widget resultPage(context,
@@ -93,6 +93,17 @@ Widget resultPage(context,
                               width: 200.w,),
                           ),
                         ),
+                        Positioned(
+                          top: 100.h,
+                          left: 0.w,
+                          right: 0.w,
+                          child: Container(
+                            height: 220.h,
+                            width: 220.w,
+                            child: Lottie.asset
+                              ('assets/animation/star2.json'),
+                          ),
+                        ),
                         Center(
                           child: Container(
                             child: Column(
@@ -106,31 +117,39 @@ Widget resultPage(context,
                                             color: Colors.grey[700],
                                             decoration: TextDecoration.none,
                                         ),)),
-                                  SizedBox(height: 25.h,),
+                                  // SizedBox(height: 25.h,),
                                   Stack(
                                     children:[
-                                      Container(
-                                        child: Lottie.asset
-                                          ('assets/animation/star2.json'),
-                                        height: 180.h,
-                                      ),
+                                        Center(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                            children: [
+                                              SizedBox(
+                                                height: 200.h,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                         Container(
                                           child:
                                           wrongProblemMode?
                                           Column(
                                             children: [
+                                              SizedBox(height: 25.h,),
                                               Container(
-                                                alignment: Alignment.centerRight,
-                                                width: 130.w,
+                                                alignment: Alignment.center,
+                                                width: 150.w,
                                                 height:100.h,
-                                                child: Text
-                                                  ('${scoreResult}점',
+                                                child: AutoSizeText(
+                                                    '${scoreResult}점',
                                                     style: TextStyle(
                                                         color: Colors.black87,
                                                         decoration: TextDecoration.none,
                                                         fontSize: 60,
                                                         fontWeight: FontWeight.bold
-                                                    )
+                                                    ),
+                                                  maxLines: 1,
                                                 ),
                                               ),
                                               SizedBox(height: 8.h,),
@@ -138,25 +157,30 @@ Widget resultPage(context,
                                                 mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                                 children: [
-                                                  Text('(${numberOfRight}/${wrongProblemsSave.length})',
+                                                  AutoSizeText(
+                                                    '(${numberOfRight}/${wrongProblemsSave.length})',
                                                     style: TextStyle(fontSize: 20),
+                                                    maxLines: 1,
                                                   ),
                                                 ],
                                               )
                                             ],
                                           ):Column(
                                             children: [
+                                              SizedBox(height: 25.h,),
                                               Container(
-                                                alignment: Alignment.centerRight,
-                                                width: 130.w,
+                                                alignment: Alignment.center,
+                                                width: 150.w,
                                                 height:100.h,
-                                                child: Text
-                                                  ('${scoreResult}점',
+                                                child:
+                                                  AutoSizeText(
+                                                    '${scoreResult}점',
                                                     style: TextStyle(
                                                         fontSize: 60,
                                                         fontWeight: FontWeight.bold
-                                                    )
-                                                ),
+                                                      ),
+                                                    maxLines: 1,
+                                                  ),
                                               ),
                                               SizedBox(height: 8.h,),
                                               Row(

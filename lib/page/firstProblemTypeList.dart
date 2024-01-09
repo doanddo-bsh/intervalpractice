@@ -9,7 +9,6 @@ import 'easyProblem/easyProblemType3.dart';
 import 'hardProblem/hardProblemType1.dart';
 import 'hardProblem/hardProblemType2.dart';
 import 'hardProblem/hardProblemType3.dart';
-import 'easyProblem/resultTestPage.dart';
 import 'problemFunc/colorList.dart';
 
 
