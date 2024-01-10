@@ -4,6 +4,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+double buttonSizeBasic = 35.0.h ;
+
 bool setEquals<T>(Set<T>? a, Set<T>? b) {
   if (a == null) {
     return b == null;

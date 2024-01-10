@@ -441,10 +441,11 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
               wrongProblemSolveStart('틀린 문제 다시 풀기'),
               (){
                 wrongProblems = [];
+                upDownWorngList = [];
                 wrongProblemMode = false ;
                 numberOfRight = 0 ;
                 Navigator.popUntil
-                  (context, ModalRoute.withName(Navigator.defaultRouteName));
+                  (context, ModalRoute.withName("/FirstProblemTypeList"));
               },
             );
           },
@@ -849,7 +850,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 40.0.h,
+                  height: buttonSizeBasic,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -862,7 +863,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
                 ),
                 SizedBox(height: 13.0.h,),
                 SizedBox(
-                  height: 40.0.h,
+                  height: buttonSizeBasic,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

@@ -4,6 +4,7 @@ import 'page/easyProblem/easyProblemType1.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
 import '../page/scorePage.dart';
+import 'page/loadingPage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,7 +48,7 @@ class _MyAppState extends State<MyApp> {
         },
         home: child,
       ),
-      child: FirstProblemTypeList(),
+      child: LoadingPage(),
     );
   }
 }
