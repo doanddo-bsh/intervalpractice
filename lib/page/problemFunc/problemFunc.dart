@@ -350,7 +350,7 @@ Widget addAccidentals(String whatAccidental, double top, double left){
     return SizedBox();
   } else if (whatAccidental == 'sharp'){
     return Positioned(
-      top: top-10.0.h,
+      top: top-11.0.h,
       left: left-9.0.h,
       child: SizedBox(
         height: 38,
