@@ -667,12 +667,12 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           Stack(
               children: [
                 SizedBox(height: 25.0.h,),
-                ElevatedButton(onPressed: (){
-                  setState(() {
-                    problemNumber = 10;
-                  });
-                }, child: Text('test')
-                ),
+                // ElevatedButton(onPressed: (){
+                //   setState(() {
+                //     problemNumber = 10;
+                //   });
+                // }, child: Text('test')
+                // ),
               ]
           ),
           SizedBox(
