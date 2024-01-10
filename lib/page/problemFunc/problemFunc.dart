@@ -350,13 +350,13 @@ Widget addAccidentals(String whatAccidental, double top, double left){
     return SizedBox();
   } else if (whatAccidental == 'sharp'){
     return Positioned(
-      top: top,
-      left: left,
+      top: top-11.0.h,
+      left: left-9.0.h,
       child: SizedBox(
-        height: height,
-        width: weight,
+        height: 38,
+        width: 43,
         child: Image(
-          image: AssetImage('assets/sharp1.png',
+          image: AssetImage('assets/sharp2.png',
           ),
           fit: BoxFit.fill,
         ),
@@ -364,11 +364,11 @@ Widget addAccidentals(String whatAccidental, double top, double left){
     );
   } else if (whatAccidental == 'double sharp'){
     return Positioned(
-      top: top,
-      left: left,
+      top: top+2.0.h,
+      left: left+3.0.h,
       child: SizedBox(
-        height: height,
-        width: weight,
+        height: 19,
+        width: 19,
         child: Image(
           image: AssetImage('assets/doubleSharp.png',
           ),
@@ -378,13 +378,13 @@ Widget addAccidentals(String whatAccidental, double top, double left){
     );
   } else if (whatAccidental == 'flat'){
     return Positioned(
-      top: top,
-      left: left,
+      top: top-11.0.h,
+      left: left+12.0.h,
       child: SizedBox(
-        height: height,
-        width: weight,
+        height: 30,
+        width: 12,
         child: Image(
-          image: AssetImage('assets/flat1.png',
+          image: AssetImage('assets/flat2.png',
           ),
           fit: BoxFit.fill,
         ),
@@ -392,11 +392,11 @@ Widget addAccidentals(String whatAccidental, double top, double left){
     );
   } else {
     return Positioned(
-      top: top,
-      left: left,
+      top: top-10.5.h,
+      left: left+5.0.h,
       child: SizedBox(
-        height: height,
-        width: weight,
+        height: 30,
+        width: 20,
         child: Image(
           image: AssetImage('assets/doubleFlat.png',
           ),
