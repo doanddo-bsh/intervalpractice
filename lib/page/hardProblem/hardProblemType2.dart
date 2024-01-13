@@ -108,7 +108,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
     return SizedBox(
       child: Column(
         children: [
-          Text('변화표를 고르세요',style: explainTextStyle),
+          Text('임시표를 고르세요',style: explainTextStyle),
           SizedBox(height: 20.0.h,),
           SizedBox(
             height: buttonSizeBasic,
@@ -116,15 +116,15 @@ class _HardProblemType2State extends State<HardProblemType2> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 secondeElevatedButton(
+                    'b',
+                    intervalNumber
+                ),
+                secondeElevatedButton(
                     '없음',
                     intervalNumber
                 ),
                 secondeElevatedButton(
-                    '샵',
-                    intervalNumber
-                ),
-                secondeElevatedButton(
-                    '더블샵',
+                    '#',
                     intervalNumber
                 ),
               ],
@@ -137,11 +137,11 @@ class _HardProblemType2State extends State<HardProblemType2> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 secondeElevatedButton(
-                    '플랫',
+                    'bb',
                     intervalNumber
                 ),
                 secondeElevatedButton(
-                    '더블플랫',
+                    'x',
                     intervalNumber
                 ),
               ],
