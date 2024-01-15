@@ -17,7 +17,7 @@ TextStyle explainTextStyle =
 TextStyle(fontSize: 14,fontWeight: FontWeight.bold);
 
 TextStyle explainTextStyle2 =
-TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.red[300]);
+TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Color(0xff931919));
 
 // next problem button style
 ButtonStyle nextProblemButtonStyle(String easyOrHard,String right_wrong){
