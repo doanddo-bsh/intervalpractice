@@ -8,6 +8,9 @@ import '../problemFunc/problemFuncDeco.dart';
 import '../problemFunc/problemVarList.dart';
 import 'package:intervalpractice/page/problemFunc/colorList.dart';
 import '../problemFunc/resultPage.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../problemFunc/admobClass.dart';
+
 
 class HardProblemType2 extends StatefulWidget {
   const HardProblemType2({super.key});
@@ -1038,6 +1041,8 @@ class _HardProblemType2State extends State<HardProblemType2> {
   //
   // }
 
+  // for admob banner
+  BannerAd? _banner;
 
   @override
   void initState() {
@@ -1057,6 +1062,19 @@ class _HardProblemType2State extends State<HardProblemType2> {
     // randomNote.sort();
     accidentals = accidentalsFinal(randomNote);
     upDown = Random().nextInt(2);
+
+    // for admob banner
+    _createBannerAd();
+  }
+
+  // admob banner
+  void _createBannerAd(){
+    _banner = BannerAd(
+      size: AdSize.banner
+      , adUnitId: AdMobServiceBanner.bannerAdUnitId!
+      , listener: AdMobServiceBanner.bannerAdListener
+      , request: const AdRequest(),
+    )..load();
   }
 
   @override
@@ -1192,7 +1210,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
           // }, child: Text('test')
           // ),
           Text('[ 주어진 음정 : $answerRealKorTemp'+'도 ]',style: explainTextStyle2),
-          SizedBox(height: 30.h,),
+          SizedBox(height: 20.h,),
           (upDown == 0)?
           (randomNoteNumber[0] < randomNoteNumber[1])?
           Text('주어진 음정을 위해 필요한 아래↓ 계이름은?',style: explainTextStyle):
@@ -1200,7 +1218,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
           (randomNoteNumber[0] < randomNoteNumber[1])?
           Text('주어진 음정을 위해 필요한 위↑ 계이름은?',style: explainTextStyle):
           Text('주어진 음정을 위해 필요한 아래↓ 계이름은?',style: explainTextStyle),
-          SizedBox(height: 30.0.h,),
+          SizedBox(height: 20.0.h,),
           SizedBox(
             child: Column(
               children: [
@@ -1232,9 +1250,20 @@ class _HardProblemType2State extends State<HardProblemType2> {
               ],
             ),
           ),
-          SizedBox(height: 30.0.h,),
+          SizedBox(height: 20.0.h,),
           showIntervalName(intervalNumber),
           // SizedBox(height: 30,),
+          Expanded(child: SizedBox()),
+          // admob banner
+          Container(
+            alignment: Alignment.center,
+            width: _banner!.size.width.toDouble(),
+            height: _banner!.size.height.toDouble(),
+            child: AdWidget(
+              ad: _banner!,
+            ),
+          ),
+          Expanded(child: SizedBox()),
         ],
       ),
     );

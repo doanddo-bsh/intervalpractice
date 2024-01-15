@@ -7,6 +7,9 @@ import 'package:music_notes/music_notes.dart';
 import '../problemFunc/problemFuncDeco.dart';
 import '../problemFunc/colorList.dart';
 import '../problemFunc/resultPage.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../problemFunc/admobClass.dart';
+
 
 class HardProblemType1 extends StatefulWidget {
   const HardProblemType1({super.key});
@@ -975,6 +978,8 @@ class _HardProblemType1State extends State<HardProblemType1> {
   //
   // }
 
+  // for admob banner
+  BannerAd? _banner;
 
   @override
   void initState() {
@@ -994,6 +999,18 @@ class _HardProblemType1State extends State<HardProblemType1> {
     // randomNote.sort();
     accidentals = accidentalsFinal(randomNote);
 
+    // for admob banner
+    _createBannerAd();
+  }
+
+  // admob banner
+  void _createBannerAd(){
+    _banner = BannerAd(
+      size: AdSize.banner
+      , adUnitId: AdMobServiceBanner.bannerAdUnitId!
+      , listener: AdMobServiceBanner.bannerAdListener
+      , request: const AdRequest(),
+    )..load();
   }
 
   @override
@@ -1143,9 +1160,20 @@ class _HardProblemType1State extends State<HardProblemType1> {
               ],
             ),
           ),
-          SizedBox(height: 60.0.h,),
+          SizedBox(height: 30.0.h,),
           showIntervalName(intervalNumber),
           // SizedBox(height: 30,),
+          Expanded(child: SizedBox()),
+          // admob banner
+          Container(
+            alignment: Alignment.center,
+            width: _banner!.size.width.toDouble(),
+            height: _banner!.size.height.toDouble(),
+            child: AdWidget(
+              ad: _banner!,
+            ),
+          ),
+          SizedBox(height: 30.h,),
         ],
       ),
     );

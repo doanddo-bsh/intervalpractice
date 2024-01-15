@@ -5,11 +5,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
 import '../page/scorePage.dart';
 import 'page/loadingPage.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+// admob banner ref : https://deku.posstree.com/ko/flutter/admob/
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized(); //  WidgetsFlutterBinding.ensureInitialized();을 사용하여 Flutter가 초기화가 잘 되었는지 확인한 후
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp]); // 가로모드 막기
+  MobileAds.instance.initialize(); //MobileAds.instance.initialize();을 호출하여 MobileAds를 초기화 합니다.
   runApp(MyApp());
 }
 

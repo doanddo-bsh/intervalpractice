@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intervalpractice/page/problemFunc/colorList.dart';
 import 'thirdPageProblem.dart';
@@ -10,7 +11,10 @@ import 'hardProblem/hardProblemType1.dart';
 import 'hardProblem/hardProblemType2.dart';
 import 'hardProblem/hardProblemType3.dart';
 import 'problemFunc/colorList.dart';
-
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'problemFunc/admobClass.dart';
+import 'problemFunc/admobFunc.dart';
 
 class FirstProblemTypeList extends StatefulWidget {
   const FirstProblemTypeList({Key? key}) : super(key: key);
@@ -24,8 +28,28 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
 
   late TabController tabController = TabController(length: 2, vsync: this);
 
+  // ios IDFS setting ref :
+  // https://coicoitech.tistory
+  // .com/entry/Flutter-Tip-AppTrackingTransparency-%EC%B6%94%EC%A0%81-
+  // %ED%97%88%EC%9A%A9-dialog-%EB%9D%84%EC%9A%B0%EA%B8%B0
+
+  // for admob banner
+  BannerAd? _banner;
+
+  // ios IDFS setting
+  String _authStatus = 'Unknown';
+  // ios IDFS setting end
+
   @override
   void initState() {
+    // ios IDFS setting
+    WidgetsBinding.instance.addPostFrameCallback((_) =>initPlugin());
+    // ios IDFS setting end
+
+    // for admob banner
+    _createBannerAd();
+
+    // for tab bar
     tabController.addListener(() {});
     super.initState();
   }
@@ -42,6 +66,38 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
       backgroundColor: Colors.white,
       body: _body()
     );
+  }
+
+  // ios IDFS setting
+  Future<void> initPlugin() async { // 앱추적
+    try{
+      final TrackingStatus status =
+      await AppTrackingTransparency.trackingAuthorizationStatus;
+      setState(() => _authStatus = '$status');
+      // If the system can show an authorization request dialog
+      if (status == TrackingStatus.notDetermined){
+        await Future.delayed(const Duration(milliseconds: 200));
+        final TrackingStatus status =
+        await AppTrackingTransparency.requestTrackingAuthorization();
+        setState(() => _authStatus = '$status');
+      }
+    } on PlatformException {
+      setState(() => _authStatus = 'PlatformException was thrown');
+    }
+
+    final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
+    print("UUID: $uuid");
+  }
+  // ios IDFS setting end
+
+  // admob banner
+  void _createBannerAd(){
+    _banner = BannerAd(
+      size: AdSize.banner
+      , adUnitId: AdMobServiceBanner.bannerAdUnitId!
+      , listener: AdMobServiceBanner.bannerAdListener
+      , request: const AdRequest(),
+    )..load();
   }
 
   Widget _body() {
@@ -80,6 +136,16 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
                 ),
               ),
             ],
+          ),
+          Expanded(child: SizedBox()),
+          // admob banner
+          Container(
+            alignment: Alignment.center,
+            width: _banner!.size.width.toDouble(),
+            height: _banner!.size.height.toDouble(),
+            child: AdWidget(
+              ad: _banner!,
+            ),
           ),
         ],
       ),
