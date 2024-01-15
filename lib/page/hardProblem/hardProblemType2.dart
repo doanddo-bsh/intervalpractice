@@ -170,8 +170,16 @@ class _HardProblemType2State extends State<HardProblemType2> {
     String answerRealKor = resultAll[2] ;
 
     // 해석 해설
-    String commentaryResult = commentaryKeyReturn(randomNoteAnswer,
-        answerRealKor);
+    // type2 해설은 answerRealKor만 활용함
+    String commentaryResult = '' ;
+
+    if (commentaryType2[answerRealKor+'도'] == null) {
+      commentaryResult = '' ;
+    } else {
+      commentaryResult = commentaryType2[answerRealKor+'도']!;
+    }
+
+    print('commentaryResult $commentaryResult');
 
     // 진짜 정답 계산
 

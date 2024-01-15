@@ -42,6 +42,7 @@ dependencies:
   lottie: ^2.6.0
   avatar_glow: ^2.0.2
   just_the_tooltip: ^0.0.12
+  google_mobile_ads: ^4.0.0
 
 dev_dependencies:
   flutter_test:
