@@ -66,15 +66,15 @@ class _HardProblemType2State extends State<HardProblemType2> {
 
     late Note answerCheck;
 
-    if (intervalName == '샵'){
+    if (intervalName == '#'){ // 샵
       answerCheck = korToEngNote[intervalNumber].sharp;
-    } else if (intervalName == '더블샵'){
+    } else if (intervalName == 'x'){ // 더블샵
       answerCheck = korToEngNote[intervalNumber].sharp.sharp;
-    } else if(intervalName == '플랫'){
+    } else if(intervalName == 'b'){ // 플랫
       answerCheck = korToEngNote[intervalNumber].flat;
-    } else if (intervalName == '더블플랫'){
+    } else if (intervalName == 'bb'){ // 더블플랫
       answerCheck = korToEngNote[intervalNumber].flat.flat;
-    } else {
+    } else { // 없음
       answerCheck = korToEngNote[intervalNumber];
     }
 
@@ -82,13 +82,13 @@ class _HardProblemType2State extends State<HardProblemType2> {
         onPressed: answerNote==null?
             () {
           setState(() {
-            if (intervalName == '샵'){
+            if (intervalName == '#'){ // 샵
               answerNote = korToEngNote[intervalNumber].sharp;
-            } else if (intervalName == '더블샵'){
+            } else if (intervalName == 'x'){ // 더블샵
               answerNote = korToEngNote[intervalNumber].sharp.sharp;
-            } else if(intervalName == '플랫'){
+            } else if(intervalName == 'b'){ // 플랫
               answerNote = korToEngNote[intervalNumber].flat;
-            } else if (intervalName == '더블플랫'){
+            } else if (intervalName == 'bb'){ // 더블플랫
               answerNote = korToEngNote[intervalNumber].flat.flat;
             } else {
               answerNote = korToEngNote[intervalNumber];
@@ -170,8 +170,16 @@ class _HardProblemType2State extends State<HardProblemType2> {
     String answerRealKor = resultAll[2] ;
 
     // 해석 해설
-    String commentaryResult = commentaryKeyReturn(randomNoteAnswer,
-        answerRealKor);
+    // type2 해설은 answerRealKor만 활용함
+    String commentaryResult = '' ;
+
+    if (commentaryType2[answerRealKor+'도'] == null) {
+      commentaryResult = '' ;
+    } else {
+      commentaryResult = commentaryType2[answerRealKor+'도']!;
+    }
+
+    print('commentaryResult $commentaryResult');
 
     // 진짜 정답 계산
 
@@ -194,6 +202,17 @@ class _HardProblemType2State extends State<HardProblemType2> {
     } else {
       realNoteAccidental = realNote.note;
     }
+
+    String realNoteNoteKr = engToKorNote[realNote.note];
+    String realNoteAccidentalString = '';
+
+    if (realNoteAccidental.toString().length ==1){
+      realNoteAccidentalString = '';
+    } else {
+      realNoteAccidentalString = realNoteAccidental.toString().substring(1);
+    }
+
+    String realNoteNoteAccidentalKr = realNoteNoteKr + realNoteAccidentalString;
 
     if (answerNote == realNoteAccidental){
 
@@ -244,7 +263,8 @@ class _HardProblemType2State extends State<HardProblemType2> {
                     ],
                   ),
                   SizedBox(height: 7,),
-                  Text('정답 : ' + answerRealKor + '도',
+                  Text('정답 : ' + realNoteNoteAccidentalKr + ''
+                      '(${realNoteAccidental.toString()})',
                     style: TextStyle(
                       color: color4,
                       fontSize : 14.0,
@@ -319,7 +339,8 @@ class _HardProblemType2State extends State<HardProblemType2> {
                     ],
                   ),
                   SizedBox(height: 7,),
-                  Text('정답 : ' + answerRealKor + '도',
+                  Text('정답 : ' + realNoteNoteAccidentalKr + ''
+                      '(${realNoteAccidental.toString()})',
                     style: TextStyle(
                       color: color6,
                       fontSize : 14.0,

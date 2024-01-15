@@ -144,10 +144,14 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
     List<dynamic> randomNoteAnswer = resultAll[0] ;
     String answerReal = resultAll[1] ;
     String answerRealKor = resultAll[2] ;
+    String answerRealOriginalKor = resultAll[3] ;
 
     // 해석 해설
-    String commentaryResult = commentaryKeyReturn(randomNoteAnswer,
-        answerRealKor);
+    String commentaryResult =
+        '화면에 주어진 음정이 ' + answerRealOriginalKor + '입니다.\n'
+            '1 ⇔ 8, 2 ⇔ 7, 3 ⇔ 6, 4 ⇔ 5\n'
+            '완전 ⇔ 완전, 장 ⇔ 단, 증 ⇔ 감, 겹증 ⇔ 겹감'
+    ;
 
     print('commentaryResult $commentaryResult');
 

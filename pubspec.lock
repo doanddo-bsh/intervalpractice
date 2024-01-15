@@ -179,6 +179,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  google_mobile_ads:
+    dependency: "direct main"
+    description:
+      name: google_mobile_ads
+      sha256: d2ef5ec1e1f31137fc241bdeab3037c31062d387dd221fd884fb1160444c788b
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   http_multi_server:
     dependency: transitive
     description:
@@ -263,10 +271,10 @@ packages:
     dependency: transitive
     description:
       name: meta
-      sha256: "3c74dbf8763d36539f114c799d8a2d87343b5067e9d796ca22b5eb8437090ee3"
+      sha256: a6e590c838b18133bb482a2745ad77c5bb7715fb0451209e1a7567d416678b8e
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.1"
+    version: "1.10.0"
   mime:
     dependency: transitive
     description:
@@ -315,6 +323,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.3"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      sha256: "4820fbfdb9478b1ebae27888254d445073732dae3d6ea81f0b7e06d5dedc3f02"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.8"
   pointycastle:
     dependency: transitive
     description:
@@ -492,10 +508,10 @@ packages:
     dependency: transitive
     description:
       name: web
-      sha256: dc8ccd225a2005c1be616fe02951e2e342092edf968cf0844220383757ef8f10
+      sha256: afe077240a270dcfd2aafe77602b4113645af95d0ad31128cc02bce5ac5d5152
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.4-beta"
+    version: "0.3.0"
   web_socket_channel:
     dependency: transitive
     description:
@@ -512,6 +528,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
+  webview_flutter:
+    dependency: transitive
+    description:
+      name: webview_flutter
+      sha256: "71e1bfaef41016c8d5954291df5e9f8c6172f1f6ff3af01b5656456ddb11f94c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.4.4"
+  webview_flutter_android:
+    dependency: transitive
+    description:
+      name: webview_flutter_android
+      sha256: "161af93c2abaf94ef2192bffb53a3658b2d721a3bf99b69aa1e47814ee18cc96"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.13.2"
+  webview_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: webview_flutter_platform_interface
+      sha256: "80b40ae4fb959957eef9fa8970b6c9accda9f49fc45c2b75154696a8e8996cfe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.9.1"
+  webview_flutter_wkwebview:
+    dependency: transitive
+    description:
+      name: webview_flutter_wkwebview
+      sha256: "4d062ad505390ecef1c4bfb6001cd857a51e00912cc9dfb66edb1886a9ebd80c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.10.2"
   yaml:
     dependency: transitive
     description:
@@ -521,5 +569,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.1.0 <4.0.0"
+  dart: ">=3.2.0-194.0.dev <4.0.0"
   flutter: ">=3.13.0"

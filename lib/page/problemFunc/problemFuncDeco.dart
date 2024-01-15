@@ -120,8 +120,10 @@ String commentaryKeyReturn(List<dynamic> randomNoteAnswerSorted, String answerRe
 
   String? commentaryUpAccidentalResult =
   commentaryUpAccidental[returnTarget[2]];
+
   String? commentaryDownAccidentalResult =
   commentaryDownAccidental[returnTarget[1]];
+
   String commentaryBasicResult =
       '${commentaryBasic[returnTarget[0]][0]} ${answerRealKor}도 '
       '${commentaryBasic[returnTarget[0]][1]}'
@@ -285,6 +287,55 @@ Map commentaryDownAccidental = {
   "df"	:"아래에 있는 음에 붙은 더블플렛으로 인해 음정간 간격이 늘어나고",
 };
 
+// type2 commentary map
+Map<String,String> commentaryType2 = {
+  "감1도":"감1도는 원음정에 비해 음의 간격이 줄어듭니다 (완전1도 음정의 기본 반음수는 0개)",
+  "겹감1도":"겹감1도는 원음정에 비해 음의 간격이 2번 줄어듭니다 (완전1도 음정의 기본 반음수는 0개)",
+  "겹증1도":"겹증1도는 원음정에 비해 음의 간격이 2번 늘어납니다 (완전1도 음정의 기본 반음수는 0개)",
+  "완전1도":"완전1도는 반음이 0개입니다 (완전1도 음정의 기본 반음수는 0개)",
+  "증1도":"증1도는 원음정에 비해 음의 간격이 늘어납니다 (완전1도 음정의 기본 반음수는 0개)",
+  "감2도":"감2도는 원음정에 비해 음의 간격이 줄어듭니다 (장2도 음정의 기본 반음수는 0개)",
+  "겹감2도":"겹감2도는 원음정에 비해 음의 간격이 2번 줄어듭니다 (장2도 음정의 기본 반음수는 0개)",
+  "겹증2도":"겹증2도는 원음정에 비해 음의 간격이 2번 늘어납니다 (장2도 음정의 기본 반음수는 0개)",
+  "단2도":"단2도는 반음이 1개입니다 (장2도 음정의 기본 반음수는 0개)",
+  "장2도":"장2도는 반음이 0개입니다 (장2도 음정의 기본 반음수는 0개)",
+  "증2도":"증2도는 원음정에 비해 음의 간격이 줄어듭니다 (장2도 음정의 기본 반음수는 0개)",
+  "감3도":"감3도는 원음정에 비해 음의 간격이 줄어듭니다 (장3도 음정의 기본 반음수는 0개)",
+  "겹감3도":"겹감3도는 원음정에 비해 음의 간격이 2번 줄어듭니다 (장3도 음정의 기본 반음수는 0개)",
+  "겹증3도":"겹증3도는 원음정에 비해 음의 간격이 2번 늘어납니다 (장3도 음정의 기본 반음수는 0개)",
+  "단3도":"단3도는 반음이 1개입니다 (장3도 음정의 기본 반음수는 0개)",
+  "장3도":"장3도는 반음이 0개입니다 (장3도 음정의 기본 반음수는 0개)",
+  "증3도":"증3도는 원음정에 비해 음의 간격이 늘어납니다 (장3도 음정의 기본 반음수는 0개)",
+  "감4도":"감4도는 원음정에 비해 음의 간격이 줄어듭니다 (완전4도 음정의 기본 반음수는 1개)",
+  "겹감4도":"겹감4도는 원음정에 비해 음의 간격이 2번 줄어듭니다 (완전4도 음정의 기본 반음수는 1개)",
+  "겹증4도":"겹증4도는 원음정에 비해 음의 간격이 2번 늘어납니다 (완전4도 음정의 기본 반음수는 1개)",
+  "완전4도":"완전4도는 반음이 1개입니다 (완전4도 음정의 기본 반음수는 1개)",
+  "증4도":"증4도는 원음정에 비해 음의 간격이 늘어납니다 (완전4도 음정의 기본 반음수는 1개)",
+  "감5도":"감5도는 원음정에 비해 음의 간격이 줄어듭니다 (완전5도 음정의 기본 반음수는 1개)",
+  "겹감5도":"겹감5도는 원음정에 비해 음의 간격이 2번 줄어듭니다 (완전5도 음정의 기본 반음수는 1개)",
+  "겹증5도":"겹증5도는 원음정에 비해 음의 간격이 2번 늘어납니다 (완전5도 음정의 기본 반음수는 1개)",
+  "완전5도":"완전5도는 반음이 1개입니다 (완전5도 음정의 기본 반음수는 1개)",
+  "증5도":"증5도는 원음정에 비해 음의 간격이 늘어납니다 (완전5도 음정의 기본 반음수는 1개)",
+  "감6도":"감6도는 원음정에 비해 음의 간격이 줄어듭니다 (장6도 음정의 기본 반음수는 1개)",
+  "겹감6도":"겹감6도는 원음정에 비해 음의 간격이 2번 줄어듭니다 (장6도 음정의 기본 반음수는 1개)",
+  "겹증6도":"겹증6도는 원음정에 비해 음의 간격이 2번 늘어납니다 (장6도 음정의 기본 반음수는 1개)",
+  "단6도":"단6도는 반음이 2개입니다 (장6도 음정의 기본 반음수는 1개)",
+  "장6도":"장6도는 반음이 1개입니다 (장6도 음정의 기본 반음수는 1개)",
+  "증6도":"증6도는 원음정에 비해 음의 간격이 늘어납니다 (장6도 음정의 기본 반음수는 1개)",
+  "감7도":"감7도는 원음정에 비해 음의 간격이 줄어듭니다 (장7도 음정의 기본 반음수는 1개)",
+  "겹감7도":"겹감7도는 원음정에 비해 음의 간격이 2번 줄어듭니다 (장7도 음정의 기본 반음수는 1개)",
+  "겹증7도":"겹증7도는 원음정에 비해 음의 간격이 2번 늘어납니다 (장7도 음정의 기본 반음수는 1개)",
+  "단7도":"단7도는 반음이 2개입니다 (장7도 음정의 기본 반음수는 2개)",
+  "장7도":"장7도는 반음이 1개입니다 (장7도 음정의 기본 반음수는 1개)",
+  "증7도":"증7도는 원음정에 비해 음의 간격이 늘어납니다 (장7도 음정의 기본 반음수는 1개)",
+  "감8도":"감8도는 원음정에 비해 음의 간격이 줄어듭니다 (완전8도 음정의 기본 반음수는 2개)",
+  "겹감8도":"겹감8도는 원음정에 비해 음의 간격이 2번 줄어듭니다 (완전8도 음정의 기본 반음수는 2개)",
+  "완전8도":"완전8도는 반음이 2개입니다 (완전8도 음정의 기본 반음수는 0개)",
+  "증8도":"증8도는 원음정에 비해 음의 간격이 늘어납니다 (완전8도 음정의 기본 반음수는 2개)",
+  "겹증8도":"겹증8도는 원음정에 비해 음의 간격이 2번 늘어납니다 (완전8도 음정의 기본 반음수는 2개)",
+};
+
+
 
 // showBottomResult 내부에서
 // 음을 sort 한 뒤, 간격 및 한글 결과 내뱉는 함수
@@ -300,14 +351,22 @@ List<dynamic> getResultAllEasy(List<dynamic> randomNote, bool inverseTF){
 
   String answerReal;
 
+  String answerRealOriginal;
+
   if (inverseTF){
     // inverse True
     answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
         .inverted.toString();
+
+    answerRealOriginal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
+        .toString();
   } else {
     // inverse False
     answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
         .toString();
+
+    answerRealOriginal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
+        .inverted.toString();
   }
 
   String answerRealKor = '';
@@ -320,7 +379,17 @@ List<dynamic> getResultAllEasy(List<dynamic> randomNote, bool inverseTF){
         answerReal.substring(2, 3);
   }
 
-  return [randomNoteAnswer, answerReal, answerRealKor];
+  String answerRealOriginalKor = '';
+
+  if (answerRealOriginal.length==2){
+    answerRealOriginalKor = intervalNameEngKor[answerRealOriginal.substring(0, 1)] +
+        answerRealOriginal.substring(1, 2);
+  } else {
+    answerRealOriginalKor = intervalNameEngKor[answerRealOriginal.substring(0, 2)] +
+        answerRealOriginal.substring(2, 3);
+  }
+
+  return [randomNoteAnswer, answerReal, answerRealKor, answerRealOriginalKor];
 }
 
 List<dynamic> getResultAllHard(List<dynamic> randomNote,List<dynamic> accidentals, bool inverseTF){
@@ -334,14 +403,22 @@ List<dynamic> getResultAllHard(List<dynamic> randomNote,List<dynamic> accidental
 
   String answerReal;
 
+  String answerRealOriginal;
+
   if (inverseTF){
     // inverse True
     answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
         .inverted.toString();
+
+    answerRealOriginal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
+        .toString();
   } else {
     // inverse False
     answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
         .toString();
+
+    answerRealOriginal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
+        .inverted.toString();
   }
 
   String answerRealKor = '';
@@ -354,5 +431,15 @@ List<dynamic> getResultAllHard(List<dynamic> randomNote,List<dynamic> accidental
         answerReal.substring(2, 3);
   }
 
-  return [randomNoteAnswer, answerReal, answerRealKor];
+  String answerRealOriginalKor = '';
+
+  if (answerRealOriginal.length==2){
+    answerRealOriginalKor = intervalNameEngKor[answerRealOriginal.substring(0, 1)] +
+        answerRealOriginal.substring(1, 2);
+  } else {
+    answerRealOriginalKor = intervalNameEngKor[answerRealOriginal.substring(0, 2)] +
+        answerRealOriginal.substring(2, 3);
+  }
+
+  return [randomNoteAnswer, answerReal, answerRealKor, answerRealOriginalKor];
 }
