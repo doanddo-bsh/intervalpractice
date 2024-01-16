@@ -100,23 +100,8 @@ String commentaryKeyReturn(List<dynamic> randomNoteAnswerSorted, String answerRe
   String commentarySecondAccidental =
   classifyAccidentals(randomNoteAnswerSorted[1].note.accidental.toString());
 
-  // print('commentary target : ${commentaryTarget}');
-  //
-  // print('commentary first accidental origin : ${randomNoteAnswerSorted[0].note
-  //     .accidental.toString()}');
-  // print('commentary second accidental origin : ${randomNoteAnswerSorted[1].note
-  //     .accidental.toString()}');
-  //
-  // print('commentary first accidental : ${commentaryFirstAccidental}');
-  // print('commentary second accidental : ${commentarySecondAccidental}');
-
   List<String> returnTarget = [commentaryTarget,commentaryFirstAccidental,
     commentarySecondAccidental];
-
-  print('returnTarget $returnTarget');
-
-  // print('returnTarget ${returnTarget}');
-  // return returnTarget;
 
   String? commentaryUpAccidentalResult =
   commentaryUpAccidental[returnTarget[2]];
@@ -159,10 +144,6 @@ Widget lastRidingProgress(
   double.parse((problemNumber / wrongProblemsSave.length).toStringAsFixed
     (1)) :
   problemNumber / 10 ;
-
-  print(percent);
-  print('problemNumber $problemNumber');
-  print('wrongProblemsSave.length ${wrongProblemsSave.length}');
 
   return Column(
     children: [

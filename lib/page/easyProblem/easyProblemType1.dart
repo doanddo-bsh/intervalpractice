@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intervalpractice/page/problemFunc/providerCounter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:music_notes/music_notes.dart';
+import 'package:provider/provider.dart';
 import '../problemFunc/problemFunc.dart';
 import '../problemFunc/problemFuncDeco.dart';
 import '../problemFunc/problemVarList.dart';
@@ -41,7 +43,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           setState(() {intervalNumber = number;});
         } :
             (){
-          // print('정답이 이미 들어옴');
         },
         child: Text(
           number,
@@ -52,7 +53,8 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
   }
 
   // 음정과 음정이름을 함께 보여주는 버튼을 생성하는 함수
-  Widget secondeElevatedButton(String intervalName,String intervalNumber){
+  Widget secondeElevatedButton(String intervalName,String
+  intervalNumber){
     return ElevatedButton(
         onPressed: answerInterval==null?
             () {
@@ -62,7 +64,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                 });
               }:
             (){
-              // print('정답이 이미 들어옴');
+              // nothing
             },
         child: Text(
             intervalName + intervalNumber + '도',
@@ -152,8 +154,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     String commentaryResult = commentaryKeyReturn(randomNoteAnswer,
         answerRealKor);
 
-    print('commentaryResult $commentaryResult');
-
     if (answerInterval == answerReal){
 
       setState(() {
@@ -229,8 +229,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     } else {
 
       wrongProblems += [randomNoteNumber] ;
-
-      print('wrongProblems $wrongProblems');
 
       showModalBottomSheet<void>(
         backgroundColor: Color(0xffd7b1b1),
@@ -433,8 +431,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           numberOfRight = 0 ;
           // back up
           wrongProblemsSave = wrongProblems ;
-          print('wrongProblemsSave $wrongProblemsSave');
-          print('wrongProblems $wrongProblems');
+
           wrongProblems = [] ;
 
           setState(() {
@@ -554,9 +551,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
   @override
   Widget build(BuildContext context) {
 
-    print('randomNote $randomNote');
-
-
     List<dynamic> randomNoteAnswerTemp = [] ;
 
     randomNoteAnswerTemp.add(randomNote[0]);
@@ -575,9 +569,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
       answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 2)] +
           answerRealTemp.substring(2, 3);
     }
-
-    print('answerRealTemp $answerRealTemp');
-    print('answerRealKorTemp $answerRealKorTemp');
 
     return Scaffold(
       appBar: AppBar(
@@ -686,11 +677,12 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           Stack(
               children: [
                 SizedBox(height: 25.0.h,),
-                // ElevatedButton(onPressed: (){
-                //   setState(() {
-                //     problemNumber = 10;
-                //   });
-                // }, child: Text('test')
+                // ElevatedButton(onPressed: ()
+                //   {
+                //     setState(() {
+                //       // problemNumber = 10;
+                //     });
+                //   }, child: Text('test')
                 // ),
               ]
           ),

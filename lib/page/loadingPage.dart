@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:async';
 import 'firstProblemTypeList.dart';
+import 'package:provider/provider.dart';
+import 'problemFunc/providerCounter.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({Key? key}) : super(key: key);
@@ -22,12 +24,23 @@ class _LoadingPageState extends State<LoadingPage> {
             context,
            MaterialPageRoute(
                settings: RouteSettings(name: "/FirstProblemTypeList"),
-               builder: (context) => FirstProblemTypeList()
+               builder: (context) {
+                 return FirstProblemTypeList();
+                 // return
+                 // ChangeNotifierProvider<Counter>(
+                 //   create: (_) => Counter(),
+                 //   child: FirstProblemTypeList()
+                 // );
+               }
            ),
         ),
     );
   }
 
+  // ChangeNotifierProvider<Counter>(
+  // create: (_) => Counter(),
+  // child: problemPage[index]
+  // );
   @override
   Widget build(BuildContext context) {
     return Scaffold(

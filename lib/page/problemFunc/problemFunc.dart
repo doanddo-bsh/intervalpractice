@@ -128,11 +128,9 @@ List<String> accidentalsFinal(List<PositionedNote> randomNote){
     // no double
     if (noDiffDoubleList.contains(randomNote)|
         noDiffDoubleList.contains(randomNote2)){
-      print('nonolist 포함');
       String fixAccidental = accidentalsNoDouble();
       return [fixAccidental,fixAccidental];
     } else {
-      print('nonolist 미포함');
       return [accidentalsNoDouble(),accidentalsNoDouble()];
     }
   }
@@ -178,10 +176,6 @@ Widget addLineBasic(){
 
 // 덧줄용1
 Widget addLine1(PositionedNote randomNote){
-
-  print('addLine1 2.0.h ${2.0.h}');
-  print('addLine1 50.w ${50.w}');
-  print('addLine1 randomNote ${randomNote}');
 
   // middle line
   List<PositionedNote> middleLine = [
@@ -303,11 +297,6 @@ Widget addLine3(PositionedNote randomNote, double left){
 
 // 덧줄용2
 Widget addLine2(PositionedNote randomNote, double left){
-
-  print('addLine2 2.0.h ${2.0.h}');
-  print('addLine2 50.w ${50.w}');
-  print('addLine2 randomNote ${randomNote}');
-  print('addLine2 left ${left}');
 
   // highhigh line
   List<PositionedNote> highHighLine = [

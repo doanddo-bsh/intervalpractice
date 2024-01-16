@@ -3,7 +3,6 @@ import '../page/firstProblemTypeList.dart';
 import 'page/easyProblem/easyProblemType1.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
-import '../page/scorePage.dart';
 import 'page/loadingPage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 

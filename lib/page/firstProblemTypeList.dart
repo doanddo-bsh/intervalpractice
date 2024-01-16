@@ -3,7 +3,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intervalpractice/page/problemFunc/colorList.dart';
-import 'thirdPageProblem.dart';
 import 'easyProblem/easyProblemType1.dart';
 import 'easyProblem/easyProblemType2.dart';
 import 'easyProblem/easyProblemType3.dart';
@@ -15,6 +14,8 @@ import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'problemFunc/admobClass.dart';
 import 'problemFunc/admobFunc.dart';
+import 'problemFunc/providerCounter.dart';
+import 'package:provider/provider.dart';
 
 class FirstProblemTypeList extends StatefulWidget {
   const FirstProblemTypeList({Key? key}) : super(key: key);
@@ -202,9 +203,14 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
   }
 }
 
-class ListViewEasy extends StatelessWidget {
+class ListViewEasy extends StatefulWidget {
   ListViewEasy({Key? key}) : super(key: key);
 
+  @override
+  State<ListViewEasy> createState() => _ListViewEasyState();
+}
+
+class _ListViewEasyState extends State<ListViewEasy> {
   List<List<String>> mainTitleAndContentsEasy = [
     ['음정 문제 1','악보 위의 음정을 계산하여','정답을 맞춰보세요'],
     ['음정 문제 2','주어진 음정을 보고 알맞은','계이름을 계산하여 맞춰보세요'],
@@ -212,8 +218,8 @@ class ListViewEasy extends StatelessWidget {
   ];
 
   List problemPage = [EasyProblemType1(),EasyProblemType2(),EasyProblemType3()];
-  // List problemPage = [ResultTestPage(),EasyProblemType2(),EasyProblemType3()];
 
+  // List problemPage = [ResultTestPage(),EasyProblemType2(),EasyProblemType3()];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -232,8 +238,14 @@ class ListViewEasy extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                              problemPage[index]
+                              builder: (context) {
+                                return problemPage[index];
+                                //   return
+                                //   ChangeNotifierProvider<Counter>(
+                                //   create: (_) {return Counter();} ,
+                                //   child: problemPage[index]
+                                //   );
+                              }
                           )
                       );
                     },
@@ -316,9 +328,14 @@ class ListViewEasy extends StatelessWidget {
 }
 
 
-class ListViewHard extends StatelessWidget {
+class ListViewHard extends StatefulWidget {
   ListViewHard({Key? key}) : super(key: key);
 
+  @override
+  State<ListViewHard> createState() => _ListViewHardState();
+}
+
+class _ListViewHardState extends State<ListViewHard> {
   List<List<String>> mainTitleAndContentsEasy = [
     ['음정 문제 1','악보 위의 음정을 계산하여','정답을 맞춰보세요'],
     ['음정 문제 2','주어진 음정을 보고 알맞은','계이름을 계산하여 맞춰보세요'],
@@ -375,31 +392,8 @@ class ListViewHard extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                // Positioned(
-                                //   top: 30,
-                                //   left: 24,
-                                //   child: SizedBox(
-                                //     height: 30.h,
-                                //     width: 15.w,
-                                //     child: Image(
-                                //         image: AssetImage('assets/sharp1.png',
-                                //         ),
-                                //       fit: BoxFit.fill,
-                                //     ),
-                                //   ),
-                                // ),
-                                // Positioned(
-                                //   top: 70,
-                                //   left: 10,
-                                //   child: SizedBox(
-                                //     height: 30.h,
-                                //     width: 30.w,
-                                //     child: Image(
-                                //         image: AssetImage('assets/flat1.png')
-                                //     ),
-                                //   ),
-                                // ),
-                              ],),
+                                ],
+                              ),
                             ),
                             // SizedBox(width: 10,),
                             Column(
