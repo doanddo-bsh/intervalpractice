@@ -570,169 +570,175 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           answerRealTemp.substring(2, 3);
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: wrongProblemMode?
-        Text("오답문제",
-            style: appBarTitleStyle
-        ) :
-        Text("Easy",
-          style: appBarTitleStyle,
-        ),
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: appBarIcon,
-              onPressed: () {
-                Navigator.of(context).pop();
+    // return Consumer<Counter>(
+    //   builder: (context, counter, child) {
+        return Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: wrongProblemMode?
+            Text("오답문제",
+                style: appBarTitleStyle
+            ) :
+            Text("Easy",
+              style: appBarTitleStyle,
+            ),
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: appBarIcon,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                );
               },
-            );
-          },
-        ),
-      ),
-      body: Column(
-        children: [
-          lastRidingProgress(
-            wrongProblemMode,
-            problemNumber,
-            wrongProblemsSave,
-            'easy',
-            context,
-          ),
-          // SizedBox(height: 5,),
-          Container(
-            height: 300.h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              // border: Border.all(color: Colors.black)
             ),
-            child: Stack(
-              children: [
-                Positioned(
-                  top: 0.h,
-                  bottom: 0.h,
-                  left: 10.0.w,
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child:Image.asset('assets/treble_clef_ff_cut.png',
-                        height: 180.h,
+          ),
+          body: Column(
+            children: [
+              lastRidingProgress(
+                wrongProblemMode,
+                problemNumber,
+                wrongProblemsSave,
+                'easy',
+                context,
+              ),
+              // SizedBox(height: 5,),
+              Container(
+                height: 300.h,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  // border: Border.all(color: Colors.black)
+                ),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 0.h,
+                      bottom: 0.h,
+                      left: 10.0.w,
+                      child: Align(
+                          alignment: Alignment.centerLeft,
+                          child:Image.asset('assets/treble_clef_ff_cut.png',
+                            height: 180.h,
+                          ),
                       ),
-                  ),
-                ),
-                returnLine(90.0),
-                returnLine(116.5),
-                returnLine(143.0),
-                returnLine(169.5),
-                returnLine(196.0),
-                Positioned(
-                  top: randomItems[0].h,
-                  left: 130.w,
-                  child: SizedBox(
-                    height: 26.5.h,
-                    child: Stack(
-                      children: [
-                        Image.asset('assets/whole_note_lean.png'),
-                        addLine1(randomNote[0]),
-                      ],
                     ),
-                  ),
-                ),
-                addLine3(randomNote[0],130.w),
-                // Positioned(
-                //   top: 50.75.h, // [50.75,3,Note.a.inOctave(5)],
-                //   left: 130.w,
-                //   child: SizedBox(
-                //     height: 26.5.h,
-                //     child: Stack(
-                //       children: [
-                //         // Image.asset('assets/whole_note_lean.png'),
-                //         addLine1(randomNote[0]),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-                // addLine2(randomNote[0],130.w),
-                // 음표 2
-                Positioned(
-                  top: randomItems[1].h,
-                  left: 230.w,
-                  child: SizedBox(
-                    height: 26.5.h,
-                    child: Stack(
-                      children: [
-                        Image.asset('assets/whole_note_lean.png'),
-                        addLine1(randomNote[1]),
-                      ],
+                    returnLine(90.0),
+                    returnLine(116.5),
+                    returnLine(143.0),
+                    returnLine(169.5),
+                    returnLine(196.0),
+                    Positioned(
+                      top: randomItems[0].h,
+                      left: 130.w,
+                      child: SizedBox(
+                        height: 26.5.h,
+                        child: Stack(
+                          children: [
+                            Image.asset('assets/whole_note_lean.png'),
+                            addLine1(randomNote[0]),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+                    addLine3(randomNote[0],130.w),
+                    // Positioned(
+                    //   top: 50.75.h, // [50.75,3,Note.a.inOctave(5)],
+                    //   left: 130.w,
+                    //   child: SizedBox(
+                    //     height: 26.5.h,
+                    //     child: Stack(
+                    //       children: [
+                    //         // Image.asset('assets/whole_note_lean.png'),
+                    //         addLine1(randomNote[0]),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    // addLine2(randomNote[0],130.w),
+                    // 음표 2
+                    Positioned(
+                      top: randomItems[1].h,
+                      left: 230.w,
+                      child: SizedBox(
+                        height: 26.5.h,
+                        child: Stack(
+                          children: [
+                            Image.asset('assets/whole_note_lean.png'),
+                            addLine1(randomNote[1]),
+                          ],
+                        ),
+                      ),
+                    ),
+                    addLine3(randomNote[1],230.w),
+                  ],
                 ),
-                addLine3(randomNote[1],230.w),
-              ],
-            ),
-          ),
-          // const SizedBox(height: 10.0,),
+              ),
+              // const SizedBox(height: 10.0,),
 
-          Text('음정의 간격을 고르세요',style: explainTextStyle),
-          Stack(
-              children: [
-                SizedBox(height: 25.0.h,),
-                // ElevatedButton(onPressed: ()
-                //   {
-                //     setState(() {
-                //       // problemNumber = 10;
-                //     });
-                //   }, child: Text('test')
-                // ),
-              ]
-          ),
-          SizedBox(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: buttonSizeBasic,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      intervalNumberButton('1'),
-                      intervalNumberButton('2'),
-                      intervalNumberButton('3'),
-                      intervalNumberButton('4'),
-                    ],
-                  ),
+              Text('음정의 간격을 고르세요',style: explainTextStyle),
+              Stack(
+                  children: [
+                    SizedBox(height: 25.0.h,),
+                    // ElevatedButton(onPressed: ()
+                    //   {
+                    //     setState(() {
+                    //       // counter.increment();
+                    //       // print('counter.count ${counter.count}');
+                    //       // problemNumber = 10;
+                    //     });
+                    //   }, child: Text('test')
+                    // ),
+                  ]
+              ),
+              SizedBox(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: buttonSizeBasic,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          intervalNumberButton('1'),
+                          intervalNumberButton('2'),
+                          intervalNumberButton('3'),
+                          intervalNumberButton('4'),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 13.0.h,),
+                    SizedBox(
+                      height: buttonSizeBasic,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          intervalNumberButton('5'),
+                          intervalNumberButton('6'),
+                          intervalNumberButton('7'),
+                          intervalNumberButton('8'),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 13.0.h,),
-                SizedBox(
-                  height: buttonSizeBasic,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      intervalNumberButton('5'),
-                      intervalNumberButton('6'),
-                      intervalNumberButton('7'),
-                      intervalNumberButton('8'),
-                    ],
-                  ),
+              ),
+              SizedBox(height: 30.0.h,),
+              showIntervalName(intervalNumber),
+              // SizedBox(height: 30.h,),
+              Expanded(child: SizedBox()),
+              // admob banner
+              Container(
+                alignment: Alignment.center,
+                width: _banner!.size.width.toDouble(),
+                height: _banner!.size.height.toDouble(),
+                child: AdWidget(
+                  ad: _banner!,
                 ),
-              ],
-            ),
+              ),
+              SizedBox(height: 30.h,),
+            ],
           ),
-          SizedBox(height: 30.0.h,),
-          showIntervalName(intervalNumber),
-          // SizedBox(height: 30.h,),
-          Expanded(child: SizedBox()),
-          // admob banner
-          Container(
-            alignment: Alignment.center,
-            width: _banner!.size.width.toDouble(),
-            height: _banner!.size.height.toDouble(),
-            child: AdWidget(
-              ad: _banner!,
-            ),
-          ),
-          SizedBox(height: 30.h,),
-        ],
-      ),
-    );
-  }
+        );
+      }
+    // );
+  // }
 }
