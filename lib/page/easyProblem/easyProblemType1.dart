@@ -679,6 +679,12 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
               Stack(
                   children: [
                     SizedBox(height: 25.0.h,),
+                    Consumer<Counter>(builder: (context, data, child){
+                      return Text('${data.count}', style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),);
+                    }),
                     // ElevatedButton(onPressed: ()
                     //   {
                     //     setState(() {

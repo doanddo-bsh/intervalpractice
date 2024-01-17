@@ -28,7 +28,7 @@ class _LoadingPageState extends State<LoadingPage> {
                  // return FirstProblemTypeList();
                  return
                  ChangeNotifierProvider<Counter>(
-                   create: (_) => Counter(),
+                   create: (context) => Counter(),
                    child: FirstProblemTypeList()
                  );
                }
