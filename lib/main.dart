@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intervalpractice/page/problemFunc/providerCounter.dart';
 import '../page/firstProblemTypeList.dart';
 import 'page/easyProblem/easyProblemType1.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
 import 'page/loadingPage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:provider/provider.dart';
 
 // admob banner ref : https://deku.posstree.com/ko/flutter/admob/
 Future<void> main() async {
@@ -34,23 +36,25 @@ class _MyAppState extends State<MyApp> {
     //   home: SecondePageProblem(),
     // );
 
-    return ScreenUtilInit(
-      designSize: Size(375, 844),
-      builder: (context, child) => MaterialApp(
-        title: 'itervalpractice',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-          useMaterial3: true,
+    return ChangeNotifierProvider(create: (context)=>CounterClass(),
+      child: ScreenUtilInit(
+        designSize: Size(375, 844),
+        builder: (context, child) => MaterialApp(
+          title: 'itervalpractice',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+            useMaterial3: true,
+          ),
+          builder: (context, child){
+            return MediaQuery(
+                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                child: child!);
+          },
+          home: child,
         ),
-        builder: (context, child){
-          return MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-              child: child!);
-        },
-        home: child,
+        child: LoadingPage(),
       ),
-      child: LoadingPage(),
     );
   }
 }

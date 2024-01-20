@@ -120,6 +120,9 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              // ElevatedButton(onPressed: (){
+              //   print(Provider.of<CounterClass>(context, listen: false).solvedProblemCount);
+              // }, child: Text('show')),
               Padding(
                 padding: EdgeInsets.fromLTRB(10.w, 10.h, 30.w, 30.h),
                 child: Tooltip(
@@ -219,9 +222,63 @@ class _ListViewEasyState extends State<ListViewEasy> {
 
   List problemPage = [EasyProblemType1(),EasyProblemType2(),EasyProblemType3()];
 
+  // for full screen ad
+  InterstitialAd? _interstitialAd;
+
+  final fullScreenAdUnitId = AdMobServiceFullScreen.fullScreenAdUnitId ;
+
+  /// Loads an interstitial ad.
+  void loadAd() {
+    InterstitialAd.load(
+        adUnitId: fullScreenAdUnitId!,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            ad.fullScreenContentCallback = FullScreenContentCallback(
+              // Called when the ad showed the full screen content.
+                onAdShowedFullScreenContent: (ad) {},
+                // Called when an impression occurs on the ad.
+                onAdImpression: (ad) {},
+                // Called when the ad failed to show full screen content.
+                onAdFailedToShowFullScreenContent: (ad, err) {
+                  // Dispose the ad here to free resources.
+                  ad.dispose();
+                },
+                // Called when the ad dismissed full screen content.
+                onAdDismissedFullScreenContent: (ad) {
+                  // Dispose the ad here to free resources.
+                  ad.dispose();
+                },
+                // Called when a click is recorded for an ad.
+                onAdClicked: (ad) {});
+
+            debugPrint('$ad loaded.');
+            // Keep a reference to the ad so you can show it later.
+            _interstitialAd = ad;
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+          },
+        ));
+  }
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    print('ad load');
+    loadAd();
+
+    super.initState();
+  }
+
   // List problemPage = [ResultTestPage(),EasyProblemType2(),EasyProblemType3()];
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: [
         Container(
@@ -235,6 +292,21 @@ class _ListViewEasyState extends State<ListViewEasy> {
                   padding: const EdgeInsets.all(7.5),
                   child: GestureDetector(
                     onTap: () {
+
+                      // show full ad if problemSolvedCount more then 30
+                      if (Provider.of<CounterClass>(context, listen: false)
+                          .solvedProblemCount >= criticalNumberSolved) {
+
+                        loadAd();
+
+                        if (_interstitialAd != null) {
+                          _interstitialAd?.show();
+
+                          Provider.of<CounterClass>(context, listen: false)
+                              .resetSolvedProblemCount();
+                        }
+                      }
+
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -344,6 +416,59 @@ class _ListViewHardState extends State<ListViewHard> {
 
   List problemPage = [HardProblemType1(),HardProblemType2(),HardProblemType3()];
 
+  // for full screen ad
+  InterstitialAd? _interstitialAd;
+
+  final fullScreenAdUnitId = AdMobServiceFullScreen.fullScreenAdUnitId ;
+
+  /// Loads an interstitial ad.
+  void loadAd() {
+    InterstitialAd.load(
+        adUnitId: fullScreenAdUnitId!,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            ad.fullScreenContentCallback = FullScreenContentCallback(
+              // Called when the ad showed the full screen content.
+                onAdShowedFullScreenContent: (ad) {},
+                // Called when an impression occurs on the ad.
+                onAdImpression: (ad) {},
+                // Called when the ad failed to show full screen content.
+                onAdFailedToShowFullScreenContent: (ad, err) {
+                  // Dispose the ad here to free resources.
+                  ad.dispose();
+                },
+                // Called when the ad dismissed full screen content.
+                onAdDismissedFullScreenContent: (ad) {
+                  // Dispose the ad here to free resources.
+                  ad.dispose();
+                },
+                // Called when a click is recorded for an ad.
+                onAdClicked: (ad) {});
+
+            debugPrint('$ad loaded.');
+            // Keep a reference to the ad so you can show it later.
+            _interstitialAd = ad;
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+          },
+        ));
+  }
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    print('ad load');
+    loadAd();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -359,6 +484,21 @@ class _ListViewHardState extends State<ListViewHard> {
                   padding: const EdgeInsets.all(7.5),
                   child: GestureDetector(
                     onTap: () {
+
+                      // show full ad if problemSolvedCount more then 30
+                      if (Provider.of<CounterClass>(context, listen: false)
+                          .solvedProblemCount >= criticalNumberSolved) {
+
+                        loadAd();
+
+                        if (_interstitialAd != null) {
+                          _interstitialAd?.show();
+
+                          Provider.of<CounterClass>(context, listen: false)
+                              .resetSolvedProblemCount();
+                        }
+                      }
+
                       Navigator.push(
                           context,
                           MaterialPageRoute(

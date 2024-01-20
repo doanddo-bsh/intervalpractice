@@ -33,3 +33,26 @@ class AdMobServiceBanner {
     onAdClosed: (ad) => debugPrint('Ad closed'),
   );
 }
+
+class AdMobServiceFullScreen {
+
+  static String? get fullScreenAdUnitId{
+    if (kReleaseMode){
+      // 실전 모드
+      if (Platform.isAndroid) {
+        return 'ca-app-pub-7191096510845066/3789278562';
+      } else if (Platform.isIOS){
+        return 'ca-app-pub-7191096510845066/9450984570';
+      }
+    } else {
+      // test mode
+      // ref : https://developers.google.com/admob/flutter/test-ads?hl=ko
+      // ref : https://luvris2.tistory.com/714
+      if (Platform.isAndroid) {
+        return 'ca-app-pub-3940256099942544/1033173712';
+      } else if (Platform.isIOS){
+        return 'ca-app-pub-3940256099942544/4411468910';
+      }
+    }
+  }
+}

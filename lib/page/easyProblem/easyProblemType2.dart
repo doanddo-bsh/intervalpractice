@@ -10,7 +10,9 @@ import 'package:intervalpractice/page/problemFunc/colorList.dart';
 import '../problemFunc/resultPage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../problemFunc/admobClass.dart';
-
+import 'package:provider/provider.dart';
+import '../problemFunc/providerCounter.dart';
+import '../problemFunc/admobFunc.dart';
 
 class EasyProblemType2 extends StatefulWidget {
   const EasyProblemType2({super.key});
@@ -43,6 +45,9 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
     return ElevatedButton(
         onPressed: answerInterval==null?
             (){
+          // for Full-page advertisement count solved problem
+          Provider.of<CounterClass>(context, listen: false).incrementSolvedProblemCount();
+
           setState(() {
             intervalNumber = number;
             // type2는 여기서 결과를 보여줌
@@ -283,10 +288,64 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
     );
   }
 
+
+  // for full screen ad
+  InterstitialAd? _interstitialAd;
+
+  final fullScreenAdUnitId = AdMobServiceFullScreen.fullScreenAdUnitId ;
+
+  /// Loads an interstitial ad.
+  void loadAd() {
+    InterstitialAd.load(
+        adUnitId: fullScreenAdUnitId!,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            ad.fullScreenContentCallback = FullScreenContentCallback(
+              // Called when the ad showed the full screen content.
+                onAdShowedFullScreenContent: (ad) {},
+                // Called when an impression occurs on the ad.
+                onAdImpression: (ad) {},
+                // Called when the ad failed to show full screen content.
+                onAdFailedToShowFullScreenContent: (ad, err) {
+                  // Dispose the ad here to free resources.
+                  ad.dispose();
+                },
+                // Called when the ad dismissed full screen content.
+                onAdDismissedFullScreenContent: (ad) {
+                  // Dispose the ad here to free resources.
+                  ad.dispose();
+                },
+                // Called when a click is recorded for an ad.
+                onAdClicked: (ad) {});
+
+            debugPrint('$ad loaded.');
+            // Keep a reference to the ad so you can show it later.
+            _interstitialAd = ad;
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+          },
+        ));
+  }
+
   Widget nextProblemResult(){
     return ElevatedButton(
 
         onPressed: (){
+
+          // show full ad if problemSolvedCount more then 30
+          if (Provider.of<CounterClass>(context, listen: false)
+              .solvedProblemCount >= criticalNumberSolved) {
+            loadAd();
+            if (_interstitialAd != null) {
+              _interstitialAd?.show();
+              Provider.of<CounterClass>(context, listen: false)
+                  .resetSolvedProblemCount();
+            }
+          }
 
           numberOfRight = 0 ;
           wrongProblems = [];

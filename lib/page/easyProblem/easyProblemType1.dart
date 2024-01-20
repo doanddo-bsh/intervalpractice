@@ -11,7 +11,7 @@ import 'package:intervalpractice/page/problemFunc/colorList.dart';
 import '../problemFunc/resultPage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../problemFunc/admobClass.dart';
-
+import '../problemFunc/admobFunc.dart';
 
 class EasyProblemType1 extends StatefulWidget {
   const EasyProblemType1({super.key});
@@ -58,6 +58,9 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     return ElevatedButton(
         onPressed: answerInterval==null?
             () {
+                // for Full-page advertisement count solved problem
+                Provider.of<CounterClass>(context, listen: false).incrementSolvedProblemCount();
+
                 setState(() {
                   answerInterval = intervalNameKorEng[intervalName] + intervalNumber;
                   showBottomResult(answerInterval!);
@@ -338,10 +341,65 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
   }
 
 
+  // for full screen ad
+  InterstitialAd? _interstitialAd;
+
+  final fullScreenAdUnitId = AdMobServiceFullScreen.fullScreenAdUnitId ;
+
+  /// Loads an interstitial ad.
+  void loadAd() {
+    InterstitialAd.load(
+        adUnitId: fullScreenAdUnitId!,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            ad.fullScreenContentCallback = FullScreenContentCallback(
+              // Called when the ad showed the full screen content.
+                onAdShowedFullScreenContent: (ad) {},
+                // Called when an impression occurs on the ad.
+                onAdImpression: (ad) {},
+                // Called when the ad failed to show full screen content.
+                onAdFailedToShowFullScreenContent: (ad, err) {
+                  // Dispose the ad here to free resources.
+                  ad.dispose();
+                },
+                // Called when the ad dismissed full screen content.
+                onAdDismissedFullScreenContent: (ad) {
+                  // Dispose the ad here to free resources.
+                  ad.dispose();
+                },
+                // Called when a click is recorded for an ad.
+                onAdClicked: (ad) {});
+
+            debugPrint('$ad loaded.');
+            // Keep a reference to the ad so you can show it later.
+            _interstitialAd = ad;
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+          },
+        ));
+  }
+
   Widget nextProblemResult(){
     return ElevatedButton(
 
         onPressed: (){
+
+          // show full ad if problemSolvedCount more then 30
+          if (Provider.of<CounterClass>(context, listen: false)
+              .solvedProblemCount >= criticalNumberSolved) {
+            loadAd();
+            if (_interstitialAd != null) {
+              _interstitialAd?.show();
+              Provider.of<CounterClass>(context, listen: false)
+                  .resetSolvedProblemCount();
+            }
+          }
+
+
 
           numberOfRight = 0 ;
           wrongProblems = [];
@@ -679,16 +737,21 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
               Stack(
                   children: [
                     SizedBox(height: 25.0.h,),
-                    Consumer<Counter>(builder: (context, data, child){
-                      return Text('${data.count}', style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),);
-                    }),
+                    // Consumer<CounterClass>(builder: (context, data, child){
+                    //     return
+                    //       Text('${data.count}',
+                    //           style: TextStyle(
+                    //             fontWeight: FontWeight.bold,
+                    //             fontSize: 20,
+                    //           ),
+                    //       );
+                    //   }
+                    // ),
                     // ElevatedButton(onPressed: ()
                     //   {
                     //     setState(() {
-                    //       // counter.increment();
+                    //       Provider.of<CounterClass>(context, listen: false)
+                    //       .increment();
                     //       // print('counter.count ${counter.count}');
                     //       // problemNumber = 10;
                     //     });

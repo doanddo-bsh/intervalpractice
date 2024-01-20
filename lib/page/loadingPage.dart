@@ -24,13 +24,13 @@ class _LoadingPageState extends State<LoadingPage> {
             context,
            MaterialPageRoute(
                settings: RouteSettings(name: "/FirstProblemTypeList"),
-               builder: (context) {
-                 // return FirstProblemTypeList();
-                 return
-                 ChangeNotifierProvider<Counter>(
-                   create: (context) => Counter(),
-                   child: FirstProblemTypeList()
-                 );
+               builder: (BuildContext context) {
+                 return FirstProblemTypeList();
+                 // return
+                 // ChangeNotifierProvider<CounterClass>(
+                 //   create: (context) => CounterClass(),
+                 //   child: FirstProblemTypeList()
+                 // );
                }
            ),
         ),
