@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intervalpractice/page/problemFunc/colorList.dart';
+import 'problemFunc/colorList.dart';
+import 'settingPage/settingPage.dart';
 import 'easyProblem/easyProblemType1.dart';
 import 'easyProblem/easyProblemType2.dart';
 import 'easyProblem/easyProblemType3.dart';
 import 'hardProblem/hardProblemType1.dart';
 import 'hardProblem/hardProblemType2.dart';
 import 'hardProblem/hardProblemType3.dart';
-import 'problemFunc/colorList.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'problemFunc/admobClass.dart';
@@ -65,6 +65,24 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('음정박사'),
+        actions: [
+          IconButton(
+              onPressed: (){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) {
+                          return SettingPage();
+                        }
+                    )
+                );
+              },
+              icon: Icon(Icons.settings)
+          )
+        ],
+      ),
       body: _body()
     );
   }
@@ -106,7 +124,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
       child: Column(
         children: [
           Container(
-            height: 610.h,
+            height: 590.h,
             child: Column(
               children: [
                 _tabBar(),
@@ -124,7 +142,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
               //   print(Provider.of<CounterClass>(context, listen: false).solvedProblemCount);
               // }, child: Text('show')),
               Padding(
-                padding: EdgeInsets.fromLTRB(10.w, 10.h, 30.w, 30.h),
+                padding: EdgeInsets.fromLTRB(10.w, 00.h, 30.w, 10.h),
                 child: Tooltip(
                   textStyle: TextStyle(color: Colors.black54),
                   decoration: BoxDecoration(color: Color(0xffeeeeee),
@@ -282,10 +300,10 @@ class _ListViewEasyState extends State<ListViewEasy> {
     return Column(
       children: [
         Container(
-          height: 550.h,
+          height: 530.h,
           child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
-              padding:const EdgeInsets.all(10),
+              padding: EdgeInsets.fromLTRB(10.w,10.h,10.w,0),
               itemCount:mainTitleAndContentsEasy.length,
               itemBuilder: (BuildContext context, int index){
                 return Padding(
@@ -474,10 +492,10 @@ class _ListViewHardState extends State<ListViewHard> {
     return Column(
       children: [
         Container(
-          height: 550.h,
+          height: 530.h,
           child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
-              padding:const EdgeInsets.all(10),
+              padding: EdgeInsets.fromLTRB(10.w,10.h,10.w,0),
               itemCount:mainTitleAndContentsEasy.length,
               itemBuilder: (BuildContext context, int index){
                 return Padding(
