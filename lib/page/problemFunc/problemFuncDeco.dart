@@ -182,7 +182,7 @@ Widget commentaryToolTip(String commentaryResult){
         decoration: BoxDecoration(color: Color(0xffeeeeee),
             borderRadius: BorderRadius.circular(10)),
         triggerMode: TooltipTriggerMode.tap,
-        showDuration: Duration(milliseconds: 2500),
+        showDuration: Duration(milliseconds: 7000),
         message:
         commentaryResult,
         child: Icon(

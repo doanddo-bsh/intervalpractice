@@ -1,7 +1,7 @@
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 // import 'admobClass.dart';
 
-int criticalNumberSolved = 3 ;
+int criticalNumberSolved = 30 ;
 
 // BannerAd? _banner;
 //

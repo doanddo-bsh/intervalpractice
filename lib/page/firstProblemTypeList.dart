@@ -148,7 +148,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
                   decoration: BoxDecoration(color: Color(0xffeeeeee),
                   borderRadius: BorderRadius.circular(10)),
                   triggerMode: TooltipTriggerMode.tap,
-                  showDuration: Duration(milliseconds: 2500),
+                  showDuration: Duration(milliseconds: 5000),
                   message:
                   'Easy는 임시표가 없는 기본 계이름입니다\nHard는 여러종류의 임시표를 포함하고 있습니다',
                   child: Icon(
