@@ -87,7 +87,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
                       )
                       );
                     },
-                    icon: Icon(Icons.privacy_tip_rounded)
+                    icon: Icon(Icons.settings)
                 );
               } else {
                 return SizedBox();

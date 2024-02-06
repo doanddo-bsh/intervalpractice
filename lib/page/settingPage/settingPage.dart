@@ -86,14 +86,14 @@ class _SettingPageState extends State<SettingPage> {
               ),
             ),
           ),
-          ListTile(
-            title: const Text('Privacy Policy'),
-            leading: const Icon(Icons.privacy_tip_rounded),
-            visualDensity: VisualDensity.compact,
-            onTap: (){
-
-            },
-          ),
+          // ListTile(
+          //   title: const Text('Privacy Policy'),
+          //   leading: const Icon(Icons.privacy_tip_rounded),
+          //   visualDensity: VisualDensity.compact,
+          //   onTap: (){
+          //
+          //   },
+          // ),
           // if (snapshot.hasData && snapshot.data == true)
             const Divider(
               indent: 12.0,
@@ -102,6 +102,7 @@ class _SettingPageState extends State<SettingPage> {
           // if (snapshot.hasData && snapshot.data == true)
             ListTile(
               title: const Text('Change privacy preferences'),
+              leading: const Icon(Icons.privacy_tip_rounded),
               onTap: () async {
                 final scaffoldMessenger = ScaffoldMessenger.of(context);
 
