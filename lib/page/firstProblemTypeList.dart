@@ -16,6 +16,9 @@ import 'problemFunc/admobClass.dart';
 import 'problemFunc/admobFunc.dart';
 import 'problemFunc/providerCounter.dart';
 import 'package:provider/provider.dart';
+import 'settingPage/settingPage.dart';
+import 'package:async_preferences/async_preferences.dart';
+import 'settingPage/initialization_helper.dart';
 
 class FirstProblemTypeList extends StatefulWidget {
   const FirstProblemTypeList({Key? key}) : super(key: key);
@@ -43,6 +46,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
 
   @override
   void initState() {
+    super.initState();
     // ios IDFS setting
     WidgetsBinding.instance.addPostFrameCallback((_) =>initPlugin());
     // ios IDFS setting end
@@ -52,7 +56,9 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
 
     // for tab bar
     tabController.addListener(() {});
-    super.initState();
+
+    // gdpr
+    _future = _isUnderGdpr();
   }
 
   @override
@@ -68,19 +74,39 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
       appBar: AppBar(
         title: Text('음정박사'),
         actions: [
-          IconButton(
-              onPressed: (){
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) {
-                          return SettingPage();
-                        }
-                    )
+          FutureBuilder<bool>(
+            future:_future,
+            builder: (context,snapshot){
+              if (snapshot.hasData && snapshot.data == true) {
+                return IconButton(
+                    onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return SettingPage();
+                          }
+                      )
+                      );
+                    },
+                    icon: Icon(Icons.privacy_tip_rounded)
                 );
-              },
-              icon: Icon(Icons.settings)
-          )
+              } else {
+                return SizedBox();
+              }
+            },
+          ),
+          // IconButton(
+          //     onPressed: (){
+          //       Navigator.push(
+          //           context,
+          //           MaterialPageRoute(
+          //               builder: (context) {
+          //                 return SettingPage();
+          //               }
+          //           )
+          //       );
+          //     },
+          //     icon: Icon(Icons.settings)
+          // )
         ],
       ),
       body: _body()
@@ -117,6 +143,15 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
       , listener: AdMobServiceBanner.bannerAdListener
       , request: const AdRequest(),
     )..load();
+  }
+
+  // GDPR setting
+  final _initializationHelper = InitializationHelper();
+  late final Future<bool> _future ;
+
+  Future<bool> _isUnderGdpr() async {
+    final preferences = AsyncPreferences();
+    return await preferences.getInt('IABTCF_gdprApplies') == 1;
   }
 
   Widget _body() {

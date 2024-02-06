@@ -5,6 +5,7 @@ import 'dart:async';
 import 'firstProblemTypeList.dart';
 import 'package:provider/provider.dart';
 import 'problemFunc/providerCounter.dart';
+import 'settingPage/initialize_screen.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({Key? key}) : super(key: key);
@@ -25,7 +26,9 @@ class _LoadingPageState extends State<LoadingPage> {
            MaterialPageRoute(
                settings: RouteSettings(name: "/FirstProblemTypeList"),
                builder: (BuildContext context) {
-                 return FirstProblemTypeList();
+                 return InitializeScreen(
+                         targetWidget:FirstProblemTypeList()
+                        );
                  // return
                  // ChangeNotifierProvider<CounterClass>(
                  //   create: (context) => CounterClass(),
@@ -75,7 +78,20 @@ class _LoadingPageState extends State<LoadingPage> {
                       color: Color(0xff373f2c),
                   ),
                 )
-            )
+            ),
+            Positioned(
+                top: MediaQuery.of(context).size.height-70.h,
+                left: 0,
+                right: 0,
+                child: Text("© Copyright 2024, seohwa lee",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12.0,
+                    color: Color(0xff373f2c),
+                  ),
+                  textAlign: TextAlign.center,
+                )
+            ),
           ]
       ),
     );
