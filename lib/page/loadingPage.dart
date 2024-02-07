@@ -21,7 +21,7 @@ class _LoadingPageState extends State<LoadingPage> {
     super.initState();
     Timer(
         Duration(milliseconds: 1500),
-        () => Navigator.push(
+        () => Navigator.pushReplacement(
             context,
            MaterialPageRoute(
                builder: (BuildContext context) {

@@ -157,7 +157,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
 
     // 해석 해설
     String commentaryResult =
-        '화면에 주어진 음정이 ' + answerRealOriginalKor + '입니다.\n'
+        '화면에 주어진 음정이 ' + answerRealOriginalKor + '도 입니다.\n'
             '1 ⇔ 8, 2 ⇔ 7, 3 ⇔ 6, 4 ⇔ 5\n'
             '완전 ⇔ 완전, 장 ⇔ 단, 증 ⇔ 감, 겹증 ⇔ 겹감'
     ;
