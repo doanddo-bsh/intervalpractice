@@ -21,19 +21,13 @@ class _LoadingPageState extends State<LoadingPage> {
     super.initState();
     Timer(
         Duration(milliseconds: 1500),
-        () => Navigator.pushReplacement(
+        () => Navigator.push(
             context,
            MaterialPageRoute(
-               settings: RouteSettings(name: "/FirstProblemTypeList"),
                builder: (BuildContext context) {
                  return InitializeScreen(
                          targetWidget:FirstProblemTypeList()
                         );
-                 // return
-                 // ChangeNotifierProvider<CounterClass>(
-                 //   create: (context) => CounterClass(),
-                 //   child: FirstProblemTypeList()
-                 // );
                }
            ),
         ),

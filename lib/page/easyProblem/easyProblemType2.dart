@@ -114,58 +114,57 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
                 topRight: Radius.circular(15.0)
             )
         ),
+        enableDrag: false,
         isDismissible:false,
         context: context,
         builder: (BuildContext context) {
           return Container(
-            height: 140,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  SizedBox(height: 7,),
-                  Stack(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('정답입니다!',
-                            style: TextStyle(
-                                color: color4,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0
-                            ),
+            height: 185.h,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(height: 27.h,),
+                Stack(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('정답입니다!',
+                          style: TextStyle(
+                              color: color4,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0
                           ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          commentaryToolTip(commentaryResult),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 7,),
-                  Text('정답 : ' + ptichNameRealKr,
-                    style: TextStyle(
-                      color: color4,
-                      fontSize : 13.0,
-                      fontWeight: FontWeight.bold,
+                        ),
+                      ],
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        commentaryToolTip(commentaryResult),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 7,),
+                Text('정답 : ' + ptichNameRealKr,
+                  style: TextStyle(
+                    color: color4,
+                    fontSize : 13.0,
+                    fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(height: 7,),
-                  wrongProblemMode?
-                  (wrongProblemsSave.length != problemNumber)?
-                  wrongProblemNextProblem('다음문제','right') :
-                  showResult('right') :
-                  (problemNumber!=10)?
-                  nextProblem('다음문제','right') :
-                  showResult('right'),
-                  // (problemNumber!=10)? nextProblem('다음문제') : showResult()
-                ],
-              ),
+                ),
+                SizedBox(height: 7,),
+                wrongProblemMode?
+                (wrongProblemsSave.length != problemNumber)?
+                wrongProblemNextProblem('다음문제','right') :
+                showResult('right') :
+                (problemNumber!=10)?
+                nextProblem('다음문제','right') :
+                showResult('right'),
+                // (problemNumber!=10)? nextProblem('다음문제') : showResult()
+              ],
             ),
           );
         },
@@ -187,58 +186,58 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
                 topRight: Radius.circular(15.0)
             )
         ),
+        enableDrag: false,
         isDismissible:false,
         context: context,
         builder: (BuildContext context) {
           return Container(
-            height: 140,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Stack(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('오답입니다',
-                            style: TextStyle(
-                                color:color6,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0
-                            ),
+            height: 185.h,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(height: 27.h,),
+                Stack(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('오답입니다',
+                          style: TextStyle(
+                              color:color6,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0
                           ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          commentaryToolTip(commentaryResult),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 7,),
-                  Text('정답 : ' + ptichNameRealKr,
-                    style: TextStyle(
-                      color: Color(0xff79474e),
-                      fontSize : 13.0,
-                      fontWeight: FontWeight.bold,
+                        ),
+                      ],
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        commentaryToolTip(commentaryResult),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 7,),
+                Text('정답 : ' + ptichNameRealKr,
+                  style: TextStyle(
+                    color: Color(0xff79474e),
+                    fontSize : 13.0,
+                    fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(height: 7,),
-                  // const Text('풀이 : ...'),
-                  wrongProblemMode?
-                  (wrongProblemsSave.length != problemNumber)?
-                  wrongProblemNextProblem('다음문제','wrong') :
-                  showResult('wrong') :
-                  (problemNumber!=10)?
-                  nextProblem('다음문제','wrong') :
-                  showResult('wrong'),
-                  // (problemNumber!=10)? nextProblem('다음문제') : showResult()
-                ],
-              ),
+                ),
+                SizedBox(height: 7,),
+                // const Text('풀이 : ...'),
+                wrongProblemMode?
+                (wrongProblemsSave.length != problemNumber)?
+                wrongProblemNextProblem('다음문제','wrong') :
+                showResult('wrong') :
+                (problemNumber!=10)?
+                nextProblem('다음문제','wrong') :
+                showResult('wrong'),
+                // (problemNumber!=10)? nextProblem('다음문제') : showResult()
+              ],
             ),
           );
         },
@@ -499,6 +498,8 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
         showModalBottomSheet<void>(
           context: context,
           isScrollControlled: true,
+          enableDrag: false,
+          isDismissible:false,
           builder: (BuildContext context) {
             return resultPage(context,
               wrongProblemMode,

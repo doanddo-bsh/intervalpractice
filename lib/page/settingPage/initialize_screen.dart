@@ -34,8 +34,17 @@ class _InitializeScreenState extends State<InitializeScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await _initializationHelper.initialize();
-      navigator.pushReplacement(
-        MaterialPageRoute(builder: (context) => widget.targetWidget),
+      // navigator.pushReplacement(
+      //   MaterialPageRoute(builder: (context) => widget.targetWidget),
+      // );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            settings: RouteSettings(name: "/FirstProblemTypeList"),
+            builder: (BuildContext context) {
+              return widget.targetWidget;
+            }
+        ),
       );
     });
   }

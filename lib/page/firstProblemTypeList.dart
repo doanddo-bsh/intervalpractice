@@ -71,45 +71,38 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('음정박사'),
-        actions: [
-          FutureBuilder<bool>(
-            future:_future,
-            builder: (context,snapshot){
-              if (snapshot.hasData && snapshot.data == true) {
-                return IconButton(
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return SettingPage();
-                          }
-                      )
-                      );
-                    },
-                    icon: Icon(Icons.settings)
-                );
-              } else {
-                return SizedBox();
+      appBar: null,
+      // AppBar(
+      //   title: Text('음정박사'),
+      //   actions: [
+      //     FutureBuilder<bool>(
+      //       future:_future,
+      //       builder: (context,snapshot){
+      //         if (snapshot.hasData && snapshot.data == true) {
+      //           return IconButton(
+      //               onPressed: (){
+      //                 Navigator.push(context, MaterialPageRoute(
+      //                     builder: (context) {
+      //                       return SettingPage();
+      //                     }
+      //                 )
+      //                 );
+      //               },
+      //               icon: Icon(Icons.settings)
+      //           );
+      //         } else {
+      //           return SizedBox();
+      //         }
+      //       },
+      //     ),
+      //   ],
+      // ),
+      body: FutureBuilder<bool>(
+          future: _future,
+          builder: (context, snapshot) {
+                return _body(snapshot);
               }
-            },
-          ),
-          // IconButton(
-          //     onPressed: (){
-          //       Navigator.push(
-          //           context,
-          //           MaterialPageRoute(
-          //               builder: (context) {
-          //                 return SettingPage();
-          //               }
-          //           )
-          //       );
-          //     },
-          //     icon: Icon(Icons.settings)
-          // )
-        ],
-      ),
-      body: _body()
+          )
     );
   }
 
@@ -154,7 +147,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
     return await preferences.getInt('IABTCF_gdprApplies') == 1;
   }
 
-  Widget _body() {
+  Widget _body(var snapshot) {
     return SafeArea(
       child: Column(
         children: [
@@ -173,11 +166,24 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              if (snapshot.hasData && snapshot.data == true)
+              Padding(
+                padding: EdgeInsets.fromLTRB(10.w, 00.h, 0.w, 10.h),
+                child: IconButton(
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {return SettingPage();}
+                        )
+                      );
+                    },
+                  icon: Icon(Icons.privacy_tip_outlined)
+                ),
+              ),
               // ElevatedButton(onPressed: (){
               //   print(Provider.of<CounterClass>(context, listen: false).solvedProblemCount);
               // }, child: Text('show')),
               Padding(
-                padding: EdgeInsets.fromLTRB(10.w, 00.h, 30.w, 10.h),
+                padding: EdgeInsets.fromLTRB(3.w, 00.h, 30.w, 10.h),
                 child: Tooltip(
                   textStyle: TextStyle(color: Colors.black54),
                   decoration: BoxDecoration(color: Color(0xffeeeeee),
