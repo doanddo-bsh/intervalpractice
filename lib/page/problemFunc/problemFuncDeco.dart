@@ -176,7 +176,7 @@ Widget commentaryToolTip(String commentaryResult){
       padding: EdgeInsets.fromLTRB(0.w, 0.h, 20.w, 0.h),
       child: Tooltip(
         margin: EdgeInsets.fromLTRB(0.w, 0.h, 0.w, 0.h),
-        verticalOffset: 30,
+        verticalOffset: -120,
         height: 80,
         textStyle: TextStyle(color: Colors.black54),
         decoration: BoxDecoration(color: Color(0xffeeeeee),

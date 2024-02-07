@@ -410,12 +410,12 @@ class _ListViewEasyState extends State<ListViewEasy> {
                             ),
                             // SizedBox(width: 10,),
                             Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children:[
                                   // SizedBox(height: 7,),
-                                  SizedBox(height: 15.h,),
+                                  // SizedBox(height: 27.h,),
                                   Container(
-                                    margin: EdgeInsets.all(10),
+                                    margin: EdgeInsets.fromLTRB(10,0,10,10),
                                     width: 180.w,
                                     child: Align(
                                         alignment: Alignment.centerLeft,
@@ -442,7 +442,6 @@ class _ListViewEasyState extends State<ListViewEasy> {
                                   ),
                                 ]
                             ),
-
                           ],
                         )
                     ),
@@ -579,8 +578,8 @@ class _ListViewHardState extends State<ListViewHard> {
                         child:Row(
                           children: [
                             Container(
-                              width: 130.w,
-                              height: 130.h,
+                              width: 105.w,
+                              height: 105.h,
                               child: Stack(children: [
                                 Center(
                                   child: SizedBox(
@@ -596,11 +595,11 @@ class _ListViewHardState extends State<ListViewHard> {
                             ),
                             // SizedBox(width: 10,),
                             Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children:[
-                                  SizedBox(height: 15.h,),
+                                  // SizedBox(height: 15.h,),
                                   Container(
-                                    margin: EdgeInsets.all(10),
+                                    margin: EdgeInsets.fromLTRB(10,0,10,10),
                                     width: 180.w,
                                     child: Align(
                                         alignment: Alignment.centerLeft,
