@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +18,6 @@ import 'problemFunc/admobClass.dart';
 import 'problemFunc/admobFunc.dart';
 import 'problemFunc/providerCounter.dart';
 import 'package:provider/provider.dart';
-import 'settingPage/settingPage.dart';
 import 'package:async_preferences/async_preferences.dart';
 import 'settingPage/initialization_helper.dart';
 
@@ -124,7 +125,6 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
     }
 
     final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
-    print("UUID: $uuid");
   }
   // ios IDFS setting end
 
@@ -151,7 +151,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
     return SafeArea(
       child: Column(
         children: [
-          Container(
+          SizedBox(
             height: 590.h,
             child: Column(
               children: [
@@ -172,11 +172,11 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
                 child: IconButton(
                   onPressed: (){
                     Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {return SettingPage();}
+                        builder: (context) {return const SettingPage();}
                         )
                       );
                     },
-                  icon: Icon(Icons.privacy_tip_outlined)
+                  icon: const Icon(Icons.privacy_tip_outlined)
                 ),
               ),
               // ElevatedButton(onPressed: (){
@@ -185,14 +185,14 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
               Padding(
                 padding: EdgeInsets.fromLTRB(3.w, 00.h, 30.w, 10.h),
                 child: Tooltip(
-                  textStyle: TextStyle(color: Colors.black54),
-                  decoration: BoxDecoration(color: Color(0xffeeeeee),
+                  textStyle: const TextStyle(color: Colors.black54),
+                  decoration: BoxDecoration(color: const Color(0xffeeeeee),
                   borderRadius: BorderRadius.circular(10)),
                   triggerMode: TooltipTriggerMode.tap,
-                  showDuration: Duration(milliseconds: 5000),
+                  showDuration: const Duration(milliseconds: 5000),
                   message:
                   'Easy는 임시표가 없는 기본 계이름입니다\nHard는 여러종류의 임시표를 포함하고 있습니다',
-                  child: Icon(
+                  child: const Icon(
                     Icons.info_outline,
                     size: 18,
                   ),
@@ -200,7 +200,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
               ),
             ],
           ),
-          Expanded(child: SizedBox()),
+          const Expanded(child: SizedBox()),
           // admob banner
           Container(
             alignment: Alignment.center,
@@ -221,7 +221,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
       // labelColor: Colors.orangeAccent, // 클릭한 텍스트 강조 컬러
       // unselectedLabelColor: Colors.blue, // 클릭 안된 텍스트 컬러
       indicatorColor: Colors.black38,
-      indicator: UnderlineTabIndicator(
+      indicator: const UnderlineTabIndicator(
         borderSide: BorderSide(width: 2),
         insets: EdgeInsets.symmetric(horizontal: 40)
       ),
@@ -234,7 +234,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
         fontWeight: FontWeight.bold
       ),
       tabs:  [
-        Tab(child: Text('Easy',
+        const Tab(child: Text('Easy',
                         style: TextStyle(
                             color: Color(0xff3f8a36),
                             // fontWeight: FontWeight.bold,
@@ -242,7 +242,7 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
                         ),
                       ),
         ),
-        Tab(child: Text('Hard',
+        const Tab(child: Text('Hard',
                       style: TextStyle(
                           color: Color(0xffc94040),
                           // fontWeight: FontWeight.bold,
@@ -279,7 +279,7 @@ class _ListViewEasyState extends State<ListViewEasy> {
     ['음정 문제 3','주어진 음정의 자리바꿈 음정을','계산하여 정답을 맞춰보세요'],
   ];
 
-  List problemPage = [EasyProblemType1(),EasyProblemType2(),EasyProblemType3()];
+  List problemPage = [const EasyProblemType1(),const EasyProblemType2(),const EasyProblemType3()];
 
   // for full screen ad
   InterstitialAd? _interstitialAd;
@@ -328,7 +328,6 @@ class _ListViewEasyState extends State<ListViewEasy> {
   void initState() {
     // TODO: implement initState
 
-    print('ad load');
     loadAd();
 
     super.initState();
@@ -340,7 +339,7 @@ class _ListViewEasyState extends State<ListViewEasy> {
 
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: 530.h,
           child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
@@ -392,7 +391,7 @@ class _ListViewEasyState extends State<ListViewEasy> {
                         ),
                         child:Row(
                           children: [
-                            Container(
+                            SizedBox(
                               width: 105.w,
                               height: 105.h,
                               child: Stack(children: [
@@ -400,7 +399,7 @@ class _ListViewEasyState extends State<ListViewEasy> {
                                   child: SizedBox(
                                     height: 73.h,
                                     width: 73.w,
-                                    child: Image(
+                                    child: const Image(
                                         image: AssetImage('assets/music_2805328.png')
                                     ),
                                   ),
@@ -415,12 +414,12 @@ class _ListViewEasyState extends State<ListViewEasy> {
                                   // SizedBox(height: 7,),
                                   // SizedBox(height: 27.h,),
                                   Container(
-                                    margin: EdgeInsets.fromLTRB(10,0,10,10),
+                                    margin: const EdgeInsets.fromLTRB(10,0,10,10),
                                     width: 180.w,
                                     child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(mainTitleAndContentsEasy[index][0],
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 16
                                           ),)
@@ -472,7 +471,7 @@ class _ListViewHardState extends State<ListViewHard> {
     ['음정 문제 3','주어진 음정의 자리바꿈 음정을','계산하여 정답을 맞춰보세요'],
   ];
 
-  List problemPage = [HardProblemType1(),HardProblemType2(),HardProblemType3()];
+  List problemPage = [const HardProblemType1(),const HardProblemType2(),const HardProblemType3()];
 
   // for full screen ad
   InterstitialAd? _interstitialAd;
@@ -521,7 +520,6 @@ class _ListViewHardState extends State<ListViewHard> {
   void initState() {
     // TODO: implement initState
 
-    print('ad load');
     loadAd();
 
     super.initState();
@@ -531,7 +529,7 @@ class _ListViewHardState extends State<ListViewHard> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: 530.h,
           child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
@@ -577,7 +575,7 @@ class _ListViewHardState extends State<ListViewHard> {
                         ),
                         child:Row(
                           children: [
-                            Container(
+                            SizedBox(
                               width: 105.w,
                               height: 105.h,
                               child: Stack(children: [
@@ -585,7 +583,7 @@ class _ListViewHardState extends State<ListViewHard> {
                                   child: SizedBox(
                                     height: 73.h,
                                     width: 73.w,
-                                    child: Image(
+                                    child: const Image(
                                         image: AssetImage('assets/musichard.png')
                                     ),
                                   ),
@@ -599,12 +597,12 @@ class _ListViewHardState extends State<ListViewHard> {
                                 children:[
                                   // SizedBox(height: 15.h,),
                                   Container(
-                                    margin: EdgeInsets.fromLTRB(10,0,10,10),
+                                    margin: const EdgeInsets.fromLTRB(10,0,10,10),
                                     width: 180.w,
                                     child: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(mainTitleAndContentsEasy[index][0],
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 16
                                           ),)

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intervalpractice/page/problemFunc/providerCounter.dart';
-import '../page/firstProblemTypeList.dart';
-import 'page/easyProblem/easyProblemType1.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
 import 'page/loadingPage.dart';
@@ -14,7 +12,7 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp]); // 가로모드 막기
   MobileAds.instance.initialize(); //MobileAds.instance.initialize();을 호출하여 MobileAds를 초기화 합니다.
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -38,7 +36,7 @@ class _MyAppState extends State<MyApp> {
 
     return ChangeNotifierProvider(create: (context)=>CounterClass(),
       child: ScreenUtilInit(
-        designSize: Size(375, 844),
+        designSize: const Size(375, 844),
         builder: (context, child) => MaterialApp(
           title: 'itervalpractice',
           debugShowCheckedModeBanner: false,
@@ -53,7 +51,7 @@ class _MyAppState extends State<MyApp> {
           },
           home: child,
         ),
-        child: LoadingPage(),
+        child: const LoadingPage(),
       ),
     );
   }

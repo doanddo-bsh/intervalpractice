@@ -1,6 +1,7 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lottie/lottie.dart';
 import 'package:music_notes/music_notes.dart';
 import '../problemFunc/problemFunc.dart';
 import '../problemFunc/problemFuncDeco.dart';
@@ -39,7 +40,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
 
   int numberOfRight = 0 ;
 
-  String? intervalNumber = null;
+  String? intervalNumber;
 
   Widget intervalNumberButton(String number){
     return ElevatedButton(
@@ -50,11 +51,11 @@ class _HardProblemType3State extends State<HardProblemType3> {
             (){
           // 정답이 null 이 아닐때?
         },
+        style: answerButtonDesign(intervalNumber,number,'hard',context),
         child: Text(
           number,
           style: answerButtonTextDesign,
-        ),
-        style: answerButtonDesign(intervalNumber,number,'hard',context)
+        )
     );
   }
 
@@ -75,11 +76,11 @@ class _HardProblemType3State extends State<HardProblemType3> {
             (){
           // ('정답이 이미 들어옴')?;
         },
+        style: answerButtonDesign(answerInterval,intervalNameKorEng[intervalName] + intervalNumber,'hard',context),
         child: Text(
-          intervalName + intervalNumber + '도',
+          '$intervalName$intervalNumber도',
           style: answerButtonTextDesign,
-        ),
-        style: answerButtonDesign(answerInterval,intervalNameKorEng[intervalName] + intervalNumber,'hard',context)
+        )
     );
   }
 
@@ -147,7 +148,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
     }
   }
 
-  String? answerInterval = null;
+  String? answerInterval;
 
   void showBottomResult(String answerInterval){
 
@@ -183,12 +184,9 @@ class _HardProblemType3State extends State<HardProblemType3> {
 
     // 해석 해설
     String commentaryResult =
-        '화면에 주어진 음정이 ' + answerRealOriginalKor + '도 입니다.\n'
-            '1 ⇔ 8, 2 ⇔ 7, 3 ⇔ 6, 4 ⇔ 5\n'
-            '완전 ⇔ 완전, 장 ⇔ 단, 증 ⇔ 감, 겹증 ⇔ 겹감'
+        '화면에 주어진 음정이 $answerRealOriginalKor도 입니다.\n1 ⇔ 8, 2 ⇔ 7, 3 ⇔ 6, 4 ⇔ 5\n완전 ⇔ 완전, 장 ⇔ 단, 증 ⇔ 감, 겹증 ⇔ 겹감'
     ;
 
-    print('commentaryResult $commentaryResult');
 
     if (answerInterval == answerReal){
 
@@ -198,7 +196,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
 
       showModalBottomSheet<void>(
         backgroundColor: color5,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(15.0),
                 topRight: Radius.circular(15.0)
@@ -208,7 +206,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
         isDismissible:false,
         context: context,
         builder: (BuildContext context) {
-          return Container(
+          return SizedBox(
             height: 185.h,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -238,15 +236,15 @@ class _HardProblemType3State extends State<HardProblemType3> {
                     ),
                   ],
                 ),
-                SizedBox(height: 7,),
-                Text('정답 : ' + answerRealKor + '도',
+                const SizedBox(height: 7,),
+                Text('정답 : $answerRealKor도',
                   style: TextStyle(
                     color: color4,
                     fontSize : 14.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 7,),
+                const SizedBox(height: 7,),
                 wrongProblemMode?
                 (wrongProblemsSave.length != problemNumber)?
                 wrongProblemNextProblem('다음문제','right') :
@@ -266,12 +264,10 @@ class _HardProblemType3State extends State<HardProblemType3> {
       wrongProblems += [randomNoteNumber] ;
       wrongProblemsAccidentals += [accidentals];
 
-      print('wrongProblems $wrongProblems');
-      print('wrongProblemsAccidentals $wrongProblemsAccidentals');
 
       showModalBottomSheet<void>(
-        backgroundColor: Color(0xffd7b1b1),
-        shape: RoundedRectangleBorder(
+        backgroundColor: const Color(0xffd7b1b1),
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(15.0),
                 topRight: Radius.circular(15.0)
@@ -281,7 +277,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
         isDismissible:false,
         context: context,
         builder: (BuildContext context) {
-          return Container(
+          return SizedBox(
             height: 185.h,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -310,15 +306,15 @@ class _HardProblemType3State extends State<HardProblemType3> {
                     ),
                   ],
                 ),
-                SizedBox(height: 7,),
-                Text('정답 : ' + answerRealKor + '도',
+                const SizedBox(height: 7,),
+                Text('정답 : $answerRealKor도',
                   style: TextStyle(
                     color: color6,
                     fontSize : 14.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 7,),
+                const SizedBox(height: 7,),
                 // Text('정답은 ${answerRealKor} 입니다.'),
                 wrongProblemMode?
                 (wrongProblemsSave.length != problemNumber)?
@@ -336,7 +332,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
     }
   }
 
-  Widget nextProblem(String buttonText,String right_wrong){
+  Widget nextProblem(String buttonText,String rightWrong){
     return ElevatedButton(
 
         onPressed: (){
@@ -347,18 +343,18 @@ class _HardProblemType3State extends State<HardProblemType3> {
             });
           }
 
-          List<List<dynamic>> note_height_list_problem = getProblemListNote(
+          List<List<dynamic>> noteHeightListProblem = getProblemListNote(
             note_height_list,
             randomItems,
           );
 
           setState(() {
             // 문제 적용
-            randomItems = [note_height_list_problem[0][0],note_height_list_problem[1][0]];
+            randomItems = [noteHeightListProblem[0][0],noteHeightListProblem[1][0]];
             // randomItems.sort();
-            randomNoteNumber = [note_height_list_problem[0][1],note_height_list_problem[1][1]];
+            randomNoteNumber = [noteHeightListProblem[0][1],noteHeightListProblem[1][1]];
             // randomNoteNumber.sort();
-            randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
+            randomNote = [noteHeightListProblem[0][2],noteHeightListProblem[1][2]];
             // randomNote.sort();
 
             answerInterval = null;
@@ -372,7 +368,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
           Navigator.pop(context);
 
         },
-        style: nextProblemButtonStyle('easy',right_wrong),
+        style: nextProblemButtonStyle('easy',rightWrong),
         child: Text(buttonText,
           style: nextProblemButtonTextStyle,
         ),
@@ -443,18 +439,18 @@ class _HardProblemType3State extends State<HardProblemType3> {
           wrongProblemsAccidentals = [];
           wrongProblemMode = false ;
 
-          List<List<dynamic>> note_height_list_problem = getProblemListNote(
+          List<List<dynamic>> noteHeightListProblem = getProblemListNote(
             note_height_list,
             randomItems,
           );
 
           setState(() {
             // 문제 적용
-            randomItems = [note_height_list_problem[0][0],note_height_list_problem[1][0]];
+            randomItems = [noteHeightListProblem[0][0],noteHeightListProblem[1][0]];
             // randomItems.sort();
-            randomNoteNumber = [note_height_list_problem[0][1],note_height_list_problem[1][1]];
+            randomNoteNumber = [noteHeightListProblem[0][1],noteHeightListProblem[1][1]];
             // randomNoteNumber.sort();
-            randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
+            randomNote = [noteHeightListProblem[0][2],noteHeightListProblem[1][2]];
             // randomNote.sort();
 
             answerInterval = null;
@@ -484,7 +480,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
   }
 
 
-  Widget wrongProblemNextProblem(String buttonText, String right_wrong){
+  Widget wrongProblemNextProblem(String buttonText, String rightWrong){
     return ElevatedButton(
 
         onPressed: (){
@@ -515,7 +511,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
           Navigator.pop(context);
 
         },
-        style: nextProblemButtonStyle('easy',right_wrong),
+        style: nextProblemButtonStyle('easy',rightWrong),
         child: Text(buttonText,
           style: nextProblemButtonTextStyle,
         ),
@@ -534,8 +530,6 @@ class _HardProblemType3State extends State<HardProblemType3> {
         wrongProblemsSave = wrongProblems ;
         wrongProblemsAccidentalsSave = wrongProblemsAccidentals;
 
-        print('wrongProblemsSave $wrongProblemsSave');
-        print('wrongProblems $wrongProblems');
 
         wrongProblems = [] ;
         wrongProblemsAccidentals = [] ;
@@ -573,13 +567,15 @@ class _HardProblemType3State extends State<HardProblemType3> {
       ),
       child: Text('틀린 문제 다시 풀기',
         style: TextStyle(
+            fontSize: 15.0,
+            fontWeight: FontWeight.bold,
             color: Colors.grey[700]
         ),
       ),
     );
   }
 
-  Widget showResult(String right_wrong){
+  Widget showResult(String rightWrong){
 
     // Navigator.pop(context);
 
@@ -609,204 +605,10 @@ class _HardProblemType3State extends State<HardProblemType3> {
                     (context, ModalRoute.withName("/FirstProblemTypeList"));
                 },
               );
-              //   Container(
-              //   decoration: const BoxDecoration(
-              //     borderRadius: BorderRadius.only(
-              //       topLeft: Radius.circular(30),
-              //       topRight: Radius.circular(30),
-              //     ),
-              //   ),
-              //   height: MediaQuery.of(context).size.height * 1.0,
-              //   child: Center(
-              //     child:
-              //     SafeArea(
-              //       child: Padding(
-              //         padding: const EdgeInsets.all(8.0),
-              //         child: Column(
-              //           children: [
-              //             Container(
-              //               child: Column(
-              //                 mainAxisAlignment: MainAxisAlignment.center,
-              //                 crossAxisAlignment: CrossAxisAlignment.center,
-              //                 children: [
-              //                   SizedBox(height: 40,),
-              //                   Stack(
-              //                     children: [
-              //                       Padding(
-              //                         padding: const EdgeInsets.all(15.0),
-              //                         child: ClipRRect(
-              //                           borderRadius: BorderRadius.circular(20),
-              //                           child: Container(
-              //                             width: 600.w,
-              //                             height: 450.h,
-              //                             color: Colors.lightGreen.withOpacity(0.4),
-              //                           ),),
-              //                       ),
-              //                       Center(
-              //                         child: Container(
-              //                           child: Column(
-              //                               children: [
-              //                                 SizedBox(height: 60,),
-              //                                 Container(
-              //                                     child: Text('이번 문제의 점수는',
-              //                                       style: TextStyle(
-              //                                           fontSize: 25,
-              //                                           color: Colors.grey[700]
-              //                                       ),)),
-              //                                 // SizedBox(height: 30,),
-              //                                 Stack(
-              //                                   children:[
-              //                                     Container(
-              //                                       child: Lottie.asset
-              //                                         ('assets/animation/star2.json'),
-              //                                     ),
-              //                                     Padding(
-              //                                       padding: const EdgeInsets.fromLTRB(40, 60, 0, 0),
-              //                                       child: Container(
-              //                                         child:
-              //                                         wrongProblemMode?
-              //                                         Text
-              //                                           ('${
-              //                                             (numberOfRight/wrongProblemsSave.length *
-              //                                                 100).round()}점',
-              //                                             style: TextStyle(
-              //                                                 fontSize: 60,
-              //                                                 fontWeight: FontWeight.bold
-              //                                             )
-              //                                         ):Text
-              //                                           ('${
-              //                                             (numberOfRight/10 *
-              //                                                 100).round()}점',
-              //                                             style: TextStyle(
-              //                                                 fontSize: 60,
-              //                                                 fontWeight: FontWeight.bold
-              //                                             )
-              //                                         ),
-              //                                       ),
-              //                                     ),
-              //                                   ],),
-              //                                 // SizedBox(height: 30,),
-              //                                 Container(
-              //                                     child: Text('정말 멋져요! 내가바로 음정고수🎉',
-              //                                         style: TextStyle(
-              //                                             fontSize: 20,
-              //                                             color: Colors.grey[700]
-              //                                         ))),
-              //                                 SizedBox(height: 20,),
-              //                                 Container(
-              //                                     child: wrongProblemMode?
-              //                                     Text
-              //                                       ('${wrongProblemsSave.length
-              //                                         .toString()}문제중에서 '
-              //                                         '${numberOfRight}문제를 '
-              //                                         '맞췄습니다',
-              //                                         style:
-              //                                         TextStyle(
-              //                                             fontSize: 20,
-              //                                             fontWeight: FontWeight.bold
-              //                                         )
-              //                                     ) : Text
-              //                                       ('10문제중에서 '
-              //                                         '${numberOfRight}문제를 '
-              //                                         '맞췄습니다',
-              //                                         style:
-              //                                         TextStyle(
-              //                                             fontSize: 20,
-              //                                             fontWeight: FontWeight.bold
-              //                                         )
-              //                                     )
-              //                                 ),
-              //                                 SizedBox(height: 20,),
-              //                                 Container(
-              //                                   height: 40,
-              //                                   width: 300,
-              //                                   child: wrongProblemSolveStart
-              //                                     ('틀린 문제 다시 풀기'),
-              //                                 )
-              //                               ]),
-              //                         ),
-              //                       ),
-              //
-              //                     ],
-              //                   ),
-              //                 ],
-              //               ),
-              //             ),
-              //             Padding(
-              //               padding: const EdgeInsets.fromLTRB(0, 1, 0, 2),
-              //               child: Divider(thickness: 1,
-              //                 indent: 7,
-              //                 endIndent: 7,),
-              //             ),
-              //             Expanded(
-              //               child: Padding(
-              //                 padding: const EdgeInsets.all(8.0),
-              //                 child: Stack(
-              //                   children: [
-              //                     ClipRRect(
-              //                       borderRadius: BorderRadius.circular(20),
-              //                       child: Container(
-              //                         width: 600,
-              //                         height: 400,
-              //                         color: Colors.grey[300],
-              //                       ),),
-              //                     Container(
-              //                       margin: EdgeInsets.all(15),
-              //                       child: Column(
-              //                         mainAxisAlignment: MainAxisAlignment.center,
-              //                         children: [
-              //                           Container(child:
-              //                           Text('계속해서 문제를 푸시겠습니까?',
-              //                             style: TextStyle(
-              //                                 fontSize: 17,
-              //                                 fontWeight: FontWeight.bold
-              //                             ),),
-              //                           ),
-              //                           SizedBox(height: 13,),
-              //                           Center(
-              //                             child: Row(
-              //                               mainAxisAlignment: MainAxisAlignment.center,
-              //                               children: [
-              //                                 nextProblemResult(),
-              //                                 SizedBox(width: 40,),
-              //                                 ElevatedButton(
-              //                                   onPressed: (){
-              //                                     wrongProblems = [];
-              //                                     wrongProblemMode = false ;
-              //                                     numberOfRight = 0 ;
-              //                                     Navigator.popUntil
-              //                                       (context, ModalRoute.withName(Navigator.defaultRouteName));
-              //                                   },
-              //                                   style: ElevatedButton.styleFrom(
-              //                                       shape: RoundedRectangleBorder(
-              //                                           borderRadius: BorderRadius.circular(10)
-              //                                       )
-              //                                   ),
-              //                                   child: Text('아니오',
-              //                                       style: TextStyle(
-              //                                           color: Colors.grey[700])
-              //                                   ),
-              //                                 )],
-              //                             ),
-              //                           ),
-              //
-              //                         ],
-              //                       ),
-              //                     ),
-              //                   ],
-              //                 ),
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // );
             },
           );
         },
-        style: nextProblemButtonStyle('easy',right_wrong),
+        style: nextProblemButtonStyle('easy',rightWrong),
         child: Text('결과보기',
           style: nextProblemButtonTextStyle,
         ),
@@ -814,242 +616,6 @@ class _HardProblemType3State extends State<HardProblemType3> {
   }
 
   int problemNumber = 1 ;
-  //
-  // Widget lastRidingProgress() {
-  //
-  //   double percent =
-  //   wrongProblemMode?
-  //   double.parse((problemNumber / wrongProblemsSave.length).toStringAsFixed
-  //     (1)) :
-  //   problemNumber / 10 ;
-  //
-  //   print(percent);
-  //   print('problemNumber $problemNumber');
-  //   print('wrongProblemsSave.length ${wrongProblemsSave.length}');
-  //
-  //   return Column(
-  //     children: [
-  //       Center(
-  //         child: Container(
-  //           // color: Colors.black12,
-  //           width: MediaQuery.of(context).size.width-15.w,
-  //           alignment: FractionalOffset(percent, 1 - percent),
-  //           child: Padding(
-  //             padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
-  //             child: Container(
-  //               // color: Colors.red,
-  //                 child: Image.asset('assets/noteToProgress.png',
-  //                     width: 20, height: 20, fit: BoxFit.cover)
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       SizedBox(height: 3,),
-  //       Row(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         children: [
-  //           LinearPercentIndicator(
-  //             width: MediaQuery.of(context).size.width-50.w,
-  //             padding: EdgeInsets.zero,
-  //             percent: percent,
-  //             lineHeight: 20.h,
-  //             center: wrongProblemMode?
-  //             Text(problemNumber.toString() + '/' + wrongProblemsSave.length
-  //                 .toString()) :
-  //             Text(problemNumber.toString() + '/10') ,
-  //             backgroundColor: Colors.black12,
-  //             progressColor: Colors.amber,
-  //           ),
-  //         ],
-  //       )
-  //     ],
-  //   );
-  // }
-
-  // Widget returnLine(double top){
-  //   return Positioned(
-  //       top: top.h,
-  //       left: 10.w,
-  //       right: 10.w,
-  //       child:
-  //       Container(
-  //         color: Colors.black,
-  //         width: double.infinity,
-  //         height: 2.0.h,
-  //       )
-  //   );
-  // }
-  //
-  // // 덧줄용1
-  // Widget addLine1(PositionedNote randomNote){
-  //
-  //   // middle line
-  //   List<PositionedNote> middleLine = [
-  //     Note.a.inOctave(5),
-  //     Note.f.inOctave(5),
-  //     Note.d.inOctave(5),
-  //     Note.b.inOctave(4),
-  //     Note.g.inOctave(4),
-  //     Note.e.inOctave(4),
-  //     Note.c.inOctave(4),
-  //     Note.a.inOctave(3),
-  //     Note.c.inOctave(6),
-  //   ];
-  //   // low line
-  //   List<PositionedNote> lowLine = [
-  //     Note.b.inOctave(5),
-  //     Note.d.inOctave(6),
-  //   ];
-  //
-  //   // high line
-  //   List<PositionedNote> highLine = [
-  //     Note.b.inOctave(3),
-  //     Note.g.inOctave(3)
-  //   ];
-  //
-  //   if (middleLine.contains(randomNote)){
-  //     return
-  //       Positioned(
-  //         top: 12.75.h,
-  //         child: Container(
-  //           color: Colors.black,
-  //           height: 2.0.h,
-  //           width: 50.w,
-  //         ),
-  //       );
-  //   } else if (lowLine.contains(randomNote)) {
-  //     return
-  //       Positioned(
-  //         top: 24.5.h,
-  //         child: Container(
-  //           color: Colors.black,
-  //           height: 2.0.h,
-  //           width: 50.w,
-  //         ),
-  //       );
-  //   } else if (highLine.contains(randomNote)){
-  //     return
-  //       Positioned(
-  //         child: Container(
-  //           color: Colors.black,
-  //           height: 2.0.h,
-  //           width: 50.w,
-  //         ),
-  //       );
-  //   }
-  //   else {
-  //     return SizedBox();
-  //   }
-  // }
-  //
-  //
-  // // 덧줄용2
-  // Widget addLine2(PositionedNote randomNote, double left){
-  //
-  //   // highhigh line
-  //   List<PositionedNote> highHighLine = [
-  //     Note.d.inOctave(6),
-  //     Note.c.inOctave(6),
-  //   ];
-  //   // lowlow line
-  //   List<PositionedNote> lowLowLine = [
-  //     Note.a.inOctave(3),
-  //     Note.g.inOctave(3),
-  //   ];
-  //
-  //   if (highHighLine.contains(randomNote)){
-  //     return
-  //       Positioned(
-  //         top: 63.5.h,
-  //         left: left,
-  //         child: Container(
-  //           color: Colors.black,
-  //           height: 2.0.h,
-  //           width: 50.w,
-  //         ),
-  //       );
-  //   } else if (lowLowLine.contains(randomNote)) {
-  //     return
-  //       Positioned(
-  //         top: 222.5.h,
-  //         left: left,
-  //         child: Container(
-  //           color: Colors.black,
-  //           height: 2.0.h,
-  //           width: 50.w,
-  //         ),
-  //       );
-  //   }
-  //   else {
-  //     return SizedBox();
-  //   }
-  // }
-  //
-  // // 변화표 추가
-  // Widget addAccidentals(String whatAccidental, double top, double left){
-  //
-  //   if (whatAccidental == 'none'){
-  //     return SizedBox();
-  //   } else if (whatAccidental == 'sharp'){
-  //     return Positioned(
-  //       top: top,
-  //       left: left,
-  //       child: SizedBox(
-  //         height: 30,
-  //         width: 15,
-  //         child: Image(
-  //           image: AssetImage('assets/sharp1.png',
-  //           ),
-  //           fit: BoxFit.fill,
-  //         ),
-  //       ),
-  //     );
-  //   } else if (whatAccidental == 'double sharp'){
-  //     return Positioned(
-  //       top: top,
-  //       left: left,
-  //       child: SizedBox(
-  //         height: 30,
-  //         width: 15,
-  //         child: Image(
-  //           image: AssetImage('assets/doubleSharp.png',
-  //           ),
-  //           fit: BoxFit.fill,
-  //         ),
-  //       ),
-  //     );
-  //   } else if (whatAccidental == 'flat'){
-  //     return Positioned(
-  //       top: top,
-  //       left: left,
-  //       child: SizedBox(
-  //         height: 30,
-  //         width: 15,
-  //         child: Image(
-  //           image: AssetImage('assets/flat1.png',
-  //           ),
-  //           fit: BoxFit.fill,
-  //         ),
-  //       ),
-  //     );
-  //   } else {
-  //     return Positioned(
-  //       top: top,
-  //       left: left,
-  //       child: SizedBox(
-  //         height: 30,
-  //         width: 15,
-  //         child: Image(
-  //           image: AssetImage('assets/doubleFlat.png',
-  //           ),
-  //           fit: BoxFit.fill,
-  //         ),
-  //       ),
-  //     );
-  //   }
-  //
-  //
-  // }
 
   // for admob banner
   BannerAd? _banner;
@@ -1060,15 +626,15 @@ class _HardProblemType3State extends State<HardProblemType3> {
     super.initState();
     // 새로운 문제 생성
 
-    List<List<dynamic>> note_height_list_problem = getProblemListNote(
+    List<List<dynamic>> noteHeightListProblem = getProblemListNote(
         note_height_list, randomItems
     );
 
-    randomItems = [note_height_list_problem[0][0],note_height_list_problem[1][0]];
+    randomItems = [noteHeightListProblem[0][0],noteHeightListProblem[1][0]];
     // randomItems.sort();
-    randomNoteNumber = [note_height_list_problem[0][1],note_height_list_problem[1][1]];
+    randomNoteNumber = [noteHeightListProblem[0][1],noteHeightListProblem[1][1]];
     // randomNoteNumber.sort();
-    randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
+    randomNote = [noteHeightListProblem[0][2],noteHeightListProblem[1][2]];
     // randomNote.sort();
     accidentals = accidentalsFinal(randomNote);
 
@@ -1147,7 +713,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
             'hard',
             context,
           ),
-          Container(
+          SizedBox(
             height: 300.h,
             width: double.infinity,
             // decoration: BoxDecoration(
@@ -1249,7 +815,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
           SizedBox(height: 35.0.h,),
           showIntervalName(intervalNumber),
           // SizedBox(height: 30,),
-          Expanded(child: SizedBox()),
+          const Expanded(child: SizedBox()),
           // admob banner
           Container(
             alignment: Alignment.center,

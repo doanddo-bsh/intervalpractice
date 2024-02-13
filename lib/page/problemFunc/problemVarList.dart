@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:music_notes/music_notes.dart';
 Map intervalNameKorEng = {
   '감' : 'd',

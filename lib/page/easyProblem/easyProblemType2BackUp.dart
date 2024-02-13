@@ -1,5 +1,6 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:lottie/lottie.dart';
@@ -62,7 +63,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
     }
   }
 
-  String? intervalNumber = null;
+  String? intervalNumber;
 
   Widget intervalNumberButton(String number){
     return ElevatedButton(
@@ -77,17 +78,17 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
             (){
           // print('정답이 이미 들어옴');
         },
-        child: Text(number),
         style: ElevatedButton.styleFrom(
           backgroundColor:
           intervalNumber==number ?
-          Color(0xffccccff) :
+          const Color(0xffccccff) :
           Theme.of(context).colorScheme.onTertiary,
-        )
+        ),
+        child: Text(number)
     );
   }
 
-  String? answerInterval = null;
+  String? answerInterval;
 
   void showBottomResult(String answerPitchName){
 
@@ -130,7 +131,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(answerPitchName,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize : 20.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -155,7 +156,6 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
 
       wrongProblems += [randomNoteNumber] ;
 
-      print('wrongProblems $wrongProblems');
 
       showModalBottomSheet<void>(
         isDismissible:false,
@@ -175,13 +175,13 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(ptichNameRealKr,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize : 20.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const Text('오답입니다.'),
-                  Text('정답은 ${ptichNameRealKr} 입니다.'),
+                  Text('정답은 $ptichNameRealKr 입니다.'),
                   const Text('풀이 : ...'),
                   wrongProblemMode?
                   (wrongProblemsSave.length != problemNumber)?
@@ -210,18 +210,18 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
             });
           }
 
-          List<List<dynamic>> note_height_list_problem = getProblemListNote(
+          List<List<dynamic>> noteHeightListProblem = getProblemListNote(
             note_height_list,
             randomItems,
           );
 
           setState(() {
             // 문제 적용
-            randomItems = [note_height_list_problem[0][0],note_height_list_problem[1][0]];
+            randomItems = [noteHeightListProblem[0][0],noteHeightListProblem[1][0]];
             randomItems.sort();
-            randomNoteNumber = [note_height_list_problem[0][1],note_height_list_problem[1][1]];
+            randomNoteNumber = [noteHeightListProblem[0][1],noteHeightListProblem[1][1]];
             randomNoteNumber.sort();
-            randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
+            randomNote = [noteHeightListProblem[0][2],noteHeightListProblem[1][2]];
             randomNote.sort();
 
             answerInterval = null;
@@ -249,7 +249,6 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
           //   });
           // }
 
-          print(randomNote[0].interval(randomNote[1]).toString());
 
           Navigator.pop(context);
 
@@ -267,18 +266,18 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
           wrongProblems = [];
           wrongProblemMode = false ;
 
-          List<List<dynamic>> note_height_list_problem = getProblemListNote(
+          List<List<dynamic>> noteHeightListProblem = getProblemListNote(
             note_height_list,
             randomItems,
           );
 
           setState(() {
             // 문제 적용
-            randomItems = [note_height_list_problem[0][0],note_height_list_problem[1][0]];
+            randomItems = [noteHeightListProblem[0][0],noteHeightListProblem[1][0]];
             randomItems.sort();
-            randomNoteNumber = [note_height_list_problem[0][1],note_height_list_problem[1][1]];
+            randomNoteNumber = [noteHeightListProblem[0][1],noteHeightListProblem[1][1]];
             randomNoteNumber.sort();
-            randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
+            randomNote = [noteHeightListProblem[0][2],noteHeightListProblem[1][2]];
             randomNote.sort();
 
             answerInterval = null;
@@ -305,7 +304,6 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
           //   });
           // }
 
-          print(randomNote[0].interval(randomNote[1]).toString());
 
           setState(() {
             problemNumber = 1 ;
@@ -369,7 +367,6 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
             });
           }
 
-          print(randomNote[0].interval(randomNote[1]).toString());
 
           Navigator.pop(context);
 
@@ -387,8 +384,6 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
 
         // back up
         wrongProblemsSave = wrongProblems ;
-        print('wrongProblemsSave $wrongProblemsSave');
-        print('wrongProblems $wrongProblems');
         wrongProblems = [] ;
 
         setState(() {
@@ -430,7 +425,6 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
           wrongProblemMode = true ;
         });
 
-        print(randomNote[0].interval(randomNote[1]).toString());
 
         Navigator.pop(context);
       },
@@ -473,116 +467,110 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(height: 40,),
-                                Stack(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Container(
-                                          width: 600.w,
-                                          height: 450.h,
-                                          color: Colors.lightGreen.withOpacity(0.4),
-                                        ),),
-                                    ),
-                                    Center(
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 40,),
+                              Stack(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
                                       child: Container(
-                                        child: Column(
-                                            children: [
-                                              SizedBox(height: 60,),
+                                        width: 600.w,
+                                        height: 450.h,
+                                        color: Colors.lightGreen.withOpacity(0.4),
+                                      ),),
+                                  ),
+                                  Center(
+                                    child: Column(
+                                        children: [
+                                          const SizedBox(height: 60,),
+                                          Text('이번 문제의 점수는',
+                                            style: TextStyle(
+                                                fontSize: 25,
+                                                color: Colors.grey[700]
+                                            ),),
+                                          // SizedBox(height: 30,),
+                                          Stack(
+                                            children:[
                                               Container(
-                                                  child: Text('이번 문제의 점수는',
-                                                    style: TextStyle(
-                                                        fontSize: 25,
-                                                        color: Colors.grey[700]
-                                                    ),)),
-                                              // SizedBox(height: 30,),
-                                              Stack(
-                                                children:[
-                                                  Container(
-                                                    child: Lottie.asset
-                                                      ('assets/animation/star2.json'),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.fromLTRB(40, 60, 0, 0),
-                                                    child: Container(
-                                                      child:
-                                                      wrongProblemMode?
-                                                      Text
-                                                        ('${
-                                                          (numberOfRight/wrongProblemsSave.length *
-                                                              100).round()}점',
-                                                          style: TextStyle(
-                                                              fontSize: 60,
-                                                              fontWeight: FontWeight.bold
-                                                          )
-                                                      ):Text
-                                                        ('${
-                                                          (numberOfRight/10 *
-                                                              100).round()}점',
-                                                          style: TextStyle(
-                                                              fontSize: 60,
-                                                              fontWeight: FontWeight.bold
-                                                          )
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],),
-                                              // SizedBox(height: 30,),
-                                              Container(
-                                                  child: Text('정말 멋져요! 내가바로 음정고수🎉',
-                                                      style: TextStyle(
-                                                          fontSize: 20,
-                                                          color: Colors.grey[700]
-                                                      ))),
-                                              SizedBox(height: 20,),
-                                              Container(
-                                                  child: wrongProblemMode?
-                                                  Text
-                                                    ('${wrongProblemsSave.length
-                                                      .toString()}문제중에서 '
-                                                      '${numberOfRight}문제를 '
-                                                      '맞췄습니다',
-                                                      style:
-                                                      TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight: FontWeight.bold
-                                                      )
-                                                  ) : Text
-                                                    ('10문제중에서 '
-                                                      '${numberOfRight}문제를 '
-                                                      '맞췄습니다',
-                                                      style:
-                                                      TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight: FontWeight.bold
-                                                      )
-                                                  )
+                                                child: Lottie.asset
+                                                  ('assets/animation/star2.json'),
                                               ),
-                                              SizedBox(height: 20,),
-                                              Container(
-                                                height: 40,
-                                                width: 300,
-                                                child: wrongProblemSolveStart
-                                                  ('틀린 문제 다시 풀기'),
+                                              Padding(
+                                                padding: const EdgeInsets.fromLTRB(40, 60, 0, 0),
+                                                child: Container(
+                                                  child:
+                                                  wrongProblemMode?
+                                                  Text
+                                                    ('${
+                                                      (numberOfRight/wrongProblemsSave.length *
+                                                          100).round()}점',
+                                                      style: const TextStyle(
+                                                          fontSize: 60,
+                                                          fontWeight: FontWeight.bold
+                                                      )
+                                                  ):Text
+                                                    ('${
+                                                      (numberOfRight/10 *
+                                                          100).round()}점',
+                                                      style: const TextStyle(
+                                                          fontSize: 60,
+                                                          fontWeight: FontWeight.bold
+                                                      )
+                                                  ),
+                                                ),
+                                              ),
+                                            ],),
+                                          // SizedBox(height: 30,),
+                                          Text('정말 멋져요! 내가바로 음정고수🎉',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.grey[700]
+                                              )),
+                                          const SizedBox(height: 20,),
+                                          Container(
+                                              child: wrongProblemMode?
+                                              Text
+                                                ('${wrongProblemsSave.length
+                                                  .toString()}문제중에서 '
+                                                  '$numberOfRight문제를 '
+                                                  '맞췄습니다',
+                                                  style:
+                                                  const TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight: FontWeight.bold
+                                                  )
+                                              ) : Text
+                                                ('10문제중에서 '
+                                                  '$numberOfRight문제를 '
+                                                  '맞췄습니다',
+                                                  style:
+                                                  const TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight: FontWeight.bold
+                                                  )
                                               )
-                                            ]),
-                                      ),
-                                    ),
+                                          ),
+                                          const SizedBox(height: 20,),
+                                          SizedBox(
+                                            height: 40,
+                                            width: 300,
+                                            child: wrongProblemSolveStart
+                                              ('틀린 문제 다시 풀기'),
+                                          )
+                                        ]),
+                                  ),
 
-                                  ],
-                                ),
-                              ],
-                            ),
+                                ],
+                              ),
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 1, 0, 2),
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(0, 1, 0, 2),
                             child: Divider(thickness: 1,
                               indent: 7,
                               endIndent: 7,),
@@ -600,24 +588,22 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
                                       color: Colors.grey[300],
                                     ),),
                                   Container(
-                                    margin: EdgeInsets.all(15),
+                                    margin: const EdgeInsets.all(15),
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Container(child:
-                                        Text('계속해서 문제를 푸시겠습니까?',
+                                        const Text('계속해서 문제를 푸시겠습니까?',
                                           style: TextStyle(
                                               fontSize: 17,
                                               fontWeight: FontWeight.bold
                                           ),),
-                                        ),
-                                        SizedBox(height: 13,),
+                                        const SizedBox(height: 13,),
                                         Center(
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               nextProblemResult(),
-                                              SizedBox(width: 40,),
+                                              const SizedBox(width: 40,),
                                               ElevatedButton(
                                                 onPressed: (){
                                                   wrongProblems = [];
@@ -655,7 +641,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
             },
           );
         },
-        child: Text('결과보기')
+        child: const Text('결과보기')
     );
   }
 
@@ -669,9 +655,6 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
       (1)) :
     problemNumber / 10 ;
 
-    print(percent);
-    print('problemNumber $problemNumber');
-    print('wrongProblemsSave.length ${wrongProblemsSave.length}');
 
     return Column(
       children: [
@@ -682,15 +665,12 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
             alignment: FractionalOffset(percent, 1 - percent),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
-              child: Container(
-                // color: Colors.red,
-                  child: Image.asset('assets/noteToProgress.png',
-                      width: 20, height: 20, fit: BoxFit.cover)
-              ),
+              child: Image.asset('assets/noteToProgress.png',
+                  width: 20, height: 20, fit: BoxFit.cover),
             ),
           ),
         ),
-        SizedBox(height: 3,),
+        const SizedBox(height: 3,),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -700,9 +680,8 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
               percent: percent,
               lineHeight: 20.h,
               center: wrongProblemMode?
-              Text(problemNumber.toString() + '/' + wrongProblemsSave.length
-                  .toString()) :
-              Text(problemNumber.toString() + '/10') ,
+              Text('$problemNumber/${wrongProblemsSave.length}') :
+              Text('$problemNumber/10') ,
               backgroundColor: Colors.black12,
               progressColor: Colors.amber,
             ),
@@ -719,15 +698,15 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
     super.initState();
     // 새로운 문제 생성
 
-    List<List<dynamic>> note_height_list_problem = getProblemListNote(
+    List<List<dynamic>> noteHeightListProblem = getProblemListNote(
         note_height_list,randomItems
     );
 
-    randomItems = [note_height_list_problem[0][0],note_height_list_problem[1][0]];
+    randomItems = [noteHeightListProblem[0][0],noteHeightListProblem[1][0]];
     randomItems.sort();
-    randomNoteNumber = [note_height_list_problem[0][1],note_height_list_problem[1][1]];
+    randomNoteNumber = [noteHeightListProblem[0][1],noteHeightListProblem[1][1]];
     randomNoteNumber.sort();
-    randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
+    randomNote = [noteHeightListProblem[0][2],noteHeightListProblem[1][2]];
     randomNote.sort();
 
     upDown = Random().nextInt(2);
@@ -745,15 +724,14 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
   @override
   Widget build(BuildContext context) {
 
-    print(MediaQuery.of(context).size.width);
 
     return Scaffold(
       appBar: AppBar(
-        title: wrongProblemMode? Text("오답 풀이 중") : Text("문제 풀이 중"),
+        title: wrongProblemMode? const Text("오답 풀이 중") : const Text("문제 풀이 중"),
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: Icon(Icons.arrow_back_ios),
+              icon: const Icon(Icons.arrow_back_ios),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -814,7 +792,7 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
             setState(() {
               problemNumber = 10;
             });
-          }, child: Text('test')),
+          }, child: const Text('test')),
           (randomNote[0].interval(randomNote[1]).toString().length==2)?
           Text('주어진 음정 ${intervalNameEngKor[randomNote[0].interval(randomNote[1]).toString().substring(0, 1)] +
               randomNote[0].interval(randomNote[1]).toString().substring(1,
@@ -822,8 +800,8 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
           Text('주어진 음정 ${intervalNameEngKor[randomNote[0].interval(randomNote[1]).toString().substring(0, 2)] +
               randomNote[0].interval(randomNote[1]).toString().substring(2, 3)}'),
           (upDown != 0)?
-          Text('주어진 음정을 만들려면 필요한 아래 계이름은?'):
-          Text('주어진 음정을 만들려면 필요한 위에 계이름은?'),
+          const Text('주어진 음정을 만들려면 필요한 아래 계이름은?'):
+          const Text('주어진 음정을 만들려면 필요한 위에 계이름은?'),
           const SizedBox(height: 10.0,),
           SizedBox(
             child: Column(

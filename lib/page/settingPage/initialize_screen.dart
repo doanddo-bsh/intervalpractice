@@ -40,7 +40,7 @@ class _InitializeScreenState extends State<InitializeScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            settings: RouteSettings(name: "/FirstProblemTypeList"),
+            settings: const RouteSettings(name: "/FirstProblemTypeList"),
             builder: (BuildContext context) {
               return widget.targetWidget;
             }

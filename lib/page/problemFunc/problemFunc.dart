@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:music_notes/music_notes.dart';
 import 'problemVarList.dart';
 import 'dart:math';
@@ -25,57 +27,57 @@ bool setEquals<T>(Set<T>? a, Set<T>? b) {
 }
 
 
-List<List<dynamic>> getRandomProblem(List<List<dynamic>> note_height_list){
+List<List<dynamic>> getRandomProblem(List<List<dynamic>> noteHeightList){
 
-  int number1 = Random().nextInt(note_height_list.length);
-  int number2 = Random().nextInt(note_height_list.length);
+  int number1 = Random().nextInt(noteHeightList.length);
+  int number2 = Random().nextInt(noteHeightList.length);
 
-  return [note_height_list[number1],note_height_list[number2]];
+  return [noteHeightList[number1],noteHeightList[number2]];
 
 }
 
 List<List<dynamic>> getProblemListNote(
-    List<List<dynamic>> note_height_list,
+    List<List<dynamic>> noteHeightList,
     List<double> randomItems,
     ){
 
   // 새로운 문제 생성
   // note_height_list.shuffle();
 
-  List<List<dynamic>> note_height_list_problem = [];
-  note_height_list_problem =
-    getRandomProblem(note_height_list);
+  List<List<dynamic>> noteHeightListProblem = [];
+  noteHeightListProblem =
+    getRandomProblem(noteHeightList);
 
   // 이전 문제와 동일하지 않게 방지 하는 장치
   // 동일하면 while문이 계속 실행
   if (randomItems.isEmpty){
     while (
     // 이전 문제와 동일하지 않게 방지 하는 장치
-    (note_height_list_problem[0][1]-note_height_list_problem[1][1]).abs()>7
+    (noteHeightListProblem[0][1]-noteHeightListProblem[1][1]).abs()>7
     ){
-      note_height_list_problem =
-          getRandomProblem(note_height_list);
+      noteHeightListProblem =
+          getRandomProblem(noteHeightList);
     }
   } else {
     while (
     // 이전 문제와 동일하지 않게 방지 하는 장치
     setEquals(
-        [note_height_list_problem[0][0],note_height_list_problem[1][0]].toSet(),
+        [noteHeightListProblem[0][0],noteHeightListProblem[1][0]].toSet(),
         [randomItems[0],randomItems[1]].toSet())
     // 7음정 넘게 차이날 경우 다시 생성
-    |((note_height_list_problem[0][1]-note_height_list_problem[1][1]).abs()>7)
+    |((noteHeightListProblem[0][1]-noteHeightListProblem[1][1]).abs()>7)
     ){
-      note_height_list_problem =
-          getRandomProblem(note_height_list);
+      noteHeightListProblem =
+          getRandomProblem(noteHeightList);
     }
   }
-  return note_height_list_problem;
+  return noteHeightListProblem;
 }
 
 // one both none
 String accidentalsWhere(){
   // 양쪽음에 한쪽만 50, 양쪽다 30, 아무것도 20
-  Random r1 = new Random();
+  Random r1 = Random();
   if (r1.nextDouble() <=0.5){
     return 'one';
   } else if (r1.nextDouble() <=0.8){
@@ -87,7 +89,7 @@ String accidentalsWhere(){
 
 // return sharp, flat, double flat, double sharp
 String accidentals(){
-  Random r2 = new Random();
+  Random r2 = Random();
   if (r2.nextDouble() <=0.35){
     return 'sharp';
   } else if (r2.nextDouble() <=0.70){
@@ -101,7 +103,7 @@ String accidentals(){
 
 // return sharp, flat
 String accidentalsNoDouble(){
-  Random r2 = new Random();
+  Random r2 = Random();
   if (r2.nextDouble() <=0.5){
     return 'sharp';
   } else{
@@ -112,7 +114,7 @@ String accidentalsNoDouble(){
 List<String> accidentalsFinal(List<PositionedNote> randomNote){
 
   String accidentalWhere = accidentalsWhere();
-  Random r3 = new Random();
+  Random r3 = Random();
 
   var randomNote2 = [randomNote[1],randomNote[0]];
 
@@ -221,7 +223,7 @@ Widget addLine1(PositionedNote randomNote){
       );
   }
   else {
-    return SizedBox();
+    return const SizedBox();
   }
 }
 
@@ -266,10 +268,6 @@ Widget addLine3(PositionedNote randomNote, double left){
           ),
         ),
       );
-      Positioned(
-        top: 12.75.h,
-        child: addLineBasic(),
-      );
   } else if (lowLine.contains(randomNote)) {
     return
       Positioned(
@@ -290,7 +288,7 @@ Widget addLine3(PositionedNote randomNote, double left){
       );
   }
   else {
-    return SizedBox();
+    return const SizedBox();
   }
 }
 
@@ -325,7 +323,7 @@ Widget addLine2(PositionedNote randomNote, double left){
       );
   }
   else {
-    return SizedBox();
+    return const SizedBox();
   }
 }
 
@@ -336,7 +334,7 @@ Widget addAccidentals(String whatAccidental, double top, double left){
   double weight = 20.w;
 
   if (whatAccidental == 'none'){
-    return SizedBox();
+    return const SizedBox();
   } else if (whatAccidental == 'sharp'){
     return Positioned(
       top: top-13.0.h,
@@ -344,7 +342,7 @@ Widget addAccidentals(String whatAccidental, double top, double left){
       child: SizedBox(
         height: 54.h,
         width: 47.w,
-        child: Image(
+        child: const Image(
           image: AssetImage('assets/sharp2.png',
           ),
           fit: BoxFit.fill,
@@ -358,7 +356,7 @@ Widget addAccidentals(String whatAccidental, double top, double left){
       child: SizedBox(
         height: 20.h,
         width: 20.w,
-        child: Image(
+        child: const Image(
           image: AssetImage('assets/doubleSharp.png',
           ),
           fit: BoxFit.fill,
@@ -372,7 +370,7 @@ Widget addAccidentals(String whatAccidental, double top, double left){
       child: SizedBox(
         height: 41.h,
         width: 16.w,
-        child: Image(
+        child: const Image(
           image: AssetImage('assets/flat2.png',
           ),
           fit: BoxFit.fill,
@@ -386,7 +384,7 @@ Widget addAccidentals(String whatAccidental, double top, double left){
       child: SizedBox(
         height: 45.h,
         width: 30.w,
-        child: Image(
+        child: const Image(
           image: AssetImage('assets/doubleFlat.png',
           ),
           fit: BoxFit.fill,

@@ -1,7 +1,8 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intervalpractice/page/problemFunc/providerCounter.dart';
-import 'package:lottie/lottie.dart';
 import 'package:music_notes/music_notes.dart';
 import 'package:provider/provider.dart';
 import '../problemFunc/problemFunc.dart';
@@ -34,7 +35,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
   int numberOfRight = 0 ;
 
-  String? intervalNumber = null;
+  String? intervalNumber;
 
   Widget intervalNumberButton(String number){
     return ElevatedButton(
@@ -44,11 +45,11 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
         } :
             (){
         },
+        style: answerButtonDesign(intervalNumber,number,'easy',context),
         child: Text(
           number,
           style: answerButtonTextDesign,
-        ),
-        style: answerButtonDesign(intervalNumber,number,'easy',context)
+        )
     );
   }
 
@@ -69,11 +70,11 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             (){
               // nothing
             },
+        style: answerButtonDesign(answerInterval,intervalNameKorEng[intervalName] + intervalNumber,'easy',context),
         child: Text(
-            intervalName + intervalNumber + '도',
+            '$intervalName$intervalNumber도',
             style: answerButtonTextDesign
-        ),
-        style: answerButtonDesign(answerInterval,intervalNameKorEng[intervalName] + intervalNumber,'easy',context)
+        )
     );
   }
 
@@ -141,7 +142,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     }
   }
 
-  String? answerInterval = null;
+  String? answerInterval;
 
   void showBottomResult(String answerInterval){
 
@@ -165,7 +166,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
       showModalBottomSheet<void>(
         backgroundColor: color5,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(15.0),
             topRight: Radius.circular(15.0)
@@ -175,7 +176,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
         isDismissible:false,
         context: context,
         builder: (BuildContext context) {
-          return Container(
+          return SizedBox(
             height: 185.h,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -205,15 +206,15 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                     ),
                   ],
                 ),
-                SizedBox(height: 7,),
-                Text('정답 : ' + answerRealKor + '도',
+                const SizedBox(height: 7,),
+                Text('정답 : $answerRealKor도',
                   style: TextStyle(
                     color: color4,
                     fontSize : 14.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 7,),
+                const SizedBox(height: 7,),
                 wrongProblemMode?
                 (wrongProblemsSave.length != problemNumber)?
                 wrongProblemNextProblem('다음문제','right') :
@@ -233,8 +234,8 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
       wrongProblems += [randomNoteNumber] ;
 
       showModalBottomSheet<void>(
-        backgroundColor: Color(0xffd7b1b1),
-        shape: RoundedRectangleBorder(
+        backgroundColor: const Color(0xffd7b1b1),
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(15.0),
                 topRight: Radius.circular(15.0)
@@ -244,7 +245,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
         isDismissible:false,
         context: context,
         builder: (BuildContext context) {
-          return Container(
+          return SizedBox(
             height: 185.h,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -273,15 +274,15 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                     ),
                   ],
                 ),
-                SizedBox(height: 7,),
-                Text('정답 : ' + answerRealKor + '도',
+                const SizedBox(height: 7,),
+                Text('정답 : $answerRealKor도',
                   style: TextStyle(
                     color: color6,
                     fontSize : 14.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 7,),
+                const SizedBox(height: 7,),
                 // Text('정답은 ${answerRealKor} 입니다.'),
                 wrongProblemMode?
                 (wrongProblemsSave.length != problemNumber)?
@@ -299,7 +300,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     }
   }
 
-  Widget nextProblem(String buttonText,String right_wrong){
+  Widget nextProblem(String buttonText,String rightWrong){
     return ElevatedButton(
 
         onPressed: (){
@@ -309,18 +310,18 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             });
           }
 
-          List<List<dynamic>> note_height_list_problem = getProblemListNote(
+          List<List<dynamic>> noteHeightListProblem = getProblemListNote(
             note_height_list,
             randomItems,
           );
 
           setState(() {
             // 문제 적용
-            randomItems = [note_height_list_problem[0][0],note_height_list_problem[1][0]];
+            randomItems = [noteHeightListProblem[0][0],noteHeightListProblem[1][0]];
             // randomItems.sort();
-            randomNoteNumber = [note_height_list_problem[0][1],note_height_list_problem[1][1]];
+            randomNoteNumber = [noteHeightListProblem[0][1],noteHeightListProblem[1][1]];
             // randomNoteNumber.sort();
-            randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
+            randomNote = [noteHeightListProblem[0][2],noteHeightListProblem[1][2]];
             // randomNote.sort();
 
             answerInterval = null;
@@ -332,7 +333,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           Navigator.pop(context);
 
         },
-      style: nextProblemButtonStyle('easy',right_wrong),
+      style: nextProblemButtonStyle('easy',rightWrong),
       child: Text(buttonText,
         style: nextProblemButtonTextStyle,
       ),
@@ -404,18 +405,18 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           wrongProblems = [];
           wrongProblemMode = false ;
 
-          List<List<dynamic>> note_height_list_problem = getProblemListNote(
+          List<List<dynamic>> noteHeightListProblem = getProblemListNote(
             note_height_list,
             randomItems,
           );
 
           setState(() {
             // 문제 적용
-            randomItems = [note_height_list_problem[0][0],note_height_list_problem[1][0]];
+            randomItems = [noteHeightListProblem[0][0],noteHeightListProblem[1][0]];
             // randomItems.sort();
-            randomNoteNumber = [note_height_list_problem[0][1],note_height_list_problem[1][1]];
+            randomNoteNumber = [noteHeightListProblem[0][1],noteHeightListProblem[1][1]];
             // randomNoteNumber.sort();
-            randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
+            randomNote = [noteHeightListProblem[0][2],noteHeightListProblem[1][2]];
             // randomNote.sort();
 
             answerInterval = null;
@@ -443,7 +444,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
   }
 
 
-  Widget wrongProblemNextProblem(String buttonText, String right_wrong){
+  Widget wrongProblemNextProblem(String buttonText, String rightWrong){
     return ElevatedButton(
         onPressed: (){
 
@@ -472,7 +473,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           Navigator.pop(context);
 
         },
-        style: nextProblemButtonStyle('easy',right_wrong),
+        style: nextProblemButtonStyle('easy',rightWrong),
         child: Text(buttonText,
           style: nextProblemButtonTextStyle,
         ),
@@ -518,11 +519,12 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           Navigator.pop(context);
         },
       style: ElevatedButton.styleFrom(
+        // minimumSize: Size(100.w,50.h),
         backgroundColor: Colors.yellow[200]
       ),
         child: Text('틀린 문제 다시 풀기',
           style: TextStyle(
-              fontSize: 13.5,
+              fontSize: 15.0,
               fontWeight: FontWeight.bold,
               color: Colors.grey[700]
           ),
@@ -530,7 +532,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     );
   }
 
-  Widget showResult(String right_wrong){
+  Widget showResult(String rightWrong){
 
     // Navigator.pop(context);
 
@@ -563,7 +565,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
             },
           );
         },
-        style: nextProblemButtonStyle('easy',right_wrong),
+        style: nextProblemButtonStyle('easy',rightWrong),
         child: Text('결과보기',
           style: nextProblemButtonTextStyle,
         ),
@@ -581,15 +583,15 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
     super.initState();
     // 새로운 문제 생성
 
-    List<List<dynamic>> note_height_list_problem = getProblemListNote(
+    List<List<dynamic>> noteHeightListProblem = getProblemListNote(
       note_height_list, randomItems
     );
 
-    randomItems = [note_height_list_problem[0][0],note_height_list_problem[1][0]];
+    randomItems = [noteHeightListProblem[0][0],noteHeightListProblem[1][0]];
     // randomItems.sort();
-    randomNoteNumber = [note_height_list_problem[0][1],note_height_list_problem[1][1]];
+    randomNoteNumber = [noteHeightListProblem[0][1],noteHeightListProblem[1][1]];
     // randomNoteNumber.sort();
-    randomNote = [note_height_list_problem[0][2],note_height_list_problem[1][2]];
+    randomNote = [noteHeightListProblem[0][2],noteHeightListProblem[1][2]];
     // randomNote.sort();
 
     // for admob banner
@@ -619,14 +621,9 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
     String answerRealTemp = randomNoteAnswerTemp[0].interval
       (randomNoteAnswerTemp[1]).toString();
-    String answerRealKorTemp = '';
 
     if (answerRealTemp.length==2){
-      answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 1)] +
-          answerRealTemp.substring(1, 2);
     } else {
-      answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 2)] +
-          answerRealTemp.substring(2, 3);
     }
 
     // return Consumer<Counter>(
@@ -665,7 +662,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
               Container(
                 height: 300.h,
                 width: double.infinity,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   // border: Border.all(color: Colors.black)
                 ),
                 child: Stack(
@@ -700,20 +697,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
                       ),
                     ),
                     addLine3(randomNote[0],130.w),
-                    // Positioned(
-                    //   top: 50.75.h, // [50.75,3,Note.a.inOctave(5)],
-                    //   left: 130.w,
-                    //   child: SizedBox(
-                    //     height: 26.5.h,
-                    //     child: Stack(
-                    //       children: [
-                    //         // Image.asset('assets/whole_note_lean.png'),
-                    //         addLine1(randomNote[0]),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    // addLine2(randomNote[0],130.w),
                     // 음표 2
                     Positioned(
                       top: randomItems[1].h,
@@ -738,26 +721,6 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
               Stack(
                   children: [
                     SizedBox(height: 25.0.h,),
-                    // Consumer<CounterClass>(builder: (context, data, child){
-                    //     return
-                    //       Text('${data.count}',
-                    //           style: TextStyle(
-                    //             fontWeight: FontWeight.bold,
-                    //             fontSize: 20,
-                    //           ),
-                    //       );
-                    //   }
-                    // ),
-                    // ElevatedButton(onPressed: ()
-                    //   {
-                    //     setState(() {
-                    //       Provider.of<CounterClass>(context, listen: false)
-                    //       .increment();
-                    //       // print('counter.count ${counter.count}');
-                    //       // problemNumber = 10;
-                    //     });
-                    //   }, child: Text('test')
-                    // ),
                   ]
               ),
               SizedBox(
@@ -794,7 +757,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
               SizedBox(height: 30.0.h,),
               showIntervalName(intervalNumber),
               // SizedBox(height: 30.h,),
-              Expanded(child: SizedBox()),
+              const Expanded(child: SizedBox()),
               // admob banner
               Container(
                 alignment: Alignment.center,
@@ -809,6 +772,4 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
           ),
         );
       }
-    // );
-  // }
 }

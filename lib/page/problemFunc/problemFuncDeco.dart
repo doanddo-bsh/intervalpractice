@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -7,30 +9,30 @@ import '../problemFunc/problemFunc.dart';
 
 // appBar title style
 TextStyle appBarTitleStyle =
-TextStyle(fontSize: 16,fontWeight: FontWeight.bold);
+const TextStyle(fontSize: 16,fontWeight: FontWeight.bold);
 
 // appBar title icon
-Icon appBarIcon = Icon(Icons.arrow_back_ios,size: 16,);
+Icon appBarIcon = const Icon(Icons.arrow_back_ios,size: 16,);
 
 // explain text style
 TextStyle explainTextStyle =
-TextStyle(fontSize: 14,fontWeight: FontWeight.bold);
+const TextStyle(fontSize: 14,fontWeight: FontWeight.bold);
 
 TextStyle explainTextStyle2 =
-TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Color(0xff931919));
+const TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Color(0xff931919));
 
 // next problem button style
-ButtonStyle nextProblemButtonStyle(String easyOrHard,String right_wrong){
+ButtonStyle nextProblemButtonStyle(String easyOrHard,String rightWrong){
   return ElevatedButton.styleFrom(
-      backgroundColor: (right_wrong=='right')? color1: color2,
-      foregroundColor: (right_wrong=='right')? color1 : color2,
+      backgroundColor: (rightWrong=='right')? color1: color2,
+      foregroundColor: (rightWrong=='right')? color1 : color2,
       elevation: 3
   );
 }
 
 // next problem button text style
 TextStyle nextProblemButtonTextStyle =
-TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.white54)
+const TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.white54)
 ;
 
 
@@ -46,7 +48,7 @@ ButtonStyle answerButtonDesign(realValue,buttonValue,easyOrHard,context){
     ElevatedButton.styleFrom(
         backgroundColor:
         realValue==buttonValue ?
-        Color(0xffdadada) :
+        const Color(0xffdadada) :
         Theme.of(context).colorScheme.onTertiary,
         foregroundColor: (easyOrHard=='easy')? color1 : color2,
         shape:RoundedRectangleBorder(
@@ -110,20 +112,18 @@ String commentaryKeyReturn(List<dynamic> randomNoteAnswerSorted, String answerRe
   commentaryDownAccidental[returnTarget[1]];
 
   String commentaryBasicResult =
-      '${commentaryBasic[returnTarget[0]][0]} ${answerRealKor}도 '
+      '${commentaryBasic[returnTarget[0]][0]} $answerRealKor도 '
       '${commentaryBasic[returnTarget[0]][1]}'
   ;
 
   if ((commentaryUpAccidentalResult==null)&(commentaryDownAccidentalResult==null)){
     return commentaryBasicResult;
   } else if (commentaryUpAccidentalResult==null){
-    return commentaryDownAccidentalResult! + ' ' + commentaryBasicResult;
+    return '${commentaryDownAccidentalResult!} $commentaryBasicResult';
   } else if (commentaryDownAccidentalResult==null){
-    return commentaryUpAccidentalResult! + ' ' + commentaryBasicResult;
+    return '$commentaryUpAccidentalResult $commentaryBasicResult';
   } else {
-    return commentaryDownAccidentalResult! + ' ' +
-        commentaryUpAccidentalResult! + ' ' +
-        commentaryBasicResult;
+    return '$commentaryDownAccidentalResult $commentaryUpAccidentalResult $commentaryBasicResult';
   }
 
 
@@ -147,7 +147,7 @@ Widget lastRidingProgress(
 
   return Column(
     children: [
-      SizedBox(height: 3,),
+      const SizedBox(height: 3,),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -157,9 +157,8 @@ Widget lastRidingProgress(
             percent: percent,
             lineHeight: 20.h,
             center: wrongProblemMode?
-            Text(problemNumber.toString() + '/' + wrongProblemsSave.length
-                .toString(),style: TextStyle(fontSize: 12)) :
-            Text(problemNumber.toString() + '/10',style: TextStyle(fontSize: 12),) ,
+            Text('$problemNumber/${wrongProblemsSave.length}',style: const TextStyle(fontSize: 12)) :
+            Text('$problemNumber/10',style: const TextStyle(fontSize: 12),) ,
             backgroundColor: Colors.black12,
             progressColor: (easyOrHard=='easy')? color1 : color2,
           ),
@@ -178,14 +177,14 @@ Widget commentaryToolTip(String commentaryResult){
         margin: EdgeInsets.fromLTRB(0.w, 0.h, 0.w, 0.h),
         verticalOffset: -120,
         height: 80,
-        textStyle: TextStyle(color: Colors.black54),
-        decoration: BoxDecoration(color: Color(0xffeeeeee),
+        textStyle: const TextStyle(color: Colors.black54),
+        decoration: BoxDecoration(color: const Color(0xffeeeeee),
             borderRadius: BorderRadius.circular(10)),
         triggerMode: TooltipTriggerMode.tap,
-        showDuration: Duration(milliseconds: 7000),
+        showDuration: const Duration(milliseconds: 7000),
         message:
         commentaryResult,
-        child: Icon(
+        child: const Icon(
           Icons.info_outline,
           size: 18,
         ),
