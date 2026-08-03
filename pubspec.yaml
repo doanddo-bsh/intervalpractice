@@ -38,7 +38,6 @@ dependencies:
   auto_size_text: ^3.0.0
   flutter_screenutil: ^5.9.3
   music_notes: ^0.26.0
-  percent_indicator: ^4.2.5
   lottie: ^3.5.1
   google_mobile_ads: ^9.0.0
   app_tracking_transparency: ^2.0.7
