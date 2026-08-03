@@ -772,6 +772,30 @@ Expected: `✓ Built build/app/outputs/flutter-apk/app-debug.apk`
 
 **이 태스크가 안드로이드 빌드를 처음으로 초록불로 만드는 지점이다.** Task 4가 `app_plugin_loader` 오류를, Task 5가 `async_preferences` namespace 오류를 걷어냈고, 여기서 `webview_flutter_android`의 v1 embedding 오류가 사라진다.
 
+- [ ] **Step 5-a: R8 난독화 방어 규칙 추가 (Task 5 품질 검토에서 발견)**
+
+릴리즈 빌드는 `minifyEnabled true` + `shrinkResources true`이고, AGP 8부터 **R8 full mode가 기본**이다. 현재 `android/app/proguard-rules.pro`는 `io.flutter.**`만 보존한다.
+
+검토자가 실제 AAR을 열어 확인한 결과:
+- `play-services-ads` (22.5.0, 25.3.0 모두) → `proguard.txt` **포함** ✅
+- `user-messaging-platform 2.1.0` (현재 UMP) → `proguard.txt` **없음** ❌
+- `app_tracking_transparency` → 안드로이드 모듈 자체가 없음(iOS 전용), 무관
+
+UMP는 EU 사용자에게 매 실행 시 GDPR 동의 화면을 그리는 SDK다. 문자열 기반 동적 조회가 있으면 R8 full mode에서 조용히 깨진다. 비용이 없으므로 방어적으로 보존한다.
+
+`android/app/proguard-rules.pro` 끝에 추가:
+
+```proguard
+## AdMob / UMP consent SDK
+## UMP 2.1.0 ships no consumer proguard rules; R8 full mode (AGP 8 default)
+## can strip classes it reaches by name. The consent form is shown to every
+## EU user on cold start, so failures here are user-visible and silent.
+-keep class com.google.android.gms.ads.** { *; }
+-keep interface com.google.android.gms.ads.** { *; }
+-keep class com.google.android.ump.** { *; }
+-dontwarn com.google.android.gms.ads.**
+```
+
 - [ ] **Step 5-b: 릴리즈 빌드 및 서명 지문 검증 (Task 5에서 이관)**
 
 ```bash
