@@ -3553,7 +3553,10 @@ git commit -m "feat(ui): unified QuizPage replacing 6 duplicated problem screens
 - Create: `lib/state/ad_counter.dart`
 - Create: `lib/ui/home/home_page.dart`
 - Modify: `lib/main.dart`, `lib/app.dart`
+- **Modify: `test/widget_test.dart`** — 이 태스크가 깨뜨린다 (아래 Step 5-b 참조)
 - Delete: `lib/page/` 하위 구 파일 전부
+
+> **경고:** 이 태스크는 `test/widget_test.dart`를 **컴파일 불가 상태로 만든다.** 해당 테스트는 `main.dart`의 `MyApp`과 `page/problemFunc/providerCounter.dart`의 `CounterClass`를 직접 import하는데, 이 태스크가 둘 다 없앤다(`IntervalPracticeApp`, `AdCounter`로 대체). Step 5-b에서 함께 고친다.
 
 - [ ] **Step 1: AdCounter 작성 (기존 providerCounter.dart 대체)**
 
@@ -3924,6 +3927,31 @@ Task 9의 `test/characterization/answer_calculation_test.dart`는 삭제된 `pro
 
 ```bash
 git rm test/characterization/answer_calculation_test.dart
+```
+
+- [ ] **Step 5-b: 스모크 테스트를 새 진입점에 맞게 갱신**
+
+Task 3에서 만든 `test/widget_test.dart`는 이 태스크가 없애는 심볼 두 개를 직접 import한다. 갱신하지 않으면 **컴파일 자체가 실패**한다.
+
+```bash
+grep -n "import\|MyApp\|CounterClass" test/widget_test.dart
+```
+
+교체 대상:
+
+| 기존 | 신규 |
+|---|---|
+| `import 'package:intervalpractice/main.dart';` → `MyApp` | `import 'package:intervalpractice/app.dart';` → `IntervalPracticeApp` |
+| `import 'package:intervalpractice/page/problemFunc/providerCounter.dart';` → `CounterClass` | `import 'package:intervalpractice/state/ad_counter.dart';` → `AdCounter` |
+
+또한 이 테스트는 `LoadingPage` → `InitializeScreen` 전이를 검증하며 `InitializeScreen`이 `CircularProgressIndicator`를 그린다는 데 의존한다. 이동한 `lib/ui/common/initialize_screen.dart`가 그 구조를 유지하는지 확인하고, 바뀌었다면 단언을 새 구조에 맞춘다.
+
+테스트가 **여전히 실제 결함을 잡는지** 반드시 재확인한다 — provider 배선을 일부러 제거해 실패하는지 보고 되돌린다:
+
+```bash
+flutter test   # 통과 확인
+# app.dart에서 ChangeNotifierProvider 래퍼를 임시 제거 → flutter test 가 실패해야 함
+# git checkout -- lib/app.dart 로 복원 후 flutter test 재통과 확인
 ```
 
 - [ ] **Step 6: 이동한 파일의 클래스명·참조 정리**
