@@ -67,6 +67,10 @@ key.properties
 *.cer
 *.certSigningRequest
 /ios/Runner/GoogleService-Info.plist
+
+# Generated at CI runtime by release-ios.yml from Secrets (APPSTORE_TEAM_ID,
+# IOS_PROVISIONING_PROFILE_NAME) -- never commit a copy with real values.
+/ios/ExportOptions.plist
 /android/app/google-services.json
 
 # Local staging folder for the above
