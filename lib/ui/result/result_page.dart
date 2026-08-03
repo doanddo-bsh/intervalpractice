@@ -38,8 +38,10 @@ Widget resultPage(
     resultPageComment = resultPageCommentList[2];
   }
 
+  final colors = Theme.of(context).colorScheme;
+
   return Container(
-    color: Colors.white,
+    color: colors.surface,
     height: MediaQuery.of(context).size.height * 1.0,
     child: Center(
       child: SafeArea(
@@ -61,7 +63,9 @@ Widget resultPage(
                           child: Container(
                             width: 600.w,
                             height: 500.h,
-                            color: Colors.lightGreen.withValues(alpha: 0.4),
+                            color: colors.primaryContainer.withValues(
+                              alpha: 0.6,
+                            ),
                           ),
                         ),
                       ),
@@ -70,18 +74,18 @@ Widget resultPage(
                           alignment: Alignment.topCenter,
                           child: Container(
                             padding: const EdgeInsets.all(3),
-                            decoration: const BoxDecoration(
-                                color: Color(0xff6aab64),
+                            decoration: BoxDecoration(
+                                color: colors.primary,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
+                                    const BorderRadius.all(Radius.circular(20))),
                             height: 55.h,
                             width: 200.w,
-                            child: const Text(
+                            child: Text(
                               'CLEAR',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   decoration: TextDecoration.none,
-                                  color: Colors.white,
+                                  color: colors.onPrimary,
                                   fontSize: 33,
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 5),
@@ -108,7 +112,7 @@ Widget resultPage(
                               style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.grey[700],
+                                color: colors.onSurfaceVariant,
                                 decoration: TextDecoration.none,
                               ),
                             ),
@@ -132,9 +136,7 @@ Widget resultPage(
                                       child: AutoSizeText(
                                         '$scoreResult점',
                                         style: TextStyle(
-                                          color: wrongProblemMode
-                                              ? Colors.black87
-                                              : null,
+                                          color: colors.onSurface,
                                           decoration: TextDecoration.none,
                                           fontSize: 60,
                                           fontWeight: FontWeight.bold,
@@ -165,7 +167,7 @@ Widget resultPage(
                                     decoration: TextDecoration.none,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.grey[700])),
+                                    color: colors.onSurfaceVariant)),
                             SizedBox(height: 30.h),
                             SizedBox(
                               height: 60.h,
@@ -197,7 +199,7 @@ Widget resultPage(
                         child: Container(
                           width: 600.w,
                           height: 400.h,
-                          color: Colors.grey[300],
+                          color: colors.surfaceContainerHighest,
                         ),
                       ),
                       Container(
@@ -222,8 +224,8 @@ Widget resultPage(
                                             borderRadius:
                                                 BorderRadius.circular(10))),
                                     child: Text('아니오',
-                                        style:
-                                            TextStyle(color: Colors.grey[700])),
+                                        style: TextStyle(
+                                            color: colors.onSurfaceVariant)),
                                   )
                                 ],
                               ),

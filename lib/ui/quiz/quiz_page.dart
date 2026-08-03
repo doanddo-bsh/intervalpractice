@@ -120,15 +120,19 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   Widget _wrongProblemSolveStartButton() {
+    final colors = Theme.of(context).colorScheme;
+
     return ElevatedButton(
       onPressed: _session.canStartReview ? _startReview : null,
-      style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow[200]),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: colors.secondaryContainer,
+      ),
       child: Text(
         '틀린 문제 다시 풀기',
         style: TextStyle(
           fontSize: 15.0,
           fontWeight: FontWeight.bold,
-          color: Colors.grey[700],
+          color: colors.onSecondaryContainer,
         ),
       ),
     );

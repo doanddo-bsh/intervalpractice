@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:async';
+import '../../theme/app_theme.dart';
 import '../home/home_page.dart';
 import 'initialize_screen.dart';
 
@@ -41,7 +42,10 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffd1e0ba),
+      // 스플래시 화면은 시스템 다크모드 판단 이전에 뜨므로 테마와 무관한
+      // 고정 브랜드 색을 쓴다 (근거: lib/theme/app_theme.dart의
+      // AppTheme.splashBackground/splashForeground 문서 참고).
+      backgroundColor: AppTheme.splashBackground,
       body: Stack(
           children: [
             Positioned(
@@ -66,7 +70,7 @@ class _LoadingPageState extends State<LoadingPage> {
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
-                      color: Color(0xff373f2c),
+                      color: AppTheme.splashForeground,
                   ),
                 )
             ),
@@ -78,7 +82,7 @@ class _LoadingPageState extends State<LoadingPage> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 12.0,
-                    color: Color(0xff373f2c),
+                    color: AppTheme.splashForeground,
                   ),
                   textAlign: TextAlign.center,
                 )
