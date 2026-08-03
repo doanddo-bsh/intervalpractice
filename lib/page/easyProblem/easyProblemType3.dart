@@ -151,7 +151,6 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
     List<dynamic> resultAll = getResultAllEasy(randomNote, true);
 
     // 정답 배분/입력
-    List<dynamic> randomNoteAnswer = resultAll[0] ;
     String answerReal = resultAll[1] ;
     String answerRealKor = resultAll[2] ;
     String answerRealOriginalKor = resultAll[3] ;
@@ -620,19 +619,6 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
     randomNoteAnswerTemp.add(randomNote[1]);
 
     randomNoteAnswerTemp.sort();
-
-    String answerRealTemp = randomNoteAnswerTemp[0].interval
-      (randomNoteAnswerTemp[1]).inverted.toString();
-    String answerRealKorTemp = '';
-
-    if (answerRealTemp.length==2){
-      answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 1)] +
-          answerRealTemp.substring(1, 2);
-    } else {
-      answerRealKorTemp = intervalNameEngKor[answerRealTemp.substring(0, 2)] +
-          answerRealTemp.substring(2, 3);
-    }
-
 
     return Scaffold(
       appBar: AppBar(

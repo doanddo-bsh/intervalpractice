@@ -177,7 +177,6 @@ class _HardProblemType3State extends State<HardProblemType3> {
     List<dynamic> resultAll = getResultAllHard(randomNote, accidentals, true);
 
     // 정답 배분/입력
-    List<dynamic> randomNoteAnswer = resultAll[0] ;
     String answerReal = resultAll[1] ;
     String answerRealKor = resultAll[2] ;
     String answerRealOriginalKor = resultAll[3] ;

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intervalpractice/page/problemFunc/providerCounter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +13,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); //  WidgetsFlutterBinding.ensureInitialized();을 사용하여 Flutter가 초기화가 잘 되었는지 확인한 후
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp]); // 가로모드 막기
-  MobileAds.instance.initialize(); //MobileAds.instance.initialize();을 호출하여 MobileAds를 초기화 합니다.
+  unawaited(MobileAds.instance
+      .initialize()); //MobileAds.instance.initialize();을 호출하여 MobileAds를 초기화 합니다.
   runApp(const MyApp());
 }
 
@@ -46,7 +49,8 @@ class _MyAppState extends State<MyApp> {
           ),
           builder: (context, child){
             return MediaQuery(
-                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                data: MediaQuery.of(context)
+                    .copyWith(textScaler: TextScaler.noScaling),
                 child: child!);
           },
           home: child,

@@ -330,9 +330,6 @@ Widget addLine2(PositionedNote randomNote, double left){
 // 변화표 추가
 Widget addAccidentals(String whatAccidental, double top, double left){
 
-  double height = 25.h;
-  double weight = 20.w;
-
   if (whatAccidental == 'none'){
     return const SizedBox();
   } else if (whatAccidental == 'sharp'){

@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'initialization_helper.dart';
 
 class InitializeScreen extends StatefulWidget {
-  Widget targetWidget ;
+  final Widget targetWidget;
 
-  InitializeScreen({required this.targetWidget});
+  const InitializeScreen({super.key, required this.targetWidget});
 
   @override
   State<InitializeScreen> createState() => _InitializeScreenState();
@@ -30,14 +32,13 @@ class _InitializeScreenState extends State<InitializeScreen> {
   );
 
   Future<void> _initialize() async {
-    final navigator = Navigator.of(context);
-
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await _initializationHelper.initialize();
       // navigator.pushReplacement(
       //   MaterialPageRoute(builder: (context) => widget.targetWidget),
       // );
-      Navigator.pushReplacement(
+      if (!mounted) return;
+      unawaited(Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             settings: const RouteSettings(name: "/FirstProblemTypeList"),
@@ -45,7 +46,7 @@ class _InitializeScreenState extends State<InitializeScreen> {
               return widget.targetWidget;
             }
         ),
-      );
+      ));
     });
   }
 }

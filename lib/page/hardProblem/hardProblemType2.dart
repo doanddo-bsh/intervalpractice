@@ -176,7 +176,6 @@ class _HardProblemType2State extends State<HardProblemType2> {
     List<dynamic> resultAll = getResultAllHard(randomNote, accidentals, false);
 
     // 정답 배분/입력
-    List<dynamic> randomNoteAnswer = resultAll[0] ;
     String answerRealKor = resultAll[2] ;
 
     // 해석 해설

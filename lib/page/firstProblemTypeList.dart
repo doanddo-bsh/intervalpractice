@@ -19,7 +19,6 @@ import 'problemFunc/admobFunc.dart';
 import 'problemFunc/providerCounter.dart';
 import 'package:provider/provider.dart';
 import 'package:async_preferences/async_preferences.dart';
-import 'settingPage/initialization_helper.dart';
 
 class FirstProblemTypeList extends StatefulWidget {
   const FirstProblemTypeList({Key? key}) : super(key: key);
@@ -40,10 +39,6 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
 
   // for admob banner
   BannerAd? _banner;
-
-  // ios IDFS setting
-  String _authStatus = 'Unknown';
-  // ios IDFS setting end
 
   @override
   void initState() {
@@ -112,19 +107,18 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
     try{
       final TrackingStatus status =
       await AppTrackingTransparency.trackingAuthorizationStatus;
-      setState(() => _authStatus = '$status');
+      setState(() {});
       // If the system can show an authorization request dialog
       if (status == TrackingStatus.notDetermined){
         await Future.delayed(const Duration(milliseconds: 200));
-        final TrackingStatus status =
         await AppTrackingTransparency.requestTrackingAuthorization();
-        setState(() => _authStatus = '$status');
+        setState(() {});
       }
     } on PlatformException {
-      setState(() => _authStatus = 'PlatformException was thrown');
+      setState(() {});
     }
 
-    final uuid = await AppTrackingTransparency.getAdvertisingIdentifier();
+    await AppTrackingTransparency.getAdvertisingIdentifier();
   }
   // ios IDFS setting end
 
@@ -139,7 +133,6 @@ class _FirstProblemTypeListState extends State<FirstProblemTypeList>
   }
 
   // GDPR setting
-  final _initializationHelper = InitializationHelper();
   late final Future<bool> _future ;
 
   Future<bool> _isUnderGdpr() async {

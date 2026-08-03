@@ -639,13 +639,10 @@ class _HardProblemType1State extends State<HardProblemType1> {
 
     // 정답 배분/입력
     List<dynamic> randomNoteAnswer = resultAll[0] ;
-    String answerReal = resultAll[1] ;
     String answerRealKor = resultAll[2] ;
 
     // 해석 해설
-    String commentaryResult = commentaryKeyReturn(randomNoteAnswer,
-        answerRealKor);
-
+    commentaryKeyReturn(randomNoteAnswer, answerRealKor);
 
     return Scaffold(
       appBar: AppBar(

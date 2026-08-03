@@ -8,7 +8,7 @@ import 'firstProblemTypeList.dart';
 import 'settingPage/initialize_screen.dart';
 
 class LoadingPage extends StatefulWidget {
-  const LoadingPage({Key? key}) : super(key: key);
+  const LoadingPage({super.key});
 
   @override
   State<LoadingPage> createState() => _LoadingPageState();
@@ -25,8 +25,8 @@ class _LoadingPageState extends State<LoadingPage> {
             context,
            MaterialPageRoute(
                builder: (BuildContext context) {
-                 return InitializeScreen(
-                         targetWidget:const FirstProblemTypeList()
+                 return const InitializeScreen(
+                         targetWidget: FirstProblemTypeList()
                         );
                }
            ),

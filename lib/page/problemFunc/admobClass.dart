@@ -23,6 +23,7 @@ class AdMobServiceBanner {
         return 'ca-app-pub-3940256099942544/2934735716';
       }
     }
+    return null;
   }
 
   static final BannerAdListener bannerAdListener = BannerAdListener(
@@ -56,5 +57,6 @@ class AdMobServiceFullScreen {
         return 'ca-app-pub-3940256099942544/4411468910';
       }
     }
+    return null;
   }
 }

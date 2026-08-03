@@ -6,7 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 
-Widget resultPage(context,
+Widget resultPage(BuildContext context,
     bool wrongProblemMode,
     int numberOfRight,
     List<List<int>> wrongProblemsSave,
@@ -70,7 +70,7 @@ Widget resultPage(context,
                           child: Container(
                             width: 600.w,
                             height: 500.h,
-                            color: Colors.lightGreen.withOpacity(0.4),
+                            color: Colors.lightGreen.withValues(alpha: 0.4),
                           ),),
                       ),
                       Positioned.fill(
