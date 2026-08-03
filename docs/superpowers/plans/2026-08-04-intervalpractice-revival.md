@@ -3818,9 +3818,18 @@ final class AdCounter extends ChangeNotifier {
 
 `lib/ui/home/home_page.dart`:
 
+> **주의 — 기능 유실 위험 지점.** 기존 `firstProblemTypeList.dart`는 세 가지를 담당하고 있었다. 새 `HomePage`는 **셋 다** 이어받아야 한다:
+> 1. **ATT(앱 추적 투명성) 동의 요청** — 없으면 iOS에서 IDFA를 못 얻어 광고 단가가 떨어지고 심사 지적 대상이 된다
+> 2. **GDPR 대상 여부 판별** — `AsyncPreferences().getInt('IABTCF_gdprApplies') == 1`로 개인정보 재설정 버튼 노출 여부 결정
+> 3. 문제 유형 목록 + 전면광고 트리거
+>
+> 아래 코드는 1과 3을 포함한다. 2는 `_HomePageState`에서 `Future<bool>`로 들고 `FutureBuilder`로 `showPrivacySettings`를 채우도록 이어붙인다.
+
 ```dart
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
@@ -3855,6 +3864,28 @@ class _HomePageState extends State<HomePage>
   void initState() {
     super.initState();
     _interstitial.preload();
+
+    // Apple은 IDFA 접근 전 ATT 동의를 요구한다. 첫 프레임 이후에 띄워야
+    // 시스템 다이얼로그가 정상 표시된다.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _requestTracking());
+  }
+
+  /// iOS 앱 추적 투명성(ATT) 동의 요청.
+  ///
+  /// 이 호출이 없으면 iOS에서 IDFA를 얻지 못해 광고 단가가 크게 떨어지고,
+  /// 심사에서 지적될 수 있다. Android에서는 무해한 no-op이다.
+  Future<void> _requestTracking() async {
+    try {
+      final status = await AppTrackingTransparency.trackingAuthorizationStatus;
+      if (status == TrackingStatus.notDetermined) {
+        // 다이얼로그가 곧바로 뜨면 무시되는 사례가 있어 한 박자 늦춘다.
+        await Future<void>.delayed(const Duration(milliseconds: 200));
+        await AppTrackingTransparency.requestTrackingAuthorization();
+      }
+      await AppTrackingTransparency.getAdvertisingIdentifier();
+    } on PlatformException catch (error) {
+      debugPrint('ATT request failed: $error');
+    }
   }
 
   @override
