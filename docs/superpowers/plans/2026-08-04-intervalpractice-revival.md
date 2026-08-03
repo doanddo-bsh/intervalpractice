@@ -1891,7 +1891,7 @@ void main() {
 
       for (var i = 0; i < 2000; i++) {
         final problem = generator.next(mode: hardType1);
-        final pitches = AnswerChecker.pitchesOf(problem);
+        final pitches = problem.sortedPitches;
         final interval = pitches[0].interval(pitches[1]);
 
         expect(
@@ -1901,10 +1901,10 @@ void main() {
               '${KoreanInterval.intervalAbbreviation(interval)}',
         );
         expect(
-          KoreanInterval.isAnswerable(interval.inversion),
+          KoreanInterval.isAnswerable(interval.inverted),
           isTrue,
           reason: '자리바꿈이 답할 수 없음: $problem -> '
-              '${KoreanInterval.intervalAbbreviation(interval.inversion)}',
+              '${KoreanInterval.intervalAbbreviation(interval.inverted)}',
         );
       }
     });
@@ -1961,6 +1961,29 @@ final class IntervalProblem {
 
   /// 오답노트 저장용 식별자 — 자리 인덱스 쌍.
   List<int> get slotIndices => [lower.index, upper.index];
+
+  /// 임시표를 적용한 실제 음높이 두 개를, 낮은 음부터 정렬해 반환한다.
+  ///
+  /// 문제가 자기 음높이를 아는 것이 자연스럽고, 생성기(Task 13)와
+  /// 채점기(Task 17)가 같은 계산을 중복하지 않게 한다.
+  ///
+  /// **music_notes 0.13 호환 주의:** 반환 타입은 0.13에서 `PositionedNote`,
+  /// 0.26에서 `Pitch`다. Task 14에서 일괄 치환된다.
+  List<PositionedNote> get sortedPitches => [
+    _withAccidental(lower.pitch, accidentals[0]),
+    _withAccidental(upper.pitch, accidentals[1]),
+  ]..sort();
+
+  static PositionedNote _withAccidental(
+    PositionedNote pitch,
+    String accidental,
+  ) => switch (accidental) {
+    'sharp' => pitch.note.sharp.inOctave(pitch.octave),
+    'double sharp' => pitch.note.sharp.sharp.inOctave(pitch.octave),
+    'flat' => pitch.note.flat.inOctave(pitch.octave),
+    'double flat' => pitch.note.flat.flat.inOctave(pitch.octave),
+    _ => pitch,
+  };
 
   @override
   String toString() =>
@@ -2091,7 +2114,7 @@ final class ProblemGenerator {
   ///
   /// 자리바꿈 문제(유형 3)는 inverted 음정이 정답이므로 그쪽도 확인한다.
   bool _isAnswerable(IntervalProblem problem) {
-    final pitches = AnswerChecker.pitchesOf(problem);
+    final pitches = problem.sortedPitches;
     final interval = pitches[0].interval(pitches[1]);
 
     return KoreanInterval.isAnswerable(interval) &&
@@ -2099,6 +2122,8 @@ final class ProblemGenerator {
   }
 }
 ```
+
+> **music_notes 0.13 호환:** 위 코드의 `interval.inversion`은 0.26 API다. 0.13에서는 `interval.inverted`를 쓴다. 이 태스크는 0.13에서 실행되므로 **`inverted`로 작성**하고, Task 14 Step 6의 일괄 치환에 맡긴다. `problem.sortedPitches`의 원소 타입도 0.13에서는 `PositionedNote`다.
 
 - [ ] **Step 5: 테스트 통과 확인**
 
@@ -3634,31 +3659,13 @@ final class Grading {
 }
 
 abstract final class AnswerChecker {
-  /// 임시표를 적용한 실제 음높이 두 개를 낮은 음부터 정렬해 반환한다.
-  static List<Pitch> pitchesOf(IntervalProblem problem) {
-    final pitches = [
-      _applyAccidental(problem.lower.pitch, problem.accidentals[0]),
-      _applyAccidental(problem.upper.pitch, problem.accidentals[1]),
-    ]..sort();
-
-    return pitches;
-  }
-
-  static Pitch _applyAccidental(Pitch pitch, String accidental) =>
-      switch (accidental) {
-        'sharp' => pitch.note.sharp.inOctave(pitch.octave),
-        'double sharp' => pitch.note.sharp.sharp.inOctave(pitch.octave),
-        'flat' => pitch.note.flat.inOctave(pitch.octave),
-        'double flat' => pitch.note.flat.flat.inOctave(pitch.octave),
-        _ => pitch,
-      };
-
   static Grading grade({
     required IntervalProblem problem,
     required ProblemMode mode,
     required String submitted,
   }) {
-    final pitches = pitchesOf(problem);
+    // 임시표 적용 + 정렬은 IntervalProblem이 안다 (Task 13에서 추가됨).
+    final pitches = problem.sortedPitches;
 
     if (mode.questionType == QuestionType.nameTheNote) {
       // 화면에 가려진 음(upper)의 계이름이 정답이다.
