@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:async';
-import 'firstProblemTypeList.dart';
-import 'settingPage/initialize_screen.dart';
+import '../home/home_page.dart';
+import 'initialize_screen.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});
@@ -26,7 +26,7 @@ class _LoadingPageState extends State<LoadingPage> {
            MaterialPageRoute(
                builder: (BuildContext context) {
                  return const InitializeScreen(
-                         targetWidget: FirstProblemTypeList()
+                         targetWidget: HomePage()
                         );
                }
            ),

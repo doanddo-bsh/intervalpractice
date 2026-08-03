@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'initialization_helper.dart';
+
+import '../../ads/consent_service.dart';
 
 class InitializeScreen extends StatefulWidget {
   final Widget targetWidget;
@@ -41,7 +42,6 @@ class _InitializeScreenState extends State<InitializeScreen> {
       unawaited(Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            settings: const RouteSettings(name: "/FirstProblemTypeList"),
             builder: (BuildContext context) {
               return widget.targetWidget;
             }

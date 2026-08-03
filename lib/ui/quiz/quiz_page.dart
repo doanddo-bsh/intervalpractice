@@ -10,6 +10,7 @@ import '../../domain/problem_mode.dart';
 import '../../state/ad_counter.dart';
 import '../../state/quiz_session.dart';
 import '../common/banner_ad_slot.dart';
+import '../result/result_page.dart';
 import 'answer_pad.dart';
 import 'progress_bar.dart';
 import 'result_sheet.dart';
@@ -101,12 +102,63 @@ class _QuizPageState extends State<QuizPage> {
       if (_interstitial.showIfReady()) counter.reset();
     }
 
-    // 결과 화면은 Task 18에서 연결한다.
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      enableDrag: false,
+      isDismissible: false,
+      builder: (_) => resultPage(
+        context,
+        wrongProblemMode: _session.isReviewMode,
+        numberOfRight: _session.correctCount,
+        totalQuestions: _session.totalQuestions,
+        nextProblemResult: _actionButton('네', _restartRound),
+        wrongProblemSolveStart: _wrongProblemSolveStartButton(),
+        onPressedNo: _goHome,
+      ),
+    );
+  }
+
+  Widget _wrongProblemSolveStartButton() {
+    return ElevatedButton(
+      onPressed: _session.canStartReview ? _startReview : null,
+      style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow[200]),
+      child: Text(
+        '틀린 문제 다시 풀기',
+        style: TextStyle(
+          fontSize: 15.0,
+          fontWeight: FontWeight.bold,
+          color: Colors.grey[700],
+        ),
+      ),
+    );
+  }
+
+  void _restartRound() {
+    Navigator.pop(context);
     setState(() {
       _selectedSize = null;
       _submittedAnswer = null;
     });
     _session.restart();
+  }
+
+  void _startReview() {
+    Navigator.pop(context);
+    setState(() {
+      _selectedSize = null;
+      _submittedAnswer = null;
+    });
+    _session.startReview();
+  }
+
+  /// 기존 코드는 `Navigator.popUntil(context,
+  /// ModalRoute.withName("/FirstProblemTypeList"))`로 홈까지 되돌아갔다.
+  /// 그 이름 붙은 라우트는 실제로 등록된 적이 없어 동작하지 않았다 — 홈은
+  /// `LoadingPage` -> `InitializeScreen` -> `HomePage`로 이어지는
+  /// `pushReplacement` 체인의 끝이라 항상 첫 번째 라우트다.
+  void _goHome() {
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   @override

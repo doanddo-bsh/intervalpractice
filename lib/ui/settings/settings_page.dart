@@ -1,18 +1,18 @@
 // ignore_for_file: file_names
 
 import 'package:async_preferences/async_preferences.dart';
-import 'initialization_helper.dart';
+import '../../ads/consent_service.dart';
 import 'package:flutter/material.dart';
 
 
-class SettingPage extends StatefulWidget {
-  const SettingPage({super.key});
+class SettingsPage extends StatefulWidget {
+  const SettingsPage({super.key});
 
   @override
-  State<SettingPage> createState() => _SettingPageState();
+  State<SettingsPage> createState() => _SettingPageState();
 }
 
-class _SettingPageState extends State<SettingPage> {
+class _SettingPageState extends State<SettingsPage> {
   final _initializationHelper = InitializationHelper();
   late final Future<bool> _future ;
 
