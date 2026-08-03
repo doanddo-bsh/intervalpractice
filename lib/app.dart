@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import 'state/ad_counter.dart';
+import 'theme/app_theme.dart';
 import 'ui/common/loading_page.dart';
 
 class IntervalPracticeApp extends StatelessWidget {
@@ -17,9 +18,8 @@ class IntervalPracticeApp extends StatelessWidget {
         builder: (context, child) => MaterialApp(
           title: '음정박사',
           debugShowCheckedModeBanner: false,
-          // TODO(Task 19): AppTheme의 M3 ColorScheme로 교체한다.
-          theme: ThemeData.light(useMaterial3: true),
-          darkTheme: ThemeData.dark(useMaterial3: true),
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
           themeMode: ThemeMode.system,
           builder: (context, child) => MediaQuery(
             data: MediaQuery.of(
