@@ -27,16 +27,13 @@ final class IntervalProblem {
   ///
   /// 문제가 자기 음높이를 아는 것이 자연스럽고, 생성기(Task 13)와
   /// 채점기(Task 17)가 같은 계산을 중복하지 않게 한다.
-  ///
-  /// **music_notes 0.13 호환 주의:** 반환 타입은 0.13에서 `PositionedNote`,
-  /// 0.26에서 `Pitch`다. Task 14에서 일괄 치환된다.
-  List<PositionedNote> get sortedPitches => [
+  List<Pitch> get sortedPitches => [
     _withAccidental(lower.pitch, accidentals[0]),
     _withAccidental(upper.pitch, accidentals[1]),
   ]..sort();
 
-  static PositionedNote _withAccidental(
-    PositionedNote pitch,
+  static Pitch _withAccidental(
+    Pitch pitch,
     String accidental,
   ) => switch (accidental) {
     'sharp' => pitch.note.sharp.inOctave(pitch.octave),

@@ -26,7 +26,7 @@ class _EasyProblemType3State extends State<EasyProblemType3> {
   // 변수 초기
   List<double> randomItems = [];
   late List<int> randomNoteNumber ;
-  late List<PositionedNote> randomNote ;
+  late List<Pitch> randomNote ;
 
   List<List<int>> wrongProblems = [];
   List<List<int>> wrongProblemsSave = [];

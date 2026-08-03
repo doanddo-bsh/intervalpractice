@@ -94,10 +94,10 @@ void main() {
               '${KoreanInterval.intervalAbbreviation(interval)}',
         );
         expect(
-          KoreanInterval.isAnswerable(interval.inverted),
+          KoreanInterval.isAnswerable(interval.inversion),
           isTrue,
           reason: '자리바꿈이 답할 수 없음: $problem -> '
-              '${KoreanInterval.intervalAbbreviation(interval.inverted)}',
+              '${KoreanInterval.intervalAbbreviation(interval.inversion)}',
         );
       }
     });

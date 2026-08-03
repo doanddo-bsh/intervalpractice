@@ -131,6 +131,6 @@ final class ProblemGenerator {
     final interval = pitches[0].interval(pitches[1]);
 
     return KoreanInterval.isAnswerable(interval) &&
-        KoreanInterval.isAnswerable(interval.inverted);
+        KoreanInterval.isAnswerable(interval.inversion);
   }
 }

@@ -13,6 +13,7 @@ import '../problemFunc/admobClass.dart';
 import 'package:provider/provider.dart';
 import '../problemFunc/providerCounter.dart';
 import '../problemFunc/admobFunc.dart';
+import 'package:intervalpractice/domain/korean_interval.dart';
 
 class EasyProblemType2 extends StatefulWidget {
   const EasyProblemType2({super.key});
@@ -572,8 +573,9 @@ class _EasyProblemType2State extends State<EasyProblemType2> {
 
 
 
-    String answerRealTemp = randomNoteAnswerTemp[0].interval
-      (randomNoteAnswerTemp[1]).toString();
+    String answerRealTemp = KoreanInterval.intervalAbbreviation(
+      randomNoteAnswerTemp[0].interval(randomNoteAnswerTemp[1]),
+    );
     String answerRealKorTemp = '';
 
     if (answerRealTemp.length==2){

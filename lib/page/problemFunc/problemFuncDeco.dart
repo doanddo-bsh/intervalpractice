@@ -1,11 +1,15 @@
 // ignore_for_file: file_names
 
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:music_notes/music_notes.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'colorList.dart';
 import 'problemVarList.dart';
 import '../problemFunc/problemFunc.dart';
+import 'package:intervalpractice/domain/korean_interval.dart';
 
 // appBar title style
 TextStyle appBarTitleStyle =
@@ -81,14 +85,16 @@ String classifyAccidentals(String accidentalOrigin){
 String commentaryKeyReturn(List<dynamic> randomNoteAnswerSorted, String answerRealKor){
 
   // number
-  String answerReal = randomNoteAnswerSorted[0].interval(randomNoteAnswerSorted[1]).toString();
+  String answerReal = KoreanInterval.intervalAbbreviation(
+    randomNoteAnswerSorted[0].interval(randomNoteAnswerSorted[1]),
+  );
 
   // commentary
   // 숫자(1~8), 알파벳(c,d,e,f,g,a,b), 알파벳(c,d,e,f,g,a,b) // ex 3cg
   String commentaryNumberTemp = answerReal.toString();
-  String commentaryAlphabat1Temp = randomNoteAnswerSorted[0].note.baseNote
+  String commentaryAlphabat1Temp = randomNoteAnswerSorted[0].note.noteName
       .toString();
-  String commentaryAlphabat2Temp = randomNoteAnswerSorted[1].note.baseNote
+  String commentaryAlphabat2Temp = randomNoteAnswerSorted[1].note.noteName
       .toString();
 
   String commentaryTarget =
@@ -97,10 +103,10 @@ String commentaryKeyReturn(List<dynamic> randomNoteAnswerSorted, String answerRe
           + commentaryAlphabat2Temp[commentaryAlphabat2Temp.length - 1];
 
   String commentaryFirstAccidental =
-  classifyAccidentals(randomNoteAnswerSorted[0].note.accidental.toString());
+  classifyAccidentals(randomNoteAnswerSorted[0].note.accidental.name);
 
   String commentarySecondAccidental =
-  classifyAccidentals(randomNoteAnswerSorted[1].note.accidental.toString());
+  classifyAccidentals(randomNoteAnswerSorted[1].note.accidental.name);
 
   List<String> returnTarget = [commentaryTarget,commentaryFirstAccidental,
     commentarySecondAccidental];
@@ -317,6 +323,36 @@ Map<String,String> commentaryType2 = {
 
 
 
+// music_notes 0.26's `Pitch.toString()` became a debug repr
+// (`Pitch(note: ..., octave: ...)`); the readable scientific-notation form
+// ("C4", "F♯4") that 0.13's `PositionedNote.toString()` produced now comes
+// from `Pitch.format()`. Callers only ever index into the sorted pitch
+// pair returned below, but the characterization tests (and any future
+// debug logging) stringify the whole list, so wrap it to keep that
+// rendering stable across the version bump instead of leaking the debug
+// repr.
+class _FormattedPitchList extends ListBase<dynamic> {
+  _FormattedPitchList(this._items);
+
+  final List<dynamic> _items;
+
+  @override
+  int get length => _items.length;
+
+  @override
+  set length(int newLength) => _items.length = newLength;
+
+  @override
+  dynamic operator [](int index) => _items[index];
+
+  @override
+  void operator []=(int index, dynamic value) => _items[index] = value;
+
+  @override
+  String toString() =>
+      '[${_items.map((e) => e is Pitch ? e.format() : e).join(', ')}]';
+}
+
 // showBottomResult 내부에서
 // 음을 sort 한 뒤, 간격 및 한글 결과 내뱉는 함수
 // List<dynamic> randomNote
@@ -335,18 +371,22 @@ List<dynamic> getResultAllEasy(List<dynamic> randomNote, bool inverseTF){
 
   if (inverseTF){
     // inverse True
-    answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
-        .inverted.toString();
+    answerReal = KoreanInterval.intervalAbbreviation(
+      randomNoteAnswer[0].interval(randomNoteAnswer[1]).inversion,
+    );
 
-    answerRealOriginal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
-        .toString();
+    answerRealOriginal = KoreanInterval.intervalAbbreviation(
+      randomNoteAnswer[0].interval(randomNoteAnswer[1]),
+    );
   } else {
     // inverse False
-    answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
-        .toString();
+    answerReal = KoreanInterval.intervalAbbreviation(
+      randomNoteAnswer[0].interval(randomNoteAnswer[1]),
+    );
 
-    answerRealOriginal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
-        .inverted.toString();
+    answerRealOriginal = KoreanInterval.intervalAbbreviation(
+      randomNoteAnswer[0].interval(randomNoteAnswer[1]).inversion,
+    );
   }
 
   String answerRealKor = '';
@@ -369,7 +409,7 @@ List<dynamic> getResultAllEasy(List<dynamic> randomNote, bool inverseTF){
         answerRealOriginal.substring(2, 3);
   }
 
-  return [randomNoteAnswer, answerReal, answerRealKor, answerRealOriginalKor];
+  return [_FormattedPitchList(randomNoteAnswer), answerReal, answerRealKor, answerRealOriginalKor];
 }
 
 List<dynamic> getResultAllHard(List<dynamic> randomNote,List<dynamic> accidentals, bool inverseTF){
@@ -387,18 +427,22 @@ List<dynamic> getResultAllHard(List<dynamic> randomNote,List<dynamic> accidental
 
   if (inverseTF){
     // inverse True
-    answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
-        .inverted.toString();
+    answerReal = KoreanInterval.intervalAbbreviation(
+      randomNoteAnswer[0].interval(randomNoteAnswer[1]).inversion,
+    );
 
-    answerRealOriginal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
-        .toString();
+    answerRealOriginal = KoreanInterval.intervalAbbreviation(
+      randomNoteAnswer[0].interval(randomNoteAnswer[1]),
+    );
   } else {
     // inverse False
-    answerReal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
-        .toString();
+    answerReal = KoreanInterval.intervalAbbreviation(
+      randomNoteAnswer[0].interval(randomNoteAnswer[1]),
+    );
 
-    answerRealOriginal = randomNoteAnswer[0].interval(randomNoteAnswer[1])
-        .inverted.toString();
+    answerRealOriginal = KoreanInterval.intervalAbbreviation(
+      randomNoteAnswer[0].interval(randomNoteAnswer[1]).inversion,
+    );
   }
 
   String answerRealKor = '';
@@ -421,5 +465,5 @@ List<dynamic> getResultAllHard(List<dynamic> randomNote,List<dynamic> accidental
         answerRealOriginal.substring(2, 3);
   }
 
-  return [randomNoteAnswer, answerReal, answerRealKor, answerRealOriginalKor];
+  return [_FormattedPitchList(randomNoteAnswer), answerReal, answerRealKor, answerRealOriginalKor];
 }

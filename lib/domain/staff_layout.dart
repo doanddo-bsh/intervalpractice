@@ -15,10 +15,7 @@ final class StaffSlot {
   final int index;
 
   /// 이 자리에 해당하는 음높이.
-  //
-  // 0.13 호환 임시 조정 (Task 12 Step 3-b): music_notes 0.26의 `Pitch`
-  // 대신 0.13의 `PositionedNote`를 쓴다. Task 14에서 `Pitch`로 되돌린다.
-  final PositionedNote pitch;
+  final Pitch pitch;
 
   @override
   String toString() => 'StaffSlot($index, $pitch, top: $top)';
@@ -38,9 +35,7 @@ abstract final class StaffLayout {
       StaffSlot(top: _topStart + _gap * i, index: i, pitch: _pitches[i]),
   ]);
 
-  // 0.13 호환 임시 조정 (Task 12 Step 3-b): `List<Pitch>` 대신
-  // `List<PositionedNote>`. Task 14에서 되돌린다.
-  static final List<PositionedNote> _pitches = [
+  static final List<Pitch> _pitches = [
     Note.d.inOctave(6),
     Note.c.inOctave(6),
     Note.b.inOctave(5),
@@ -64,24 +59,19 @@ abstract final class StaffLayout {
 
   static StaffSlot byIndex(int index) => slots[index];
 
-  // 0.13 호환 임시 조정 (Task 12 Step 3-b): `NoteName` 대신 `BaseNote`.
-  // Task 14에서 되돌린다.
-  static const _koreanNoteNames = <BaseNote, String>{
-    BaseNote.c: '도',
-    BaseNote.d: '레',
-    BaseNote.e: '미',
-    BaseNote.f: '파',
-    BaseNote.g: '솔',
-    BaseNote.a: '라',
-    BaseNote.b: '시',
+  static const _koreanNoteNames = <NoteName, String>{
+    NoteName.c: '도',
+    NoteName.d: '레',
+    NoteName.e: '미',
+    NoteName.f: '파',
+    NoteName.g: '솔',
+    NoteName.a: '라',
+    NoteName.b: '시',
   };
 
   /// 한글 계이름 ("도", "레", ...). 임시표는 무시한다.
-  //
-  // 0.13 호환 임시 조정 (Task 12 Step 3-b): `pitch.note.noteName` 대신
-  // `pitch.note.baseNote`. Task 14에서 되돌린다.
-  static String koreanNameOf(PositionedNote pitch) =>
-      _koreanNoteNames[pitch.note.baseNote]!;
+  static String koreanNameOf(Pitch pitch) =>
+      _koreanNoteNames[pitch.note.noteName]!;
 
   /// 한글 계이름 전체 목록 (정답 버튼 배열용).
   static const koreanNoteNames = <String>['도', '레', '미', '파', '솔', '라', '시'];

@@ -82,7 +82,8 @@ abstract final class KoreanInterval {
 
   /// music_notes 버전 차이를 흡수하는 단일 지점.
   ///
-  /// 0.13에서는 `toString()`이, 0.26 이후로는 `format()`이 `"M3"` 형태를 낸다.
-  /// 마이그레이션 시 이 메서드 한 곳만 고치면 된다.
-  static String intervalAbbreviation(Interval interval) => interval.toString();
+  /// 0.13에서는 `toString()`이 `"M3"` 형태를 냈지만, 0.26부터 `toString()`은
+  /// 디버그 표현(`Interval(size: ..., quality: ...)`)이 되었고 `"M3"` 형태는
+  /// `format()`이 낸다. 마이그레이션 시 이 메서드 한 곳만 고치면 된다.
+  static String intervalAbbreviation(Interval interval) => interval.format();
 }

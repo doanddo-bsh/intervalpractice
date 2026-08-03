@@ -13,6 +13,7 @@ import '../problemFunc/resultPage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../problemFunc/admobClass.dart';
 import '../problemFunc/admobFunc.dart';
+import 'package:intervalpractice/domain/korean_interval.dart';
 
 class EasyProblemType1 extends StatefulWidget {
   const EasyProblemType1({super.key});
@@ -26,7 +27,7 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
   // 변수 초기화
   List<double> randomItems = [];
   late List<int> randomNoteNumber ;
-  late List<PositionedNote> randomNote ;
+  late List<Pitch> randomNote ;
 
   List<List<int>> wrongProblems = [];
   List<List<int>> wrongProblemsSave = [];
@@ -619,8 +620,9 @@ class _EasyProblemType1State extends State<EasyProblemType1> {
 
     randomNoteAnswerTemp.sort();
 
-    String answerRealTemp = randomNoteAnswerTemp[0].interval
-      (randomNoteAnswerTemp[1]).toString();
+    String answerRealTemp = KoreanInterval.intervalAbbreviation(
+      randomNoteAnswerTemp[0].interval(randomNoteAnswerTemp[1]),
+    );
 
     if (answerRealTemp.length==2){
     } else {

@@ -28,7 +28,7 @@ class _HardProblemType1State extends State<HardProblemType1> {
   // 변수 초기화
   List<double> randomItems = [];
   late List<int> randomNoteNumber ;
-  late List<PositionedNote> randomNote ;
+  late List<Pitch> randomNote ;
   // hard - accidentals 추가
   List<String> accidentals = [];
 

@@ -14,6 +14,7 @@ import '../problemFunc/admobClass.dart';
 import 'package:provider/provider.dart';
 import '../problemFunc/providerCounter.dart';
 import '../problemFunc/admobFunc.dart';
+import 'package:intervalpractice/domain/korean_interval.dart';
 
 class HardProblemType2 extends StatefulWidget {
   const HardProblemType2({super.key});
@@ -26,7 +27,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
 
   List<double> randomItems = [];
   late List<int> randomNoteNumber ;
-  late List<PositionedNote> randomNote ;
+  late List<Pitch> randomNote ;
   List<String> accidentals = [];
 
   List<List<int>> wrongProblems = [];
@@ -191,7 +192,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
 
     // 진짜 정답 계산
 
-    PositionedNote realNote = (upDown != 0)?
+    Pitch realNote = (upDown != 0)?
     randomNote[0]:randomNote[1];
 
     String realAccidental = (upDown != 0)?
@@ -214,10 +215,10 @@ class _HardProblemType2State extends State<HardProblemType2> {
     String realNoteNoteKr = engToKorNote[realNote.note];
     String realNoteAccidentalString = '';
 
-    if (realNoteAccidental.toString().length ==1){
+    if (realNoteAccidental.format().length ==1){
       realNoteAccidentalString = '';
     } else {
-      realNoteAccidentalString = realNoteAccidental.toString().substring(1);
+      realNoteAccidentalString = realNoteAccidental.format().substring(1);
     }
 
     String realNoteNoteAccidentalKr = realNoteNoteKr + realNoteAccidentalString;
@@ -271,7 +272,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
                   ],
                 ),
                 const SizedBox(height: 7,),
-                Text('정답 : $realNoteNoteAccidentalKr(${realNoteAccidental.toString()})',
+                Text('정답 : $realNoteNoteAccidentalKr(${realNoteAccidental.format()})',
                   style: TextStyle(
                     color: color4,
                     fontSize : 14.0,
@@ -343,7 +344,7 @@ class _HardProblemType2State extends State<HardProblemType2> {
                   ],
                 ),
                 const SizedBox(height: 7,),
-                Text('정답 : $realNoteNoteAccidentalKr(${realNoteAccidental.toString()})',
+                Text('정답 : $realNoteNoteAccidentalKr(${realNoteAccidental.format()})',
                   style: TextStyle(
                     color: color6,
                     fontSize : 14.0,
@@ -714,8 +715,9 @@ class _HardProblemType2State extends State<HardProblemType2> {
 
     randomNoteAnswerTemp.sort();
 
-    String answerRealTemp = randomNoteAnswerTemp[0].interval
-      (randomNoteAnswerTemp[1]).toString();
+    String answerRealTemp = KoreanInterval.intervalAbbreviation(
+      randomNoteAnswerTemp[0].interval(randomNoteAnswerTemp[1]),
+    );
     String answerRealKorTemp = '';
 
     if (answerRealTemp.length==2){

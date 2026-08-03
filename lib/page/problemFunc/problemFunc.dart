@@ -111,7 +111,7 @@ String accidentalsNoDouble(){
   }
 }
 
-List<String> accidentalsFinal(List<PositionedNote> randomNote){
+List<String> accidentalsFinal(List<Pitch> randomNote){
 
   String accidentalWhere = accidentalsWhere();
   Random r3 = Random();
@@ -139,7 +139,7 @@ List<String> accidentalsFinal(List<PositionedNote> randomNote){
 }
 
 
-PositionedNote addAccidental(PositionedNote inputNote, String accidental){
+Pitch addAccidental(Pitch inputNote, String accidental){
   if (accidental == 'none'){
     return inputNote;
   } else if (accidental == 'sharp'){
@@ -177,10 +177,10 @@ Widget addLineBasic(){
 }
 
 // 덧줄용1
-Widget addLine1(PositionedNote randomNote){
+Widget addLine1(Pitch randomNote){
 
   // middle line
-  List<PositionedNote> middleLine = [
+  List<Pitch> middleLine = [
     Note.a.inOctave(5),
     Note.f.inOctave(5),
     Note.d.inOctave(5),
@@ -192,13 +192,13 @@ Widget addLine1(PositionedNote randomNote){
     Note.c.inOctave(6),
   ];
   // low line
-  List<PositionedNote> lowLine = [
+  List<Pitch> lowLine = [
     Note.b.inOctave(5),
     Note.d.inOctave(6),
   ];
 
   // high line
-  List<PositionedNote> highLine = [
+  List<Pitch> highLine = [
     Note.b.inOctave(3),
     Note.g.inOctave(3)
   ];
@@ -228,15 +228,15 @@ Widget addLine1(PositionedNote randomNote){
 }
 
 // 덧줄용3
-Widget addLine3(PositionedNote randomNote, double left){
+Widget addLine3(Pitch randomNote, double left){
 
   // 위의 도 레 거나 high line
-  List<PositionedNote> highLine = [
+  List<Pitch> highLine = [
     Note.d.inOctave(6),
     Note.c.inOctave(6),
   ];
   // 아래의 라 솔 인 경우 low line
-  List<PositionedNote> lowLine = [
+  List<Pitch> lowLine = [
     Note.a.inOctave(3),
     Note.g.inOctave(3),
   ];
@@ -294,15 +294,15 @@ Widget addLine3(PositionedNote randomNote, double left){
 
 
 // 덧줄용2
-Widget addLine2(PositionedNote randomNote, double left){
+Widget addLine2(Pitch randomNote, double left){
 
   // highhigh line
-  List<PositionedNote> highHighLine = [
+  List<Pitch> highHighLine = [
     Note.d.inOctave(6),
     Note.c.inOctave(6),
   ];
   // lowlow line
-  List<PositionedNote> lowLowLine = [
+  List<Pitch> lowLowLine = [
     Note.a.inOctave(3),
     Note.g.inOctave(3),
   ];

@@ -25,7 +25,7 @@ class _HardProblemType3State extends State<HardProblemType3> {
 
   List<double> randomItems = [];
   late List<int> randomNoteNumber ;
-  late List<PositionedNote> randomNote ;
+  late List<Pitch> randomNote ;
   List<String> accidentals = [];
 
   List<List<int>> wrongProblems = [];
