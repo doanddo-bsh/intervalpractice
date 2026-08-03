@@ -4269,6 +4269,18 @@ git mv lib/page/loadingPage.dart lib/ui/common/loading_page.dart
 rmdir lib/page/problemFunc lib/page/settingPage lib/page 2>/dev/null || true
 ```
 
+- [ ] **Step 4-b: `_FormattedPitchList` 스캐폴딩이 딸려오지 않게 할 것**
+
+Task 14에서 `lib/page/problemFunc/problemFuncDeco.dart`에 `_FormattedPitchList`(ListBase 래퍼)가 추가됐다. 이유는 오직 하나 — 특성화 테스트가 `result[0].toString() == '[C4, D4]'`를 단언하는데, music_notes 0.26에서 `Pitch.toString()`이 디버그 표현으로 바뀌었기 때문이다. **앱 동작과 무관한 표시용 스캐폴딩이다.**
+
+이 태스크가 `problemFuncDeco.dart`와 특성화 테스트를 둘 다 지우므로 래퍼도 함께 사라져야 한다. 새 `lib/domain/`이나 `lib/ui/`로 **절대 옮기지 말 것.**
+
+```bash
+grep -rn "_FormattedPitchList" lib/ test/
+```
+
+Expected: 이 태스크 완료 후 출력 없음.
+
 - [ ] **Step 5: 특성화 테스트 정리**
 
 Task 9의 `test/characterization/answer_calculation_test.dart`는 삭제된 `problemFuncDeco.dart`를 import하므로 더 이상 컴파일되지 않는다. 그 검증 책임은 이미 `test/domain/` 테스트들이 이어받았다.
