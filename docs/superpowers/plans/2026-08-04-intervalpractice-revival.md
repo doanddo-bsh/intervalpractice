@@ -406,8 +406,57 @@ git commit -m "build(android): migrate to declarative plugins block, Gradle 8.9 
 
 Google Play는 2026-08-31부터 신규 앱 및 업데이트에 **targetSdk 36**을 요구한다. 또한 현재 `namespace`가 `com.example.intervalpractice`로 실제 `applicationId`(`com.nowaa.intervalpractice`)와 불일치한다.
 
+> **Task 4 실행 후 판명된 정정 3건** — 아래 Step 0에서 먼저 처리한다.
+>
+> 1. **AGP 8.7.3은 `compileSdk 36`을 지원하지 않는다.** AGP 8.7.3에 포함된 `com.android.SdkConstants.MAX_SUPPORTED_ANDROID_PLATFORM_VERSION`이 `35`로 하드코딩돼 있어, 36을 쓰면 "has not been tested with this version" 경고가 나온다. `compileSdk 36` 지원은 AGP 8.9부터다. → **AGP 8.11.1 / Gradle 8.14 / Kotlin 2.2.20**으로 올린다(Flutter 경고선도 함께 해소). Flutter 3.44.2의 자체 기본값은 Gradle 9.1.0 / AGP 9.0.1이지만, Gradle 9는 `rootProject.buildDir` 제거 등 별도 마이그레이션을 요구하므로 출시 일정을 고려해 8.x 계열에 머무른다.
+> 2. **`android.nonTransitiveRClass=false`는 근거 없는 추가였다.** AGP 8의 기본값은 `true`이고, 이 앱은 의존성의 `R` 클래스를 통해 리소스에 접근하는 코드가 없다. → 삭제한다.
+> 3. **Flutter 툴이 매 빌드마다 `android.newDsl=false`와 `android.builtInKotlin=false`를 `gradle.properties`에 자동 추가한다.** Task 4에서는 이를 계속 되돌렸으나, 이는 Flutter 자체 템플릿에도 들어있는 값이므로 툴과 싸우지 말고 **명시적으로 포함**한다.
+>
+> 그리고 **빌드를 막고 있는 진짜 원인**: `async_preferences 0.8.0`이 자기 `android/build.gradle`에 `namespace`를 선언하지 않아 AGP 8에서 구성 단계가 실패한다. 이 앱의 다른 의존성은 모두 정상이다(확인 완료). `async_preferences 2.0.0`은 `namespace com.svprdga.async_preferences`를 선언하고, 이 앱이 쓰는 유일한 API인 `getInt(String id, {String? file}) → Future<int?>`의 시그니처가 0.8.0과 **동일**하므로 호출부 수정이 필요 없다. → Step 0에서 함께 올린다.
+
 **Files:**
+- Modify: `android/settings.gradle` (AGP/Kotlin 버전)
+- Modify: `android/gradle/wrapper/gradle-wrapper.properties` (Gradle 버전)
+- Modify: `android/gradle.properties` (플래그 정정)
+- Modify: `pubspec.yaml` (`async_preferences`만)
 - Modify: `android/app/build.gradle`
+
+- [ ] **Step 0: 툴체인 버전 정정 및 빌드 차단 의존성 해소**
+
+`android/settings.gradle`의 plugins 블록 두 줄을 교체:
+
+```groovy
+    id "com.android.application" version "8.11.1" apply false
+    id "org.jetbrains.kotlin.android" version "2.2.20" apply false
+```
+
+`android/gradle/wrapper/gradle-wrapper.properties`의 `distributionUrl`:
+
+```properties
+distributionUrl=https\://services.gradle.org/distributions/gradle-8.14-all.zip
+```
+
+`android/gradle.properties` 전체:
+
+```properties
+org.gradle.jvmargs=-Xmx4G -XX:MaxMetaspaceSize=2G -XX:+HeapDumpOnOutOfMemoryError
+android.useAndroidX=true
+android.enableJetifier=false
+android.newDsl=false
+android.builtInKotlin=false
+```
+
+`pubspec.yaml`에서 `async_preferences`만 상향(나머지 의존성은 Task 7에서 처리):
+
+```yaml
+  async_preferences: ^2.0.0
+```
+
+```bash
+flutter pub get && flutter analyze 2>&1 | tail -3
+```
+
+Expected: error 0건. `getInt` 시그니처가 동일하므로 `lib/page/firstProblemTypeList.dart:146`과 `lib/page/settingPage/settingPage.dart:27`의 호출부는 수정 불필요하다.
 
 - [ ] **Step 1: `android/app/build.gradle` 전체 교체**
 
