@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -140,16 +141,23 @@ class _ButtonRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final actualValues = values ?? labels;
 
+    // 버튼이 고유 폭을 요구하면 "겹감3도"처럼 긴 라벨 4개가 한 줄에 들어갈 때
+    // 좁은 기기(375pt: iPhone SE, 13 mini 등)에서 가로로 넘친다. 남는 폭을
+    // 균등하게 나눠 갖게 하고, 라벨은 필요하면 축소되도록 한다.
     return SizedBox(
       height: 35.0.h,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           for (var i = 0; i < labels.length; i++)
-            _AnswerButton(
-              label: labels[i],
-              isSelected: selected == actualValues[i],
-              onPressed: enabled ? () => onTap(actualValues[i]) : null,
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 3.w),
+                child: _AnswerButton(
+                  label: labels[i],
+                  isSelected: selected == actualValues[i],
+                  onPressed: enabled ? () => onTap(actualValues[i]) : null,
+                ),
+              ),
             ),
         ],
       ),
@@ -180,8 +188,18 @@ class _AnswerButton extends StatelessWidget {
             : colors.surfaceContainerHighest,
         foregroundColor: colors.onSurface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        padding: EdgeInsets.symmetric(horizontal: 4.w),
+        // Material 기본 최소 폭(64)이 Expanded 안에서도 하한으로 작동해
+        // 좁은 기기에서 넘침을 유발한다.
+        minimumSize: Size.zero,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
-      child: Text(label),
+      child: AutoSizeText(
+        label,
+        maxLines: 1,
+        minFontSize: 9,
+        overflow: TextOverflow.ellipsis,
+      ),
     );
   }
 }
