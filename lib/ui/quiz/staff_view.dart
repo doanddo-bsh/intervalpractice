@@ -29,11 +29,11 @@ class StaffView extends StatelessWidget {
             top: 0.h,
             bottom: 0.h,
             left: 10.0.w,
-            child: Align(
+            child: const Align(
               alignment: Alignment.centerLeft,
-              child: Image.asset(
-                'assets/treble_clef_ff_cut.png',
-                height: 180.h,
+              child: _StaffImage(
+                asset: 'assets/treble_clef_ff_cut.png',
+                height: 180,
               ),
             ),
           ),
@@ -57,6 +57,43 @@ class StaffView extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+/// 악보 에셋(높은음자리표, 음표머리, 임시표)은 모두 검은 선화(線畵)라
+/// 다크모드에서 배경에 묻힌다. 다크 테마에서만 밝기를 반전시켜 흰 선화로
+/// 바꾼다.
+///
+/// `whole_note_lean.png`의 "빈 타원" 부분은 흰색으로 채워진 게 아니라
+/// 알파값 0인 완전 투명 영역이다(오선/덧줄이 비쳐 보이도록). 단순 RGB 반전은
+/// 알파 채널을 건드리지 않으므로 검은 테두리만 흰 테두리로 바뀌고 투명한
+/// 안쪽은 그대로 투명하게 남아 뭉개짐 없이 정상 동작한다.
+///
+/// `assets/whole_note_lean_all_white.png`는 흰색 대체 에셋으로 존재하지만
+/// 실제로는 전체 픽셀이 완전 투명(RGBA 전부 0)인 빈 이미지라 사용하지
+/// 않았다 — 다크모드에서 음표머리가 아예 보이지 않게 된다.
+class _StaffImage extends StatelessWidget {
+  const _StaffImage({required this.asset, this.height, this.fit});
+
+  final String asset;
+  final double? height;
+  final BoxFit? fit;
+
+  /// 밝기 반전 행렬 (RGB 반전, 알파 보존).
+  static const _invert = ColorFilter.matrix(<double>[
+    -1, 0, 0, 0, 255, //
+    0, -1, 0, 0, 255, //
+    0, 0, -1, 0, 255, //
+    0, 0, 0, 1, 0, //
+  ]);
+
+  @override
+  Widget build(BuildContext context) {
+    final image = Image.asset(asset, height: height?.h, fit: fit);
+
+    if (Theme.of(context).brightness == Brightness.light) return image;
+
+    return ColorFiltered(colorFilter: _invert, child: image);
   }
 }
 
@@ -94,7 +131,7 @@ class _NoteHead extends StatelessWidget {
         height: 26.5.h,
         child: Stack(
           children: [
-            Image.asset('assets/whole_note_lean.png'),
+            const _StaffImage(asset: 'assets/whole_note_lean.png'),
             _LedgerLineThrough(slot: slot),
           ],
         ),
@@ -223,7 +260,7 @@ class _Accidental extends StatelessWidget {
       child: SizedBox(
         height: spec.h.h,
         width: spec.w.w,
-        child: Image.asset(spec.asset, fit: BoxFit.fill),
+        child: _StaffImage(asset: spec.asset, fit: BoxFit.fill),
       ),
     );
   }
