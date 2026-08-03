@@ -1318,6 +1318,25 @@ abstract final class KoreanInterval {
   static String fromInterval(Interval interval) =>
       fromAbbreviation(intervalAbbreviation(interval));
 
+  /// 이 음정을 정답 버튼으로 입력할 수 있는가.
+  ///
+  /// UI가 제공하는 품질은 위 7종과 1~8도뿐이다. 겹임시표가 반음 경계에
+  /// 얹히면 `ddd5`, `AAA4` 같은 세 겹 음정이 나오는데 버튼에 없다.
+  /// **원본 앱은 이런 문제를 실제로 출제했고**, 그 결과 정답 계산에서
+  /// `intervalNameEngKor[...]`가 null을 반환해 크래시하거나(8개 조합)
+  /// 정답이 빈칸으로 표시됐다(16개 조합).
+  static bool isAnswerable(Interval interval) {
+    final abbreviation = intervalAbbreviation(interval);
+    final digitIndex = abbreviation.indexOf(RegExp(r'\d'));
+    if (digitIndex <= 0) return false;
+
+    final quality = abbreviation.substring(0, digitIndex);
+    final size = abbreviation.substring(digitIndex);
+
+    return _abbreviationToKorean.containsKey(quality) &&
+        const {'1', '2', '3', '4', '5', '6', '7', '8'}.contains(size);
+  }
+
   /// `"M3"` -> `"장3"`.
   ///
   /// 품질 부분은 1~2글자이므로 뒤에서부터 도수를 떼어낸다.
@@ -1864,6 +1883,32 @@ void main() {
       }
     });
 
+    test('생성된 모든 문제는 UI 버튼으로 답할 수 있어야 한다 (원본 크래시 버그 회귀 방지)', () {
+      // 원본 앱은 노출 가능한 Hard 조합 1680개 중 8개에서 크래시했고
+      // 16개에서 정답이 빈칸이었다. 원인: 겹임시표 금지 가드가 겹임시표를
+      // 만들지 않는 분기에만 걸려 있었다.
+      final generator = ProblemGenerator(random: Random(2026));
+
+      for (var i = 0; i < 2000; i++) {
+        final problem = generator.next(mode: hardType1);
+        final pitches = AnswerChecker.pitchesOf(problem);
+        final interval = pitches[0].interval(pitches[1]);
+
+        expect(
+          KoreanInterval.isAnswerable(interval),
+          isTrue,
+          reason: '답할 수 없는 음정 출제됨: $problem -> '
+              '${KoreanInterval.intervalAbbreviation(interval)}',
+        );
+        expect(
+          KoreanInterval.isAnswerable(interval.inversion),
+          isTrue,
+          reason: '자리바꿈이 답할 수 없음: $problem -> '
+              '${KoreanInterval.intervalAbbreviation(interval.inversion)}',
+        );
+      }
+    });
+
     test('같은 seed는 같은 문제열을 만든다 (재현 가능)', () {
       final a = ProblemGenerator(random: Random(99));
       final b = ProblemGenerator(random: Random(99));
@@ -1980,23 +2025,31 @@ final class ProblemGenerator {
       {a.index, b.index}.difference(previous.slotIndices.toSet()).isEmpty;
 
   /// 임시표 배정: 한쪽만 50%, 양쪽 30%, 없음 20%.
+  ///
+  /// **원본 버그 수정.** 기존 `accidentalsFinal()`은 겹임시표 금지 목록
+  /// (`noDiffDoubleList`)을 "양쪽 모두" 분기에서만 검사했다. 그런데 겹임시표를
+  /// 생성할 수 있는 것은 "한쪽만" 분기뿐이라(`accidentals()`), 가드가 아무것도
+  /// 막지 못했다. 그 결과 도달 가능한 Hard 조합 1,680개 중 8개가 앱을
+  /// 크래시시켰고(`intervalNameEngKor[...]`가 null 반환 → `+` 호출),
+  /// 16개는 정답이 빈칸으로 표시됐다. 여기서는 가드를 **겹임시표를 쓰는
+  /// 분기에** 건다.
   List<String> _randomAccidentals(StaffSlot first, StaffSlot second) {
     final where = _random.nextDouble();
 
     if (where > 0.8) return const ['none', 'none'];
 
+    final allowDouble = !_forbidsDoubleAccidentals(first, second);
+
     if (where <= 0.5) {
+      // 한쪽에만 붙인다. 겹임시표는 이 분기에서만 나올 수 있으므로
+      // 가드를 반드시 여기에 적용해야 한다.
+      final accidental = allowDouble ? _anyAccidental() : _simpleAccidental();
       return _random.nextBool()
-          ? [_anyAccidental(), 'none']
-          : ['none', _anyAccidental()];
+          ? [accidental, 'none']
+          : ['none', accidental];
     }
 
-    // 양쪽 모두 — 겹임시표가 어색해지는 조합은 홑임시표로 통일한다.
-    if (_forbidsDoubleAccidentals(first, second)) {
-      final shared = _simpleAccidental();
-      return [shared, shared];
-    }
-
+    // 양쪽 모두 — 원본과 동일하게 홑임시표만 쓴다.
     return [_simpleAccidental(), _simpleAccidental()];
   }
 
@@ -2010,17 +2063,39 @@ final class ProblemGenerator {
 
   String _simpleAccidental() => _random.nextBool() ? 'sharp' : 'flat';
 
-  /// 반음 관계 등으로 겹임시표를 붙이면 이론적으로 어색해지는 조합.
+  /// 겹임시표를 붙였을 때 **사용자가 답할 수 없는** 음정이 되는 조합인지.
   ///
-  /// 기존 `noDiffDoubleList`의 규칙을 일반화한 것이다: 두 음의 자리 간격이
-  /// 좁거나(2~4도) 반음 경계(E-F, B-C)를 포함하면 겹임시표를 쓰지 않는다.
+  /// 정답 버튼이 제공하는 품질은 감/겹감/단/장/완전/증/겹증 7종뿐이다.
+  /// 반음 경계(E-F, B-C)나 이미 증·감인 음정에 겹임시표를 얹으면
+  /// `ddd5`, `AAA4` 같은 세 겹 음정이 나오는데, 이건 버튼에 없어서
+  /// 출제 자체가 잘못이다. 휴리스틱으로 짐작하지 말고 **실제로 계산해서**
+  /// 답 가능 집합에 드는지 확인한다.
   bool _forbidsDoubleAccidentals(StaffSlot a, StaffSlot b) {
-    final distance = (a.index - b.index).abs();
-    if (distance <= 4) return true;
+    for (final accidental in const ['double sharp', 'double flat']) {
+      for (final order in const [true, false]) {
+        final accidentals = order
+            ? [accidental, 'none']
+            : ['none', accidental];
+        final problem = IntervalProblem(
+          lower: a,
+          upper: b,
+          accidentals: accidentals,
+        );
+        if (!_isAnswerable(problem)) return true;
+      }
+    }
+    return false;
+  }
 
-    const semitoneBoundaryNames = {'미', '파', '시', '도'};
-    return semitoneBoundaryNames.contains(StaffLayout.koreanNameOf(a.pitch)) &&
-        semitoneBoundaryNames.contains(StaffLayout.koreanNameOf(b.pitch));
+  /// 이 문제의 정답이 UI 버튼으로 입력 가능한지.
+  ///
+  /// 자리바꿈 문제(유형 3)는 inverted 음정이 정답이므로 그쪽도 확인한다.
+  bool _isAnswerable(IntervalProblem problem) {
+    final pitches = AnswerChecker.pitchesOf(problem);
+    final interval = pitches[0].interval(pitches[1]);
+
+    return KoreanInterval.isAnswerable(interval) &&
+        KoreanInterval.isAnswerable(interval.inversion);
   }
 }
 ```
