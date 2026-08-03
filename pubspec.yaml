@@ -43,7 +43,7 @@ dependencies:
   google_mobile_ads: ^4.0.0
   app_tracking_transparency: ^2.0.4
   provider: ^6.1.1
-  async_preferences: ^0.8.0
+  async_preferences: ^2.0.0
 
 dev_dependencies:
   flutter_test:
