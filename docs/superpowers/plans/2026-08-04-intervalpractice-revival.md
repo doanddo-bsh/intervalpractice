@@ -688,6 +688,105 @@ git commit -m "build(ios): raise deployment target to 13.0, add privacy manifest
 
 ---
 
+## Task 6-b: Flutter의 iOS 프로젝트 자동 마이그레이션 수용 (실행 중 추가됨)
+
+Task 6 실행 중 발견: `flutter build ios`를 돌릴 때마다 Flutter 툴이 아래를 **자동으로 고쳐 쓴다.**
+
+- 루트 `.gitignore` (`ios/` 밖!)
+- `ios/Runner/AppDelegate.swift` — `@UIApplicationMain` → `@main` (Swift 5.9+에서 deprecated)
+- `ios/Runner/Info.plist`
+- `ios/Podfile.lock`
+- `ios/Runner.xcodeproj/project.pbxproj`
+- `ios/Runner.xcworkspace/xcshareddata/swiftpm/` (Swift Package Manager 통합)
+- `ios/Runner/Runner.xcscheme`, `ios/Flutter/AppFrameworkInfo.plist`
+
+Task 6에서는 커밋 범위를 지키려고 매번 되돌렸다. 하지만 **이를 영구히 되돌릴 수는 없다**: 빌드할 때마다 작업트리가 더러워지고, Task 22의 CI에서 노이즈가 되며, `@UIApplicationMain` 같은 deprecated 속성은 언젠가 컴파일 오류가 된다. Flutter가 하려는 마이그레이션을 **의도적으로 수용해 커밋**하는 편이 옳다.
+
+**Files:** `ios/` 전반 + 루트 `.gitignore`
+
+- [ ] **Step 1: 마이그레이션 전 상태 기록**
+
+```bash
+git status --porcelain   # 비어 있어야 시작 가능
+cp ios/Runner/AppDelegate.swift /tmp/AppDelegate.before
+```
+
+- [ ] **Step 2: 빌드를 돌려 마이그레이션을 유발**
+
+```bash
+flutter build ios --release --no-codesign 2>&1 | tail -10
+git status --porcelain
+```
+
+- [ ] **Step 3: 변경 내용을 한 건씩 검토**
+
+```bash
+git diff
+```
+
+각 변경이 Flutter 툴의 정당한 마이그레이션인지 확인한다. 특히:
+- `AppDelegate.swift`: `@UIApplicationMain` → `@main` 이어야 한다. 그 외 로직 변경이 있으면 의심할 것.
+- 루트 `.gitignore`: Flutter가 무엇을 추가했는지 확인하고, **Task 1에서 넣은 서명 파일 무시 규칙이 지워지지 않았는지 반드시 검증한다.**
+
+```bash
+git diff .gitignore
+grep -nE "\*\.jks|key\.properties|\*\.p12|\*\.p8|keyfiles" .gitignore
+```
+
+Expected: 서명 규칙이 전부 남아 있어야 한다. 지워졌다면 복원한 뒤 진행한다.
+
+- [ ] **Step 4: 서명 파일이 여전히 무시되는지 재확인 (필수)**
+
+```bash
+git check-ignore -v android/app/key.jks android/app/key.properties android/local.properties
+git ls-files | grep -E '\.jks$|key\.properties$' || echo "추적 안 됨 ✅"
+```
+
+- [ ] **Step 5: 빌드와 테스트가 여전히 통과하는지 확인**
+
+```bash
+flutter build ios --release --no-codesign 2>&1 | tail -5
+git status --porcelain
+```
+
+Expected: 두 번째 빌드에서는 **작업트리가 더 이상 더러워지지 않는다**(마이그레이션이 이미 적용됐으므로). 계속 더러워지면 수렴하지 않는 마이그레이션이 있는 것이므로 원인을 파악한다.
+
+```bash
+flutter test && flutter analyze 2>&1 | tail -3
+```
+
+- [ ] **Step 6: PrivacyInfo.xcprivacy가 여전히 번들에 들어가는지 재확인**
+
+마이그레이션이 pbxproj를 다시 썼으므로 Task 6의 성과가 유지되는지 확인해야 한다.
+
+```bash
+find build/ios/iphoneos -name "PrivacyInfo.xcprivacy" -maxdepth 3
+plutil -p build/ios/iphoneos/Runner.app/Info.plist | grep MinimumOSVersion
+```
+
+Expected: `Runner.app/PrivacyInfo.xcprivacy` 존재, `MinimumOSVersion = 13.0`.
+
+- [ ] **Step 7: 커밋**
+
+```bash
+git add -A
+git status   # 서명 파일이 없는지 최종 확인
+git commit -m "build(ios): accept Flutter's automatic project migrations
+
+Flutter rewrites these on every iOS build; reverting them each time left the
+working tree permanently dirty and would add noise to CI.
+
+- AppDelegate.swift: @UIApplicationMain -> @main (deprecated in Swift 5.9+)
+- Swift Package Manager integration files
+- Podfile.lock, xcscheme, AppFrameworkInfo.plist refreshed
+- root .gitignore entries added by the tool
+
+Verified after migration: PrivacyInfo.xcprivacy still ships inside Runner.app,
+MinimumOSVersion still 13.0, signing-secret ignore rules still intact."
+```
+
+---
+
 ## Task 7: Dart 의존성 업그레이드 (music_notes 제외)
 
 `music_notes`는 정답 로직 전체를 바꾸므로 **여기서 올리지 않는다** (Phase 2에서 테스트로 보호한 뒤 진행).
