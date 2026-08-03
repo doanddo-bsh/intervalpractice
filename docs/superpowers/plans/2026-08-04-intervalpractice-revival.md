@@ -4406,6 +4406,102 @@ git commit -m "refactor!: delete 6 duplicated problem screens, reorganize lib/ b
 
 ---
 
+## Task 18-b: 채점 로직 특성화 테스트 재구축 (실행 중 추가됨)
+
+**왜 필요한가.** Task 18이 레거시 파이프라인을 지우면서 두 개의 테스트가 함께 사라졌다:
+- `test/characterization/answer_calculation_test.dart` (41건) — 레거시 계산기를 import
+- `test/domain/answer_checker_parity_test.dart` (13,671건 대조) — **차등** 테스트라 레거시와 신규 양쪽이 필요
+
+둘 다 삭제가 옳았다. 하지만 결과적으로 **`AnswerChecker`와 `Commentary` — 앱의 채점 핵심 — 에 직접 테스트가 하나도 없다.** 리팩토링 전보다 안전망이 얇아졌다.
+
+패리티 테스트가 신규 코드의 출력이 레거시와 동일함을 이미 증명했으므로, 그 출력을 **신규 코드에 대한 직접 특성화 테스트로 고정**한다.
+
+**Files:**
+- Create: `test/domain/answer_checker_test.dart`
+- Create: `test/domain/commentary_test.dart`
+
+- [ ] **Step 1: 실제 출력을 프로브로 수집**
+
+기대값을 음악 이론으로 추론하지 말 것. 실행해서 나온 값을 박제한다.
+
+```dart
+// 임시 프로브 — 커밋하지 말 것
+for (final spec in [
+  (lower: 15, upper: 13, acc: ['none', 'none']),      // C4, E4
+  (lower: 15, upper: 11, acc: ['none', 'none']),      // C4, G4
+  (lower: 13, upper: 12, acc: ['none', 'none']),      // E4, F4
+  (lower: 15, upper: 13, acc: ['none', 'sharp']),
+  (lower: 15, upper: 13, acc: ['flat', 'none']),
+  (lower: 15, upper: 13, acc: ['none', 'double flat']),
+]) {
+  final problem = IntervalProblem(
+    lower: StaffLayout.byIndex(spec.lower),
+    upper: StaffLayout.byIndex(spec.upper),
+    accidentals: spec.acc,
+  );
+  for (final mode in ProblemMode.all) {
+    final g = AnswerChecker.grade(
+      problem: problem, mode: mode, submitted: '',
+    );
+    print('$mode $problem -> "${g.correctAnswerText}" | "${g.commentary}"');
+  }
+}
+```
+
+- [ ] **Step 2: `AnswerChecker` 테스트 작성**
+
+최소 커버리지:
+- 세 문제 유형 각각의 `correctAnswerText` — 유형 1/3은 `"장3도"` 꼴, 유형 2는 계이름(`"미"`)
+- 유형 3은 자리바꿈 음정이 정답임을 확인 (유형 1과 다른 값이 나와야 함)
+- 임시표가 정답을 바꾸는지 — sharp/flat/double sharp/double flat 각각
+- `isCorrect`가 제출값과 정확히 일치할 때만 true
+- 인자 순서 무관성 (`sortedPitches`가 정렬하므로)
+
+- [ ] **Step 3: `Commentary` 테스트 작성**
+
+- `forIntervalQuestion` — 임시표 없는 경우와 있는 경우, **전체 문자열 정확 비교** (`contains` 금지)
+- `forNoteQuestion` — 유형 2용 해설
+- 해설 테이블에 없는 조합에서 빈 문자열을 반환하는지
+
+- [ ] **Step 4: 생성기가 내는 모든 문제를 채점할 수 있는지 (통합 성격)**
+
+```dart
+test('생성된 모든 문제는 크래시 없이 채점되고 정답 텍스트가 비지 않는다', () {
+  for (final mode in ProblemMode.all) {
+    final generator = ProblemGenerator(random: Random(4242));
+    for (var i = 0; i < 1000; i++) {
+      final problem = generator.next(mode: mode);
+      final grading = AnswerChecker.grade(
+        problem: problem, mode: mode, submitted: 'X',
+      );
+      expect(grading.correctAnswerText, isNotEmpty,
+          reason: '$mode $problem 의 정답 텍스트가 비었다');
+    }
+  }
+});
+```
+
+이 테스트가 원본 앱의 크래시·빈칸 버그가 재발하지 않음을 보증한다.
+
+- [ ] **Step 5: 검증 및 커밋**
+
+```bash
+flutter test && flutter analyze 2>&1 | tail -3
+```
+
+```bash
+git add test/domain/
+git commit -m "test: restore characterization coverage for the new grading core
+
+Task 18 necessarily deleted both the legacy characterization tests and
+the differential parity test (the latter needs both pipelines to diff).
+That left AnswerChecker and Commentary -- the app's entire grading
+core -- with no direct coverage. These freeze the same behavior the
+parity run proved equal to the legacy pipeline across 13,671 cases."
+```
+
+---
+
 # Phase 4 — Material 3 테마 및 다크모드
 
 ## Task 19: M3 ColorScheme 정의
