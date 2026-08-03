@@ -4,6 +4,7 @@ import 'package:music_notes/music_notes.dart';
 
 import '../../domain/problem.dart';
 import '../../domain/staff_layout.dart';
+import '../common/line_art_image.dart';
 
 /// 높은음자리표 오선지에 문제의 두 음을 그린다.
 class StaffView extends StatelessWidget {
@@ -30,11 +31,11 @@ class StaffView extends StatelessWidget {
             top: 0.h,
             bottom: 0.h,
             left: 10.0.w,
-            child: const Align(
+            child: Align(
               alignment: Alignment.centerLeft,
-              child: _StaffImage(
+              child: LineArtImage(
                 asset: 'assets/treble_clef_ff_cut.png',
-                height: 180,
+                height: 180.h,
               ),
             ),
           ),
@@ -58,44 +59,6 @@ class StaffView extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-/// 악보 에셋(높은음자리표, 음표머리, 임시표)은 모두 검은 선화(線畵)라
-/// 다크모드에서 배경에 묻힌다. 다크 테마에서만 밝기를 반전시켜 흰 선화로
-/// 바꾼다.
-///
-/// `whole_note_lean.png`의 "빈 타원" 부분은 흰색으로 채워진 게 아니라
-/// 알파값 0인 완전 투명 영역이다(오선/덧줄이 비쳐 보이도록). 단순 RGB 반전은
-/// 알파 채널을 건드리지 않으므로 검은 테두리만 흰 테두리로 바뀌고 투명한
-/// 안쪽은 그대로 투명하게 남아 뭉개짐 없이 정상 동작한다.
-///
-/// 참고: 예전에 `assets/whole_note_lean_all_white.png`라는 "흰색 변형"
-/// 에셋이 있었으나 실제로는 전체 픽셀이 완전 투명(RGBA 전부 0)인 빈
-/// 이미지였다. 다크모드 대안으로 쓰면 음표머리가 아예 사라지므로 쓰지
-/// 않았고, 삭제했다.
-class _StaffImage extends StatelessWidget {
-  const _StaffImage({required this.asset, this.height, this.fit});
-
-  final String asset;
-  final double? height;
-  final BoxFit? fit;
-
-  /// 밝기 반전 행렬 (RGB 반전, 알파 보존).
-  static const _invert = ColorFilter.matrix(<double>[
-    -1, 0, 0, 0, 255, //
-    0, -1, 0, 0, 255, //
-    0, 0, -1, 0, 255, //
-    0, 0, 0, 1, 0, //
-  ]);
-
-  @override
-  Widget build(BuildContext context) {
-    final image = Image.asset(asset, height: height?.h, fit: fit);
-
-    if (Theme.of(context).brightness == Brightness.light) return image;
-
-    return ColorFiltered(colorFilter: _invert, child: image);
   }
 }
 
@@ -133,7 +96,7 @@ class _NoteHead extends StatelessWidget {
         height: 26.5.h,
         child: Stack(
           children: [
-            const _StaffImage(asset: 'assets/whole_note_lean.png'),
+            const LineArtImage(asset: 'assets/whole_note_lean.png'),
             _LedgerLineThrough(slot: slot),
           ],
         ),
@@ -268,7 +231,7 @@ class _Accidental extends StatelessWidget {
       child: SizedBox(
         height: spec.h.h,
         width: spec.w.w,
-        child: _StaffImage(asset: spec.asset, fit: BoxFit.fill),
+        child: LineArtImage(asset: spec.asset, fit: BoxFit.fill),
       ),
     );
   }

@@ -36,7 +36,10 @@ jobs:
         run: flutter analyze --no-fatal-infos
 
       - name: Run tests
-        run: flutter test --coverage
+        # 골든 테스트는 폰트 래스터화가 플랫폼마다 달라 macOS에서 생성한
+        # 이미지가 Ubuntu 러너에서 재현되지 않는다. 육안 검증용이지
+        # 회귀 게이트가 아니므로 제외한다 (dart_test.yaml 참조).
+        run: flutter test --coverage --exclude-tags golden
 
       - name: Upload coverage
         uses: actions/upload-artifact@v4

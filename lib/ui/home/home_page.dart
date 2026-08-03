@@ -11,6 +11,7 @@ import '../../ads/ad_service.dart';
 import '../../domain/problem_mode.dart';
 import '../../state/ad_counter.dart';
 import '../common/banner_ad_slot.dart';
+import '../common/line_art_image.dart';
 import '../quiz/quiz_page.dart';
 import '../settings/settings_page.dart';
 
@@ -37,6 +38,9 @@ class _HomePageState extends State<HomePage>
   void initState() {
     super.initState();
     _interstitial.preload();
+
+    // 지시선 색이 선택된 탭을 따라가므로 탭 전환 시 다시 그려야 한다.
+    _tabController.addListener(_onTabChanged);
 
     // Apple은 IDFA 접근 전 ATT 동의를 요구한다. 첫 프레임 이후에 띄워야
     // 시스템 다이얼로그가 정상 표시된다.
@@ -70,9 +74,14 @@ class _HomePageState extends State<HomePage>
 
   @override
   void dispose() {
+    _tabController.removeListener(_onTabChanged);
     _tabController.dispose();
     _interstitial.dispose();
     super.dispose();
+  }
+
+  void _onTabChanged() {
+    if (mounted) setState(() {});
   }
 
   void _openQuiz(ProblemMode mode) {
@@ -97,9 +106,17 @@ class _HomePageState extends State<HomePage>
           children: [
             TabBar(
               controller: _tabController,
-              indicator: const UnderlineTabIndicator(
-                borderSide: BorderSide(width: 2),
-                insets: EdgeInsets.symmetric(horizontal: 40),
+              // 색을 지정하지 않으면 BorderSide 기본값이 검정이라,
+              // 다크모드에서 지시선이 배경에 묻혀 구분선이 끊긴 것처럼
+              // 보인다. 선택된 탭의 강조색을 따라가게 한다.
+              indicator: UnderlineTabIndicator(
+                borderSide: BorderSide(
+                  width: 2,
+                  color: _tabController.index == 0
+                      ? colors.primary
+                      : colors.tertiary,
+                ),
+                insets: const EdgeInsets.symmetric(horizontal: 40),
               ),
               labelStyle: const TextStyle(
                 fontSize: 18,
@@ -208,7 +225,7 @@ class _ModeTile extends StatelessWidget {
                 child: SizedBox(
                   height: 73.h,
                   width: 73.w,
-                  child: Image.asset(iconAsset),
+                  child: LineArtImage(asset: iconAsset),
                 ),
               ),
             ),
