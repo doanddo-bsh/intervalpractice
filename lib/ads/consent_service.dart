@@ -2,7 +2,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'dart:async';
 
 class InitializationHelper {
-
   // https://davidserrano.io/admob-ump-sdk-in-flutter-implement-your-gdpr-dialog
 
   // In this method, we request the consent status, and if a form is available we will proceed to display it.
@@ -71,7 +70,7 @@ class InitializationHelper {
 
     ConsentInformation.instance
         .requestConsentInfoUpdate(ConsentRequestParameters(), () async {
-      if (await ConsentInformation.instance.isConsentFormAvailable()){
+      if (await ConsentInformation.instance.isConsentFormAvailable()) {
         ConsentForm.loadConsentForm((consentForm) {
           consentForm.show((formError) async {
             await _initialize();
@@ -89,7 +88,6 @@ class InitializationHelper {
 
     return completer.future;
   }
-
 
   // Now we will create a private method that loads and displays the message:
   // old version
@@ -148,6 +146,4 @@ class InitializationHelper {
      * or Google Crashlytics would go here.
      */
   }
-
-
 }

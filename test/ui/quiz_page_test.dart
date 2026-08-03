@@ -10,12 +10,12 @@ import 'package:intervalpractice/ui/quiz/quiz_page.dart';
 import 'package:intervalpractice/ui/quiz/staff_view.dart';
 
 Widget wrap(Widget child) => ChangeNotifierProvider(
-  create: (_) => AdCounter(),
-  child: ScreenUtilInit(
-    designSize: const Size(375, 844),
-    builder: (context, _) => MaterialApp(home: child),
-  ),
-);
+      create: (_) => AdCounter(),
+      child: ScreenUtilInit(
+        designSize: const Size(375, 844),
+        builder: (context, _) => MaterialApp(home: child),
+      ),
+    );
 
 void main() {
   testWidgets('유형 1은 오선지와 도수 버튼을 보여준다', (tester) async {

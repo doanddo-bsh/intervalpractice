@@ -8,9 +8,10 @@ import 'package:intervalpractice/theme/app_theme.dart';
 import 'package:intervalpractice/ui/quiz/staff_view.dart';
 
 Widget wrap(Widget child, ThemeData theme) => ScreenUtilInit(
-  designSize: const Size(375, 844),
-  builder: (context, _) => MaterialApp(theme: theme, home: Scaffold(body: child)),
-);
+      designSize: const Size(375, 844),
+      builder: (context, _) =>
+          MaterialApp(theme: theme, home: Scaffold(body: child)),
+    );
 
 void main() {
   final problem = IntervalProblem(

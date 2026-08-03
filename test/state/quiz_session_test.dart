@@ -13,9 +13,9 @@ void main() {
   );
 
   QuizSession newSession() => QuizSession(
-    mode: mode,
-    generator: ProblemGenerator(random: Random(11)),
-  );
+        mode: mode,
+        generator: ProblemGenerator(random: Random(11)),
+      );
 
   group('QuizSession 진행', () {
     test('1번 문제부터 시작하고 첫 문제가 준비된다', () {

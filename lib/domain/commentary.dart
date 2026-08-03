@@ -14,8 +14,7 @@ abstract final class Commentary {
       sortedPitches[0].interval(sortedPitches[1]),
     );
 
-    final key =
-        abbreviation[abbreviation.length - 1] +
+    final key = abbreviation[abbreviation.length - 1] +
         _noteLetter(sortedPitches[0]) +
         _noteLetter(sortedPitches[1]);
 

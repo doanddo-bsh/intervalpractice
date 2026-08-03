@@ -7,7 +7,8 @@ import '../../domain/staff_layout.dart';
 
 /// 높은음자리표 오선지에 문제의 두 음을 그린다.
 class StaffView extends StatelessWidget {
-  const StaffView({super.key, required this.problem, this.hideUpperNote = false});
+  const StaffView(
+      {super.key, required this.problem, this.hideUpperNote = false});
 
   final IntervalProblem problem;
 
@@ -148,9 +149,15 @@ class _LedgerLineThrough extends StatelessWidget {
   final StaffSlot slot;
 
   static final _middle = {
-    Note.a.inOctave(5), Note.f.inOctave(5), Note.d.inOctave(5),
-    Note.b.inOctave(4), Note.g.inOctave(4), Note.e.inOctave(4),
-    Note.c.inOctave(4), Note.a.inOctave(3), Note.c.inOctave(6),
+    Note.a.inOctave(5),
+    Note.f.inOctave(5),
+    Note.d.inOctave(5),
+    Note.b.inOctave(4),
+    Note.g.inOctave(4),
+    Note.e.inOctave(4),
+    Note.c.inOctave(4),
+    Note.a.inOctave(3),
+    Note.c.inOctave(6),
   };
   static final _low = {Note.b.inOctave(5), Note.d.inOctave(6)};
   static final _high = {Note.b.inOctave(3), Note.g.inOctave(3)};
@@ -223,33 +230,33 @@ class _Accidental extends StatelessWidget {
   Widget build(BuildContext context) {
     final spec = switch (kind) {
       'sharp' => (
-        asset: 'assets/sharp2.png',
-        dTop: -13.0,
-        dLeft: -11.0,
-        h: 54.0,
-        w: 47.0,
-      ),
+          asset: 'assets/sharp2.png',
+          dTop: -13.0,
+          dLeft: -11.0,
+          h: 54.0,
+          w: 47.0,
+        ),
       'double sharp' => (
-        asset: 'assets/doubleSharp.png',
-        dTop: 3.5,
-        dLeft: -2.0,
-        h: 20.0,
-        w: 20.0,
-      ),
+          asset: 'assets/doubleSharp.png',
+          dTop: 3.5,
+          dLeft: -2.0,
+          h: 20.0,
+          w: 20.0,
+        ),
       'flat' => (
-        asset: 'assets/flat2.png',
-        dTop: -16.0,
-        dLeft: 7.0,
-        h: 41.0,
-        w: 16.0,
-      ),
+          asset: 'assets/flat2.png',
+          dTop: -16.0,
+          dLeft: 7.0,
+          h: 41.0,
+          w: 16.0,
+        ),
       'double flat' => (
-        asset: 'assets/doubleFlat.png',
-        dTop: -17.5,
-        dLeft: -7.5,
-        h: 45.0,
-        w: 30.0,
-      ),
+          asset: 'assets/doubleFlat.png',
+          dTop: -17.5,
+          dLeft: -7.5,
+          h: 45.0,
+          w: 30.0,
+        ),
       _ => null,
     };
 

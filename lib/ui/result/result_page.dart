@@ -76,8 +76,8 @@ Widget resultPage(
                             padding: const EdgeInsets.all(3),
                             decoration: BoxDecoration(
                                 color: colors.primary,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(20))),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(20))),
                             height: 55.h,
                             width: 200.w,
                             child: Text(
@@ -151,8 +151,7 @@ Widget resultPage(
                                       children: [
                                         AutoSizeText(
                                           '($numberOfRight/$totalQuestions)',
-                                          style:
-                                              const TextStyle(fontSize: 20),
+                                          style: const TextStyle(fontSize: 20),
                                           maxLines: 1,
                                         ),
                                       ],

@@ -28,23 +28,23 @@ final class IntervalProblem {
   /// 문제가 자기 음높이를 아는 것이 자연스럽고, 생성기(Task 13)와
   /// 채점기(Task 17)가 같은 계산을 중복하지 않게 한다.
   List<Pitch> get sortedPitches => [
-    _withAccidental(lower.pitch, accidentals[0]),
-    _withAccidental(upper.pitch, accidentals[1]),
-  ]..sort();
+        _withAccidental(lower.pitch, accidentals[0]),
+        _withAccidental(upper.pitch, accidentals[1]),
+      ]..sort();
 
   static Pitch _withAccidental(
     Pitch pitch,
     String accidental,
-  ) => switch (accidental) {
-    'sharp' => pitch.note.sharp.inOctave(pitch.octave),
-    'double sharp' => pitch.note.sharp.sharp.inOctave(pitch.octave),
-    'flat' => pitch.note.flat.inOctave(pitch.octave),
-    'double flat' => pitch.note.flat.flat.inOctave(pitch.octave),
-    _ => pitch,
-  };
+  ) =>
+      switch (accidental) {
+        'sharp' => pitch.note.sharp.inOctave(pitch.octave),
+        'double sharp' => pitch.note.sharp.sharp.inOctave(pitch.octave),
+        'flat' => pitch.note.flat.inOctave(pitch.octave),
+        'double flat' => pitch.note.flat.flat.inOctave(pitch.octave),
+        _ => pitch,
+      };
 
   @override
-  String toString() =>
-      'IntervalProblem(${lower.pitch} ${accidentals[0]}, '
+  String toString() => 'IntervalProblem(${lower.pitch} ${accidentals[0]}, '
       '${upper.pitch} ${accidentals[1]})';
 }

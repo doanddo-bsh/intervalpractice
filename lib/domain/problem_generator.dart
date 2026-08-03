@@ -25,7 +25,8 @@ final class ProblemGenerator {
     IntervalProblem? previous,
   }) {
     for (var attempt = 0; attempt < _maxAttempts; attempt++) {
-      final first = StaffLayout.slots[_random.nextInt(StaffLayout.slots.length)];
+      final first =
+          StaffLayout.slots[_random.nextInt(StaffLayout.slots.length)];
       final second =
           StaffLayout.slots[_random.nextInt(StaffLayout.slots.length)];
 
@@ -80,9 +81,7 @@ final class ProblemGenerator {
       // 한쪽에만 붙인다. 겹임시표는 이 분기에서만 나올 수 있으므로
       // 가드를 반드시 여기에 적용해야 한다.
       final accidental = allowDouble ? _anyAccidental() : _simpleAccidental();
-      return _random.nextBool()
-          ? [accidental, 'none']
-          : ['none', accidental];
+      return _random.nextBool() ? [accidental, 'none'] : ['none', accidental];
     }
 
     // 양쪽 모두 — 원본과 동일하게 홑임시표만 쓴다.
@@ -109,9 +108,7 @@ final class ProblemGenerator {
   bool _forbidsDoubleAccidentals(StaffSlot a, StaffSlot b) {
     for (final accidental in const ['double sharp', 'double flat']) {
       for (final order in const [true, false]) {
-        final accidentals = order
-            ? [accidental, 'none']
-            : ['none', accidental];
+        final accidentals = order ? [accidental, 'none'] : ['none', accidental];
         final problem = IntervalProblem(
           lower: a,
           upper: b,

@@ -9,7 +9,7 @@ import '../domain/problem_mode.dart';
 /// 기존에는 이 상태가 6개 화면에 각각 복제되어 있었다.
 final class QuizSession extends ChangeNotifier {
   QuizSession({required this.mode, required ProblemGenerator generator})
-    : _generator = generator {
+      : _generator = generator {
     _current = _generator.next(mode: mode);
   }
 

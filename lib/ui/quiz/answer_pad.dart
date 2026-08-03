@@ -68,9 +68,7 @@ class AnswerPad extends StatelessWidget {
           // values는 제출값과 같은 형식("장3")이어야 선택 하이라이트가 맞는다.
           _ButtonRow(
             labels: _perfectQualities.map((q) => '$q$selectedSize도').toList(),
-            values: _perfectQualities
-                .map((q) => '$q$selectedSize')
-                .toList(),
+            values: _perfectQualities.map((q) => '$q$selectedSize').toList(),
             selected: submittedAnswer,
             enabled: submittedAnswer == null,
             onTap: onQualitySelected,
@@ -78,9 +76,7 @@ class AnswerPad extends StatelessWidget {
           SizedBox(height: 13.0.h),
           _ButtonRow(
             labels: _imperfectQualities.map((q) => '$q$selectedSize도').toList(),
-            values: _imperfectQualities
-                .map((q) => '$q$selectedSize')
-                .toList(),
+            values: _imperfectQualities.map((q) => '$q$selectedSize').toList(),
             selected: submittedAnswer,
             enabled: submittedAnswer == null,
             onTap: onQualitySelected,

@@ -27,12 +27,10 @@ class AnswerResultSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final background = isCorrect
-        ? colors.primaryContainer
-        : colors.errorContainer;
-    final foreground = isCorrect
-        ? colors.onPrimaryContainer
-        : colors.onErrorContainer;
+    final background =
+        isCorrect ? colors.primaryContainer : colors.errorContainer;
+    final foreground =
+        isCorrect ? colors.onPrimaryContainer : colors.onErrorContainer;
 
     return Container(
       decoration: BoxDecoration(
@@ -55,9 +53,9 @@ class AnswerResultSheet extends StatelessWidget {
                   Text(
                     isCorrect ? '정답입니다!' : '오답입니다',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: foreground,
-                      fontWeight: FontWeight.bold,
-                    ),
+                          color: foreground,
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                 ],
               ),
@@ -72,9 +70,9 @@ class AnswerResultSheet extends StatelessWidget {
           Text(
             '정답 : $answerText',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: foreground,
-              fontWeight: FontWeight.bold,
-            ),
+                  color: foreground,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
           const SizedBox(height: 7),
           actionButton,

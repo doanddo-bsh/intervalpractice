@@ -35,23 +35,26 @@ final class ProblemMode {
 
   /// AppBar에 표시할 제목.
   String get title => switch (difficulty) {
-    Difficulty.easy => 'Easy',
-    Difficulty.hard => 'Hard',
-  };
+        Difficulty.easy => 'Easy',
+        Difficulty.hard => 'Hard',
+      };
 
   /// 홈 화면 목록에 표시할 문제 제목.
   String get listTitle => switch (questionType) {
-    QuestionType.nameTheInterval => '음정 문제 1',
-    QuestionType.nameTheNote => '음정 문제 2',
-    QuestionType.invertedInterval => '음정 문제 3',
-  };
+        QuestionType.nameTheInterval => '음정 문제 1',
+        QuestionType.nameTheNote => '음정 문제 2',
+        QuestionType.invertedInterval => '음정 문제 3',
+      };
 
   /// 홈 화면 목록에 표시할 설명 2줄.
   List<String> get listDescription => switch (questionType) {
-    QuestionType.nameTheInterval => const ['악보 위의 음정을 계산하여', '정답을 맞춰보세요'],
-    QuestionType.nameTheNote => const ['주어진 음정을 보고 알맞은', '계이름을 계산하여 맞춰보세요'],
-    QuestionType.invertedInterval => const ['주어진 음정의 자리바꿈 음정을', '계산하여 정답을 맞춰보세요'],
-  };
+        QuestionType.nameTheInterval => const ['악보 위의 음정을 계산하여', '정답을 맞춰보세요'],
+        QuestionType.nameTheNote => const ['주어진 음정을 보고 알맞은', '계이름을 계산하여 맞춰보세요'],
+        QuestionType.invertedInterval => const [
+            '주어진 음정의 자리바꿈 음정을',
+            '계산하여 정답을 맞춰보세요'
+          ],
+      };
 
   /// 가능한 6가지 조합 전부.
   static const all = <ProblemMode>[

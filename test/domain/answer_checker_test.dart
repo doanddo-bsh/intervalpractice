@@ -41,7 +41,8 @@ void main() {
     StaffSlot lower,
     StaffSlot upper, [
     List<String> accidentals = const ['none', 'none'],
-  ]) => IntervalProblem(lower: lower, upper: upper, accidentals: accidentals);
+  ]) =>
+      IntervalProblem(lower: lower, upper: upper, accidentals: accidentals);
 
   group('correctAnswerText 형식', () {
     test('유형 1(음정 이름)은 "장3도" 꼴을 낸다', () {

@@ -27,10 +27,10 @@ class _InitializeScreenState extends State<InitializeScreen> {
 
   @override
   Widget build(BuildContext context) => const Scaffold(
-    body: Center(
-      child: CircularProgressIndicator(),
-    ),
-  );
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
 
   Future<void> _initialize() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -41,11 +41,9 @@ class _InitializeScreenState extends State<InitializeScreen> {
       if (!mounted) return;
       unawaited(Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-            builder: (BuildContext context) {
-              return widget.targetWidget;
-            }
-        ),
+        MaterialPageRoute(builder: (BuildContext context) {
+          return widget.targetWidget;
+        }),
       ));
     });
   }

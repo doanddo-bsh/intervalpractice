@@ -68,8 +68,7 @@ void main() {
     // wrapper in IntervalPracticeApp.build() is ever removed or broken.
     final providerContext =
         tester.element(find.byType(CircularProgressIndicator));
-    expect(
-        Provider.of<AdCounter>(providerContext, listen: false), isNotNull);
+    expect(Provider.of<AdCounter>(providerContext, listen: false), isNotNull);
 
     // Pump substantially more virtual time: InitializeScreen's post-frame
     // callback awaits an AdMob consent MethodChannel call with no handler

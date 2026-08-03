@@ -66,10 +66,9 @@ void main() {
 
       for (var i = 0; i < 100; i++) {
         final current = generator.next(mode: easyType1, previous: previous);
-        final samePair =
-            {current.lower.index, current.upper.index}.difference(
-              {previous.lower.index, previous.upper.index},
-            ).isEmpty;
+        final samePair = {current.lower.index, current.upper.index}.difference(
+          {previous.lower.index, previous.upper.index},
+        ).isEmpty;
 
         expect(samePair, isFalse);
         previous = current;
