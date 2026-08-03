@@ -909,12 +909,22 @@ Expected: `✓ Built ... app-release.apk`
 E5:1D:6A:6F:45:E2:4D:98:14:A9:10:28:CD:5B:6B:B7:DA:7C:C7:93
 ```
 
+> **`jarsigner`를 쓰지 말 것.** 최신 AGP는 v1(JAR) 서명을 끄고 **v2 스킴 전용**으로 서명한다. `jarsigner`는 v1만 이해하므로 정상 서명된 APK에도 `jar is unsigned`를 반환한다 — 실행 중 실제로 겪은 함정이다. `apksigner`를 쓴다.
+
 ```bash
-$JAVA_HOME/bin/jarsigner -verify -verbose:summary build/app/outputs/flutter-apk/app-release.apk 2>&1 | tail -5
-keytool -printcert -jarfile build/app/outputs/flutter-apk/app-release.apk | grep SHA1
+APKSIGNER=$(find "$ANDROID_HOME" /opt/homebrew/share/android-commandlinetools ~/Library/Android/sdk \
+  -name apksigner -type f 2>/dev/null | tail -1)
+"$APKSIGNER" verify --print-certs build/app/outputs/flutter-apk/app-release.apk
 ```
 
-Expected: `jar verified.` 그리고 SHA1이 위 값과 일치.
+Expected:
+```
+Verified using v2 scheme (APK Signature Scheme v2): true
+Signer #1 certificate DN: CN=seohwalee, OU=nowaa, O=nowaa, L=seoul, ST=korea, C=kr
+Signer #1 certificate SHA-1 digest: e51d6a6f45e24d9814a91028cd5b6bb7da7cc793
+```
+
+SHA-1이 `e51d6a6f45e24d9814a91028cd5b6bb7da7cc793`(= `E5:1D:6A:...:C7:93`)와 일치해야 한다.
 
 **일치하지 않으면 중단하고 보고한다.** debug 키로 폴백된 것이라면 `android/app/key.properties`가 읽히지 않은 것이고, 그 상태로 Play에 올리면 거부된다.
 
