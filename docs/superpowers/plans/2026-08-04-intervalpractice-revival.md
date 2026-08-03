@@ -5312,6 +5312,22 @@ git push origin master
 
 ---
 
+## 부록: 알려진 한계 (실행 중 기록)
+
+**`AnswerChecker.grade`는 답할 수 없는 음정에 대해 `FormatException`을 던진다.**
+
+반음 경계 쌍(예: E4/F4)의 **양쪽 모두**에 겹임시표를 직접 붙여 `IntervalProblem`을 만들면 `KoreanInterval.fromInterval`이 `FormatException: Unknown interval quality`로 실패한다.
+
+현재 도달 불가인 이유가 두 겹이다:
+1. `ProblemGenerator`의 "양쪽 임시표" 분기는 `_simpleAccidental()`만 쓴다 — 양쪽에 동시에 겹임시표가 붙는 경우가 없다
+2. `next()`가 후보 전체를 `_isAnswerable`로 검증한 뒤에만 내보낸다
+
+`test/domain/answer_checker_test.dart`의 통합 테스트(6개 모드 × 1,000회)가 이 보증을 지킨다. 생성기를 바꿔 답할 수 없는 문제가 나오면 그 테스트가 먼저 깨진다.
+
+방어를 한 겹 더 원한다면 `grade()`가 `isAnswerable`을 먼저 확인해 예외 대신 판정 불가를 반환하게 할 수 있으나, 오늘 기준 실익은 없다.
+
+---
+
 ## 부록: 사용자 확인이 필요한 항목
 
 구현 중 아래 지점에서는 진행 전에 사용자에게 확인해야 한다.
