@@ -551,29 +551,29 @@ find android/app/src/main -name "MainActivity.kt" -o -name "MainActivity.java" |
 Expected: `package com.nowaa.intervalpractice` 또는 `com.example.intervalpractice`.
 `com.example...`이면 파일 내 `package` 선언과 디렉터리 경로를 `com/nowaa/intervalpractice`로 옮긴다. `AndroidManifest.xml`의 `android:name=".MainActivity"`는 상대 경로이므로 수정 불필요하다.
 
-- [ ] **Step 3: 디버그 빌드 성공 확인**
+- [ ] **Step 3: 빌드가 "다른 곳"에서 실패하는지 확인 (성공은 여기서 불가능)**
 
 ```bash
-flutter build apk --debug 2>&1 | tail -20
+flutter build apk --debug 2>&1 | tail -25
 ```
 
-Expected: `✓ Built build/app/outputs/flutter-apk/app-debug.apk`
+> **실행 결과 판명된 순서 오류.** 이 태스크에서는 빌드 성공이 **원리적으로 불가능**하다. `google_mobile_ads 4.0.0`이 `webview_flutter_android 3.13.2`를 끌어오는데, 이 패키지가 Flutter가 제거한 **v1 embedding**(`PluginRegistry.Registrar`)을 참조한다. Gradle/AGP를 어떻게 설정하든 이 지점에서 컴파일이 깨진다. `google_mobile_ads`는 4.0.0이 4.x의 마지막이라 9.0.0으로의 메이저 상향(Task 7)만이 해결책이다.
+>
+> 따라서 **Step 4(릴리즈 빌드)와 서명 검증은 Task 7로 이관한다.** 이 태스크의 성공 기준은 다음으로 대체한다:
+>
+> Expected: 실패 지점이 `async_preferences` namespace 오류에서 **`webview_flutter_android:compileDebugJavaWithJavac`의 `cannot find symbol: PluginRegistry.Registrar`로 바뀐다.** 이 변화 자체가 Step 0(d)가 제대로 동작했다는 증거다.
 
-**만약 `google_mobile_ads` 4.0.0에서 컴파일 에러가 나면** 이는 예상된 것이다 — Task 7에서 SDK를 올리면 해결된다. 그 경우 Step 4를 건너뛰고 Task 7을 먼저 수행한 뒤 돌아온다.
-
-- [ ] **Step 4: 릴리즈 빌드 및 서명 검증**
+- [ ] **Step 3-b: 정적 검증**
 
 ```bash
-flutter build apk --release 2>&1 | tail -10
+flutter analyze 2>&1 | tail -3 && flutter test
 ```
 
-Expected: `✓ Built ... app-release.apk`
+Expected: error 0건, 테스트 통과.
 
-```bash
-$JAVA_HOME/bin/jarsigner -verify -verbose:summary build/app/outputs/flutter-apk/app-release.apk 2>&1 | tail -5
-```
+- [ ] **Step 4: (Task 7로 이관됨 — 여기서 수행하지 않는다)**
 
-Expected: `jar verified.`
+릴리즈 빌드와 서명 지문 검증은 의존성 상향 이후에만 가능하므로 Task 7 Step 5-b로 옮겼다.
 
 - [ ] **Step 5: 커밋**
 
@@ -765,10 +765,57 @@ flutter test
 Expected: `All tests passed!`
 
 ```bash
-flutter build apk --release 2>&1 | tail -5
+flutter build apk --debug 2>&1 | tail -5
+```
+
+Expected: `✓ Built build/app/outputs/flutter-apk/app-debug.apk`
+
+**이 태스크가 안드로이드 빌드를 처음으로 초록불로 만드는 지점이다.** Task 4가 `app_plugin_loader` 오류를, Task 5가 `async_preferences` namespace 오류를 걷어냈고, 여기서 `webview_flutter_android`의 v1 embedding 오류가 사라진다.
+
+- [ ] **Step 5-b: 릴리즈 빌드 및 서명 지문 검증 (Task 5에서 이관)**
+
+```bash
+flutter build apk --release 2>&1 | tail -10
 ```
 
 Expected: `✓ Built ... app-release.apk`
+
+서명이 **실제 업로드 키**로 됐는지 확인한다. 기대 SHA1은 아래와 같다(키스토어에서 확인 완료):
+
+```
+E5:1D:6A:6F:45:E2:4D:98:14:A9:10:28:CD:5B:6B:B7:DA:7C:C7:93
+```
+
+```bash
+$JAVA_HOME/bin/jarsigner -verify -verbose:summary build/app/outputs/flutter-apk/app-release.apk 2>&1 | tail -5
+keytool -printcert -jarfile build/app/outputs/flutter-apk/app-release.apk | grep SHA1
+```
+
+Expected: `jar verified.` 그리고 SHA1이 위 값과 일치.
+
+**일치하지 않으면 중단하고 보고한다.** debug 키로 폴백된 것이라면 `android/app/key.properties`가 읽히지 않은 것이고, 그 상태로 Play에 올리면 거부된다.
+
+- [x] **Step 5-c: 서명 폴백 경로 검증 — Task 5 실행 중 이미 완료됨**
+
+> Task 5 구현자가 `./gradlew :app:signingReport`로 양쪽 분기를 실증했다. 결과:
+> - `key.properties` 없음 → `BUILD SUCCESSFUL`, `Variant: release / Config: debug` (폴백 정상, `Could not find signingConfig 'release'` 발생하지 않음)
+> - `key.properties` 있음 → `Config: release`, `Alias: key_intervalpractice`, `SHA1: E5:1D:6A:6F:45:E2:4D:98:14:A9:10:28:CD:5B:6B:B7:DA:7C:C7:93` — **기대값 일치**
+>
+> Groovy 삼항 연산자가 단락 평가되므로 `hasSigningConfig`가 false일 때 `signingConfigs.release`가 역참조되지 않는다. 구조적으로 안전함이 확인됐다.
+>
+> 아래 절차는 참고용으로 남긴다(릴리즈 APK 산출물 자체에 대한 재확인이 필요할 때).
+
+`key.properties`가 없는 환경(= CI PR 빌드)에서도 릴리즈 빌드가 죽지 않아야 한다. 임시로 치워서 확인한다.
+
+```bash
+mv android/app/key.properties /tmp/key.properties.bak
+flutter build apk --release 2>&1 | tail -5
+mv /tmp/key.properties.bak android/app/key.properties
+```
+
+Expected: 빌드 성공(debug 서명으로 폴백). `Could not find signingConfig 'release'` 같은 구성 오류가 나면 `android/app/build.gradle`의 조건부 `signingConfigs` 블록을 고쳐야 한다.
+
+**반드시 `key.properties`를 제자리로 되돌린 뒤** `ls android/app/key.properties`로 확인한다.
 
 ```bash
 cd ios && pod install --repo-update && cd .. && flutter build ios --release --no-codesign 2>&1 | tail -5
