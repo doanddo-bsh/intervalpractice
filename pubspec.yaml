@@ -40,15 +40,10 @@ dependencies:
   music_notes: ^0.13.0
   percent_indicator: ^4.2.3
   lottie: ^2.6.0
-  avatar_glow: ^2.0.2
-  just_the_tooltip: ^0.0.12
   google_mobile_ads: ^4.0.0
   app_tracking_transparency: ^2.0.4
   provider: ^6.1.1
-  flutter_riverpod: ^2.4.9
   async_preferences: ^0.8.0
-  firebase_core: ^2.13.0
-  firebase_analytics: ^10.0.0
 
 dev_dependencies:
   flutter_test:
