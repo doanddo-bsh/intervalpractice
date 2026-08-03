@@ -69,9 +69,10 @@ class StaffView extends StatelessWidget {
 /// 알파 채널을 건드리지 않으므로 검은 테두리만 흰 테두리로 바뀌고 투명한
 /// 안쪽은 그대로 투명하게 남아 뭉개짐 없이 정상 동작한다.
 ///
-/// `assets/whole_note_lean_all_white.png`는 흰색 대체 에셋으로 존재하지만
-/// 실제로는 전체 픽셀이 완전 투명(RGBA 전부 0)인 빈 이미지라 사용하지
-/// 않았다 — 다크모드에서 음표머리가 아예 보이지 않게 된다.
+/// 참고: 예전에 `assets/whole_note_lean_all_white.png`라는 "흰색 변형"
+/// 에셋이 있었으나 실제로는 전체 픽셀이 완전 투명(RGBA 전부 0)인 빈
+/// 이미지였다. 다크모드 대안으로 쓰면 음표머리가 아예 사라지므로 쓰지
+/// 않았고, 삭제했다.
 class _StaffImage extends StatelessWidget {
   const _StaffImage({required this.asset, this.height, this.fit});
 
