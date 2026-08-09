@@ -75,3 +75,6 @@ key.properties
 
 # Local staging folder for the above
 /keyfiles/
+
+# 실기기 통합 테스트가 찍은 스크린샷 (산출물)
+/screenshots/
