@@ -31,7 +31,19 @@ iOS 시뮬레이터(iPhone 17 Pro / iOS 26.5)에서 앱을 실제로 띄워 검�
 - [ ] 결과 화면의 반투명 오버레이(`alpha: 0.6`) 시각적 적절성
 - [ ] 임시표가 음표 머리에 겹쳐 보이는 부분이 실사용에서 거슬리는지 (원본과 동일한 배치라 의도적으로 두었다)
 
-### 2. Play Console 업로드 키 대조 — 되돌리기 어려움
+### 2. Play Console 업로드 키 대조 — ✅ 2026-08-10 확인 완료
+
+앱 소유자가 Play Console(앱 무결성 → 앱 서명 → 업로드 키 인증서)에서 직접 대조했고 **일치**한다.
+
+세 지점이 모두 같은 지문임이 확인됐다:
+1. 로컬 키스토어 `android/app/key.jks` (`keytool -list`)
+2. 빌드된 AAB에서 추출한 인증서 (`keytool -printcert -jarfile`)
+3. Play Console 등록값 (소유자 육안 확인)
+
+아래는 기록용이며, 키스토어를 교체할 일이 생기면 같은 절차로 다시 확인할 것.
+
+<details>
+<summary>원래 절차</summary>
 
 빌드된 AAB에서 추출한 서명 지문:
 
@@ -41,13 +53,30 @@ Owner: CN=seohwalee, OU=nowaa, O=nowaa, L=seoul, ST=korea, C=kr
 Alias: key_intervalpractice
 ```
 
-**Play Console → 설정 → 앱 무결성 → 앱 서명 → 업로드 키 인증서**와 대조할 것.
+**Play Console → 테스트 및 출시 → 앱 무결성 → 앱 서명 → 업로드 키 인증서**와 대조할 것.
 불일치 상태로 업로드하면 거부되고 복구에 구글 지원 요청이 필요하다.
+
+</details>
 
 ### 3. Play Console 데이터 보안 양식 갱신
 
 `firebase_core` / `firebase_analytics`를 제거했다 — 코드 호출부가 0곳이었고 `google-services.json`도 저장소에 없어 실제로 동작한 적이 없다.
 기존 신고 내용에 Analytics 항목이 있다면 실제 구성과 어긋나므로 내려야 한다.
+
+**현재 코드 기준으로 실제 수집되는 것은 광고 ID 하나뿐이다.**
+
+| SDK | 수집 | 비고 |
+|---|---|---|
+| `google_mobile_ads` (AdMob) | 광고 ID(기기 ID) | 제3자(Google)와 공유, 광고 목적 |
+| `app_tracking_transparency` | — | iOS에서 IDFA 접근 **동의를 받는** 역할. 자체 수집 없음 |
+| `async_preferences` | — | 기기 내부 저장만. 전송 없음 |
+| ~~`firebase_analytics`~~ | — | **제거됨** |
+
+앱에 로그인·계정·사용자 생성 콘텐츠·위치 수집이 없다. 문제 풀이 기록도 저장하지 않는다(앱 종료 시 사라짐).
+
+따라서 양식에서:
+- **유지:** 기기 또는 기타 ID → 광고 ID (수집됨, 공유됨, 광고 또는 마케팅)
+- **내릴 것:** Analytics를 전제로 신고했던 항목 — 앱 상호작용, 앱 내 검색 기록, 기타 앱 성능 데이터 등이 있다면 제거
 
 ### 4. GitHub Secrets 등록 후 배포
 
