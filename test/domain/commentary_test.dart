@@ -4,6 +4,10 @@
 // 관찰한 값 그대로 전체 문자열 비교(=)로 고정한다. `contains(...)`는 쓰지
 // 않는다 — 문구 일부가 우연히 맞아도 전체가 틀릴 수 있기 때문이다.
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intervalpractice/domain/problem_mode.dart';
+import 'package:intervalpractice/domain/problem_generator.dart';
+import 'package:intervalpractice/domain/answer_checker.dart';
+import 'dart:math';
 
 import 'package:intervalpractice/domain/commentary.dart';
 import 'package:intervalpractice/domain/korean_interval.dart';
@@ -11,6 +15,8 @@ import 'package:intervalpractice/domain/problem.dart';
 import 'package:intervalpractice/domain/staff_layout.dart';
 
 void main() {
+  _reviewRegression();
+
   final c4 = StaffLayout.byIndex(15);
   final e4 = StaffLayout.byIndex(13);
   final f4 = StaffLayout.byIndex(12);
@@ -156,6 +162,84 @@ void main() {
       );
 
       expect(result, '');
+    });
+  });
+}
+
+// ---------------------------------------------------------------------------
+// 사용자 리뷰로 제보된 버그의 회귀 테스트
+//
+//   "음정 정답이랑 해설이 정반대임 단2도인데 정답은 장7도 근데 해설은 장7도로 나옴"
+//
+// 원본 앱은 자리바꿈 문제(유형 3)에서 해설 키를 자리바꿈하지 않은 음정으로
+// 뽑으면서 문구에는 자리바꿈된 이름을 넣었다. 결과적으로
+// "장7도 음정입니다 (장2도 음정의 기본 반음수는 0개)" 같은 모순이 나왔다.
+// ---------------------------------------------------------------------------
+void _reviewRegression() {
+  group('해설과 정답의 도수가 일치한다 (리뷰 제보 버그)', () {
+    test('미4+파4 자리바꿈: 정답 장7도 → 해설도 7도 기준이어야 한다', () {
+      final problem = IntervalProblem(
+        lower: StaffLayout.byIndex(13), // E4
+        upper: StaffLayout.byIndex(12), // F4
+        accidentals: const ['none', 'none'],
+      );
+      const mode = ProblemMode(
+        difficulty: Difficulty.easy,
+        questionType: QuestionType.invertedInterval,
+      );
+
+      final grading = AnswerChecker.grade(
+        problem: problem,
+        mode: mode,
+        submitted: '',
+      );
+
+      expect(grading.correctAnswerText, '장7도');
+      expect(
+        grading.commentary,
+        contains('장7도 음정의 기본 반음수'),
+        reason: '해설이 자리바꿈된 음정(7도)을 설명해야 한다',
+      );
+      expect(
+        grading.commentary,
+        isNot(contains('장2도 음정의 기본 반음수')),
+        reason: '원래 음정(2도) 설명이 남아 있으면 안 된다',
+      );
+    });
+
+    test('생성 가능한 모든 문제에서 해설 도수와 정답 도수가 같다', () {
+      final degree = RegExp(r'(\d)도');
+
+      for (final mode in ProblemMode.all) {
+        if (mode.questionType == QuestionType.nameTheNote) continue;
+
+        final generator = ProblemGenerator(random: Random(20260818));
+        for (var i = 0; i < 500; i++) {
+          final problem = generator.next(mode: mode);
+          final grading = AnswerChecker.grade(
+            problem: problem,
+            mode: mode,
+            submitted: '',
+          );
+          if (grading.commentary.isEmpty) continue;
+
+          final answerDegree =
+              degree.firstMatch(grading.correctAnswerText)?.group(1);
+          // 해설 끝의 "(...N도 음정의 기본 반음수는 ...)" 안의 도수
+          final explained = RegExp(r'\((?:완전|장|단|증|감|겹증|겹감)?(\d)도')
+              .firstMatch(grading.commentary)
+              ?.group(1);
+
+          if (explained == null) continue;
+          expect(
+            explained,
+            answerDegree,
+            reason: '$mode $problem\n'
+                '  정답 ${grading.correctAnswerText}\n'
+                '  해설 ${grading.commentary}',
+          );
+        }
+      }
     });
   });
 }

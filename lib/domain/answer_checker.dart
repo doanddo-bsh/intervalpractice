@@ -49,7 +49,11 @@ abstract final class AnswerChecker {
     return Grading(
       isCorrect: submitted == korean,
       correctAnswerText: '$korean도',
-      commentary: Commentary.forIntervalQuestion(pitches, korean),
+      commentary: Commentary.forIntervalQuestion(
+        pitches,
+        korean,
+        inverted: mode.usesInvertedAnswer,
+      ),
     );
   }
 }
