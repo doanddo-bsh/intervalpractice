@@ -10,7 +10,6 @@ import '../../ads/ad_ids.dart';
 import '../../ads/ad_service.dart';
 import '../../domain/problem_mode.dart';
 import '../../state/ad_counter.dart';
-import '../../state/theme_controller.dart';
 import '../common/banner_ad_slot.dart';
 import '../common/line_art_image.dart';
 import '../quiz/quiz_page.dart';
@@ -267,8 +266,6 @@ class _BottomActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.watch<ThemeController>();
-
     // 아래로 배너 광고가 붙으므로 위아래 여백을 둔다.
     // 여백이 없으면 ⓘ 버튼과 광고가 맞닿아 오탭이 나기 쉽다.
     return Padding(
@@ -285,11 +282,18 @@ class _BottomActions extends StatelessWidget {
               icon: const Icon(Icons.privacy_tip_outlined),
               tooltip: '개인정보 설정',
             ),
-          IconButton(
-            onPressed: theme.cycle,
-            icon: Icon(theme.icon),
-            tooltip: theme.label,
-          ),
+          // 다크/라이트 토글은 의도적으로 감춰 두었다 (다크모드 미제공).
+          // 되살리려면 아래 주석을 풀고 `lib/app.dart` 의 themeMode 도
+          // ThemeController 를 보도록 되돌린다.
+          //
+          // Builder(builder: (context) {
+          //   final theme = context.watch<ThemeController>();
+          //   return IconButton(
+          //     onPressed: theme.cycle,
+          //     icon: Icon(theme.icon),
+          //     tooltip: theme.label,
+          //   );
+          // }),
           Padding(
             padding: EdgeInsets.only(left: 4.w, right: 30.w),
             child: const Tooltip(

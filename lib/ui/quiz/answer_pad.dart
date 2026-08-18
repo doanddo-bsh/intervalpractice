@@ -55,7 +55,7 @@ class AnswerPad extends StatelessWidget {
           enabled: submittedAnswer == null,
           onTap: onSizeSelected,
         ),
-        SizedBox(height: 13.0.h),
+        SizedBox(height: 16.0.h),
         _ButtonRow(
           labels: _sizes.sublist(4),
           selected: selectedSize,
@@ -74,7 +74,7 @@ class AnswerPad extends StatelessWidget {
             enabled: submittedAnswer == null,
             onTap: onQualitySelected,
           ),
-          SizedBox(height: 13.0.h),
+          SizedBox(height: 16.0.h),
           _ButtonRow(
             labels: _imperfectQualities.map((q) => '$q$selectedSize도').toList(),
             values: _imperfectQualities.map((q) => '$q$selectedSize').toList(),
@@ -108,7 +108,7 @@ class _NotePad extends StatelessWidget {
           enabled: submittedAnswer == null,
           onTap: onSelected,
         ),
-        SizedBox(height: 13.0.h),
+        SizedBox(height: 16.0.h),
         _ButtonRow(
           labels: names.sublist(4),
           selected: submittedAnswer,
@@ -145,7 +145,8 @@ class _ButtonRow extends StatelessWidget {
     // 좁은 기기(375pt: iPhone SE, 13 mini 등)에서 가로로 넘친다. 남는 폭을
     // 균등하게 나눠 갖게 하고, 라벨은 필요하면 축소되도록 한다.
     return SizedBox(
-      height: 35.0.h,
+      // 기본 35 에서 2배. 원본 앱보다 누르기 편하게 키웠다.
+      height: 70.0.h,
       child: Row(
         children: [
           for (var i = 0; i < labels.length; i++)
@@ -197,7 +198,9 @@ class _AnswerButton extends StatelessWidget {
       child: AutoSizeText(
         label,
         maxLines: 1,
-        minFontSize: 9,
+        style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w600),
+        // 좁은 기기에서는 줄어들되 너무 작아지지는 않게 한다.
+        minFontSize: 11,
         overflow: TextOverflow.ellipsis,
       ),
     );
