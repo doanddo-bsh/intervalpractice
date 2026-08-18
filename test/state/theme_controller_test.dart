@@ -36,21 +36,21 @@ void main() {
         .setMockMethodCallHandler(channel, null);
   });
 
-  test('기본값은 시스템 설정이다', () {
-    expect(ThemeController().mode, ThemeMode.system);
+  test('기본값은 라이트다', () {
+    expect(ThemeController().mode, ThemeMode.light);
   });
 
-  test('시스템 → 라이트 → 다크 → 시스템 순으로 돈다', () async {
+  test('라이트 → 다크 → 시스템 → 라이트 순으로 돈다', () async {
     final controller = ThemeController();
-
-    await controller.cycle();
-    expect(controller.mode, ThemeMode.light);
 
     await controller.cycle();
     expect(controller.mode, ThemeMode.dark);
 
     await controller.cycle();
     expect(controller.mode, ThemeMode.system);
+
+    await controller.cycle();
+    expect(controller.mode, ThemeMode.light);
   });
 
   test('바뀌면 리스너에게 알린다', () async {
@@ -67,7 +67,7 @@ void main() {
     var notified = 0;
     controller.addListener(() => notified++);
 
-    await controller.setMode(ThemeMode.system);
+    await controller.setMode(ThemeMode.light);
     expect(notified, 0);
   });
 
@@ -76,17 +76,17 @@ void main() {
 
     // 새 인스턴스가 저장된 값을 읽어온다.
     final restored = ThemeController();
-    expect(restored.mode, ThemeMode.system, reason: 'load 전에는 기본값');
+    expect(restored.mode, ThemeMode.light, reason: 'load 전에는 기본값');
 
     await restored.load();
     expect(restored.mode, ThemeMode.dark);
   });
 
-  test('저장된 값이 없으면 시스템 설정을 유지한다', () async {
+  test('저장된 값이 없으면 라이트를 유지한다 (OS가 다크여도)', () async {
     final controller = ThemeController();
     await controller.load();
 
-    expect(controller.mode, ThemeMode.system);
+    expect(controller.mode, ThemeMode.light);
   });
 
   test('저장된 값이 범위를 벗어나면 무시한다', () async {
@@ -95,7 +95,16 @@ void main() {
     final controller = ThemeController();
     await controller.load();
 
-    expect(controller.mode, ThemeMode.system);
+    expect(controller.mode, ThemeMode.light);
+  });
+
+  test('사용자가 시스템 설정을 고르면 그것도 저장된다', () async {
+    final controller = ThemeController();
+    await controller.setMode(ThemeMode.system);
+
+    final restored = ThemeController();
+    await restored.load();
+    expect(restored.mode, ThemeMode.system);
   });
 
   test('모드마다 다른 아이콘과 문구를 준다', () async {
