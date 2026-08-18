@@ -10,6 +10,7 @@ import '../../ads/ad_ids.dart';
 import '../../ads/ad_service.dart';
 import '../../domain/problem_mode.dart';
 import '../../state/ad_counter.dart';
+import '../../state/theme_controller.dart';
 import '../common/banner_ad_slot.dart';
 import '../common/line_art_image.dart';
 import '../quiz/quiz_page.dart';
@@ -266,28 +267,41 @@ class _BottomActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        if (showPrivacySettings)
-          IconButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute<void>(builder: (_) => const SettingsPage()),
+    final theme = context.watch<ThemeController>();
+
+    // 아래로 배너 광고가 붙으므로 위아래 여백을 둔다.
+    // 여백이 없으면 ⓘ 버튼과 광고가 맞닿아 오탭이 나기 쉽다.
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 12.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          if (showPrivacySettings)
+            IconButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute<void>(builder: (_) => const SettingsPage()),
+              ),
+              icon: const Icon(Icons.privacy_tip_outlined),
+              tooltip: '개인정보 설정',
             ),
-            icon: const Icon(Icons.privacy_tip_outlined),
+          IconButton(
+            onPressed: theme.cycle,
+            icon: Icon(theme.icon),
+            tooltip: theme.label,
           ),
-        Padding(
-          padding: EdgeInsets.only(right: 30.w),
-          child: const Tooltip(
-            triggerMode: TooltipTriggerMode.tap,
-            showDuration: Duration(seconds: 5),
-            message: 'Easy는 임시표가 없는 기본 계이름입니다\n'
-                'Hard는 여러종류의 임시표를 포함하고 있습니다',
-            child: Icon(Icons.info_outline, size: 18),
+          Padding(
+            padding: EdgeInsets.only(left: 4.w, right: 30.w),
+            child: const Tooltip(
+              triggerMode: TooltipTriggerMode.tap,
+              showDuration: Duration(seconds: 5),
+              message: 'Easy는 임시표가 없는 기본 계이름입니다\n'
+                  'Hard는 여러종류의 임시표를 포함하고 있습니다',
+              child: Icon(Icons.info_outline, size: 18),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
