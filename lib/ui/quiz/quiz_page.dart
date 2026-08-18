@@ -9,6 +9,7 @@ import '../../domain/problem_generator.dart';
 import '../../domain/problem_mode.dart';
 import '../../state/ad_counter.dart';
 import '../../state/quiz_session.dart';
+import '../../theme/app_theme.dart';
 import '../common/banner_ad_slot.dart';
 import '../result/result_page.dart';
 import 'answer_pad.dart';
@@ -75,14 +76,48 @@ class _QuizPageState extends State<QuizPage> {
         answerText: grading.correctAnswerText,
         commentary: grading.commentary,
         actionButton: _session.isFinished
-            ? _actionButton('결과보기', _showFinalResult)
-            : _actionButton('다음문제', _goToNextQuestion),
+            ? _actionButton(
+                '결과보기',
+                _showFinalResult,
+                isCorrect: grading.isCorrect,
+              )
+            : _actionButton(
+                '다음문제',
+                _goToNextQuestion,
+                isCorrect: grading.isCorrect,
+              ),
       ),
     );
   }
 
-  Widget _actionButton(String label, VoidCallback onPressed) {
-    return ElevatedButton(onPressed: onPressed, child: Text(label));
+  /// 결과 시트의 진행 버튼.
+  ///
+  /// 원본 앱과 같이 정답이면 초록, 오답이면 주황이다. 오답 시트에 초록
+  /// 버튼이 놓이면 결과와 어긋나 보인다.
+  ///
+  /// [isCorrect] 를 생략하면 결과와 무관한 버튼(결과 화면의 "네" 등)으로
+  /// 보고 초록을 쓴다.
+  Widget _actionButton(
+    String label,
+    VoidCallback onPressed, {
+    bool isCorrect = true,
+  }) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: isCorrect ? AppTheme.easyAccent : AppTheme.hardAccent,
+        foregroundColor: Colors.white,
+        elevation: 3,
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: Colors.white70,
+        ),
+      ),
+    );
   }
 
   void _goToNextQuestion() {
