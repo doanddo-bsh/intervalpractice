@@ -161,10 +161,12 @@ class _ButtonRow extends StatelessWidget {
     // 좁은 기기(375pt: iPhone SE, 13 mini 등)에서 가로로 넘친다. 남는 폭을
     // 균등하게 나눠 갖게 하고, 라벨은 필요하면 축소되도록 한다.
     return SizedBox(
-      // 원본 앱과 같은 높이. 폭은 Expanded 로 나눠 갖게 해서
-      // 좁은 기기(375pt)에서 넘치지 않게 한다 — 원본은 여기서 넘쳤다.
-      height: 35.0.h,
+      height: 44.0.h,
       child: Row(
+        // stretch 가 없으면 Row 기본 정렬(center)이 세로를 느슨하게 주고,
+        // minimumSize: Size.zero 와 겹쳐 버튼이 글자 높이(약 22pt)로
+        // 쪼그라든다. 지정한 높이를 그대로 채우게 한다.
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           for (var i = 0; i < labels.length; i++)
             Expanded(
