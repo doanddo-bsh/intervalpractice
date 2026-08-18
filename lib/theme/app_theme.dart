@@ -19,6 +19,37 @@ abstract final class AppTheme {
   /// hard 난이도 강조색 (기존 color2).
   static const _hardSeed = Color(0xffe36d3f);
 
+  // ---------------------------------------------------------------
+  // 원본 앱 팔레트
+  //
+  // M3 ColorScheme 이 뽑아주는 색보다 원본 조합이 보기 좋다는 판단에
+  // 따라, 정답 버튼과 결과 시트는 아래 고정색을 쓴다.
+  // (구 `colorList.dart` 및 각 문제 화면에서 그대로 가져왔다.)
+  // ---------------------------------------------------------------
+
+  /// 정답 버튼 배경 (선택되지 않은 상태).
+  static const answerButtonBackground = Color(0xfffdfdfd);
+
+  /// 정답 버튼 배경 (선택된 상태).
+  static const answerButtonSelected = Color(0xffdadada);
+
+  /// 정답 버튼 글자색.
+  static const answerButtonText = Colors.black54;
+
+  /// easy 난이도 강조 (버튼 잉크, 진행바).
+  static const easyAccent = _easySeed;
+
+  /// hard 난이도 강조.
+  static const hardAccent = _hardSeed;
+
+  /// 정답 시트 배경 / 글자 (구 color5 / color4).
+  static const correctSheetBackground = Color(0xffacd0a8);
+  static const correctSheetText = Color(0xff4b7947);
+
+  /// 오답 시트 배경 / 글자 (구 하드코딩값 / color6).
+  static const wrongSheetBackground = Color(0xffd7b1b1);
+  static const wrongSheetText = Color(0xff79474e);
+
   /// 스플래시 화면 전용 브랜드 고정 색상.
   ///
   /// [LoadingPage]는 앱 실행 즉시(테마/시스템 다크모드 판단 이전) 뜨는

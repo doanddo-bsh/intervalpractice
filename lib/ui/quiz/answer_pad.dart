@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../domain/problem_mode.dart';
 import '../../domain/staff_layout.dart';
+import '../../theme/app_theme.dart';
 
 /// 문제 유형에 따라 다른 정답 입력 UI를 제공한다.
 ///
@@ -42,6 +43,7 @@ class AnswerPad extends StatelessWidget {
       return _NotePad(
         submittedAnswer: submittedAnswer,
         onSelected: onNoteSelected,
+        difficulty: mode.difficulty,
       );
     }
 
@@ -54,13 +56,15 @@ class AnswerPad extends StatelessWidget {
           selected: selectedSize,
           enabled: submittedAnswer == null,
           onTap: onSizeSelected,
+          difficulty: mode.difficulty,
         ),
-        SizedBox(height: 16.0.h),
+        SizedBox(height: 13.0.h),
         _ButtonRow(
           labels: _sizes.sublist(4),
           selected: selectedSize,
           enabled: submittedAnswer == null,
           onTap: onSizeSelected,
+          difficulty: mode.difficulty,
         ),
         SizedBox(height: 30.0.h),
         if (selectedSize != null) ...[
@@ -73,14 +77,16 @@ class AnswerPad extends StatelessWidget {
             selected: submittedAnswer,
             enabled: submittedAnswer == null,
             onTap: onQualitySelected,
+            difficulty: mode.difficulty,
           ),
-          SizedBox(height: 16.0.h),
+          SizedBox(height: 13.0.h),
           _ButtonRow(
             labels: _imperfectQualities.map((q) => '$q$selectedSize도').toList(),
             values: _imperfectQualities.map((q) => '$q$selectedSize').toList(),
             selected: submittedAnswer,
             enabled: submittedAnswer == null,
             onTap: onQualitySelected,
+            difficulty: mode.difficulty,
           ),
         ],
       ],
@@ -89,10 +95,15 @@ class AnswerPad extends StatelessWidget {
 }
 
 class _NotePad extends StatelessWidget {
-  const _NotePad({required this.submittedAnswer, required this.onSelected});
+  const _NotePad({
+    required this.submittedAnswer,
+    required this.onSelected,
+    required this.difficulty,
+  });
 
   final String? submittedAnswer;
   final ValueChanged<String> onSelected;
+  final Difficulty difficulty;
 
   @override
   Widget build(BuildContext context) {
@@ -107,13 +118,15 @@ class _NotePad extends StatelessWidget {
           selected: submittedAnswer,
           enabled: submittedAnswer == null,
           onTap: onSelected,
+          difficulty: difficulty,
         ),
-        SizedBox(height: 16.0.h),
+        SizedBox(height: 13.0.h),
         _ButtonRow(
           labels: names.sublist(4),
           selected: submittedAnswer,
           enabled: submittedAnswer == null,
           onTap: onSelected,
+          difficulty: difficulty,
         ),
       ],
     );
@@ -126,8 +139,11 @@ class _ButtonRow extends StatelessWidget {
     required this.selected,
     required this.enabled,
     required this.onTap,
+    required this.difficulty,
     this.values,
   });
+
+  final Difficulty difficulty;
 
   final List<String> labels;
 
@@ -145,8 +161,9 @@ class _ButtonRow extends StatelessWidget {
     // 좁은 기기(375pt: iPhone SE, 13 mini 등)에서 가로로 넘친다. 남는 폭을
     // 균등하게 나눠 갖게 하고, 라벨은 필요하면 축소되도록 한다.
     return SizedBox(
-      // 기본 35 에서 2배. 원본 앱보다 누르기 편하게 키웠다.
-      height: 70.0.h,
+      // 원본 앱과 같은 높이. 폭은 Expanded 로 나눠 갖게 해서
+      // 좁은 기기(375pt)에서 넘치지 않게 한다 — 원본은 여기서 넘쳤다.
+      height: 35.0.h,
       child: Row(
         children: [
           for (var i = 0; i < labels.length; i++)
@@ -157,6 +174,7 @@ class _ButtonRow extends StatelessWidget {
                   label: labels[i],
                   isSelected: selected == actualValues[i],
                   onPressed: enabled ? () => onTap(actualValues[i]) : null,
+                  difficulty: difficulty,
                 ),
               ),
             ),
@@ -171,25 +189,31 @@ class _AnswerButton extends StatelessWidget {
     required this.label,
     required this.isSelected,
     required this.onPressed,
+    required this.difficulty,
   });
 
   final String label;
   final bool isSelected;
   final VoidCallback? onPressed;
+  final Difficulty difficulty;
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
+    // 원본 앱의 색 조합을 그대로 쓴다 — M3 가 뽑는 색보다 보기 좋다는 판단.
+    // 잉크(누를 때 번지는 색)만 난이도를 따라간다.
+    final accent = difficulty == Difficulty.easy
+        ? AppTheme.easyAccent
+        : AppTheme.hardAccent;
 
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: isSelected
-            ? colors.secondaryContainer
-            : colors.surfaceContainerHighest,
-        foregroundColor: colors.onSurface,
+            ? AppTheme.answerButtonSelected
+            : AppTheme.answerButtonBackground,
+        foregroundColor: accent,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        padding: EdgeInsets.symmetric(horizontal: 4.w),
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
         // Material 기본 최소 폭(64)이 Expanded 안에서도 하한으로 작동해
         // 좁은 기기에서 넘침을 유발한다.
         minimumSize: Size.zero,
@@ -198,9 +222,9 @@ class _AnswerButton extends StatelessWidget {
       child: AutoSizeText(
         label,
         maxLines: 1,
-        style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w600),
+        style: TextStyle(fontSize: 14.sp, color: AppTheme.answerButtonText),
         // 좁은 기기에서는 줄어들되 너무 작아지지는 않게 한다.
-        minFontSize: 11,
+        minFontSize: 10,
         overflow: TextOverflow.ellipsis,
       ),
     );

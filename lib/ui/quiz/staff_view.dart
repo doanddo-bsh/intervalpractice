@@ -191,32 +191,41 @@ class _Accidental extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // dLeft 는 각 이미지의 **실제 잉크 영역**을 재서 정했다. 이미지마다
+    // 투명 여백 비율이 제각각이라(샵은 좌우 36%가 여백, 겹샵은 2%),
+    // 상자 기준으로 맞추면 글리프가 어긋난다.
+    //
+    //   음표머리: 상자 폭 약 50.8, 잉크는 20~80% → 잉크 시작 +10.2
+    //   목표: 임시표 잉크 오른쪽 끝이 음표 잉크보다 5 앞에 오도록
+    //
+    // 원본은 임시표를 음표머리 위에 겹쳐 그려 Hard 모드에서 음을 읽기
+    // 어려웠다. 악보 관례대로 왼쪽에 띄워 놓는다.
     final spec = switch (kind) {
       'sharp' => (
           asset: 'assets/sharp2.png',
           dTop: -13.0,
-          dLeft: -11.0,
+          dLeft: -25.5,
           h: 54.0,
           w: 47.0,
         ),
       'double sharp' => (
           asset: 'assets/doubleSharp.png',
           dTop: 3.5,
-          dLeft: -2.0,
+          dLeft: -14.5,
           h: 20.0,
           w: 20.0,
         ),
       'flat' => (
           asset: 'assets/flat2.png',
           dTop: -16.0,
-          dLeft: 7.0,
+          dLeft: -8.0,
           h: 41.0,
           w: 16.0,
         ),
       'double flat' => (
           asset: 'assets/doubleFlat.png',
           dTop: -17.5,
-          dLeft: -7.5,
+          dLeft: -23.5,
           h: 45.0,
           w: 30.0,
         ),

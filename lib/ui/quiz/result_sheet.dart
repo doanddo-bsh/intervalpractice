@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../theme/app_theme.dart';
+
 /// 정답/오답 직후 아래에서 올라오는 시트.
 ///
 /// 기존에는 6개 화면에 정답용/오답용 두 벌씩, 총 12벌이 복붙되어 있었다.
@@ -26,11 +28,12 @@ class AnswerResultSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-    final background =
-        isCorrect ? colors.primaryContainer : colors.errorContainer;
+    // 원본 앱의 색 조합. M3 가 뽑는 색보다 보기 좋다는 판단.
+    final background = isCorrect
+        ? AppTheme.correctSheetBackground
+        : AppTheme.wrongSheetBackground;
     final foreground =
-        isCorrect ? colors.onPrimaryContainer : colors.onErrorContainer;
+        isCorrect ? AppTheme.correctSheetText : AppTheme.wrongSheetText;
 
     return Container(
       decoration: BoxDecoration(
