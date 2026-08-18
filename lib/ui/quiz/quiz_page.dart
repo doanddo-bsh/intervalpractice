@@ -226,6 +226,13 @@ class _QuizPageState extends State<QuizPage> {
                 // AnswerPad가 이미 "장3" 형태로 조립해 넘겨준다.
                 onQualitySelected: _submit,
                 onNoteSelected: _submit,
+                givenInterval:
+                    widget.mode.questionType == QuestionType.nameTheNote
+                        ? AnswerChecker.givenIntervalText(_session.current)
+                        : null,
+                hiddenNoteIsAbove: AnswerChecker.hiddenNoteIsAbove(
+                  _session.current,
+                ),
               ),
               const Expanded(child: SizedBox()),
               const BannerAdSlot(),

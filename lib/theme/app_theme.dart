@@ -42,6 +42,9 @@ abstract final class AppTheme {
   /// hard 난이도 강조.
   static const hardAccent = _hardSeed;
 
+  /// 유형 2의 "주어진 음정" 강조색 (구 explainTextStyle2).
+  static const givenIntervalText = Color(0xff931919);
+
   /// 정답 시트 배경 / 글자 (구 color5 / color4).
   static const correctSheetBackground = Color(0xffacd0a8);
   static const correctSheetText = Color(0xff4b7947);

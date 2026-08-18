@@ -19,7 +19,17 @@ class AnswerPad extends StatelessWidget {
     required this.onSizeSelected,
     required this.onQualitySelected,
     required this.onNoteSelected,
+    this.givenInterval,
+    this.hiddenNoteIsAbove = true,
   });
+
+  /// 유형 2에서 화면에 보여줄 "주어진 음정" (예: `단3도`).
+  ///
+  /// 이게 없으면 사용자는 음표 하나만 보고 계이름 7개 중 찍어야 한다.
+  final String? givenInterval;
+
+  /// 유형 2에서 가려진 음이 보이는 음보다 위인지.
+  final bool hiddenNoteIsAbove;
 
   final ProblemMode mode;
 
@@ -44,6 +54,8 @@ class AnswerPad extends StatelessWidget {
         submittedAnswer: submittedAnswer,
         onSelected: onNoteSelected,
         difficulty: mode.difficulty,
+        givenInterval: givenInterval,
+        hiddenNoteIsAbove: hiddenNoteIsAbove,
       );
     }
 
@@ -99,11 +111,15 @@ class _NotePad extends StatelessWidget {
     required this.submittedAnswer,
     required this.onSelected,
     required this.difficulty,
+    required this.givenInterval,
+    required this.hiddenNoteIsAbove,
   });
 
   final String? submittedAnswer;
   final ValueChanged<String> onSelected;
   final Difficulty difficulty;
+  final String? givenInterval;
+  final bool hiddenNoteIsAbove;
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +127,25 @@ class _NotePad extends StatelessWidget {
 
     return Column(
       children: [
-        Text('알맞은 계이름을 고르세요', style: Theme.of(context).textTheme.titleSmall),
+        // 주어진 음정과 방향이 없으면 이 문제는 풀 수 없다. 원본 앱은 둘 다
+        // 보여줬는데 리팩토링 과정에서 빠졌었다.
+        if (givenInterval != null) ...[
+          Text(
+            '[ 주어진 음정 : $givenInterval ]',
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: AppTheme.givenIntervalText,
+            ),
+          ),
+          SizedBox(height: 14.0.h),
+        ],
+        Text(
+          hiddenNoteIsAbove
+              ? '주어진 음정을 위해 필요한 위↑ 계이름은?'
+              : '주어진 음정을 위해 필요한 아래↓ 계이름은?',
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
         SizedBox(height: 25.0.h),
         _ButtonRow(
           labels: names.sublist(0, 4),
