@@ -32,12 +32,20 @@ abstract final class AppTheme {
   static ThemeData get dark => _build(Brightness.dark);
 
   static ThemeData _build(Brightness brightness) {
+    // contrastLevel 은 기본값(0.0)을 쓴다.
+    //
+    // 한때 다크 테마에 1.0(최대 대비)을 넣었는데, 실기기에서 보니
+    // 정답/오답 시트가 **밝은 파스텔 패널**로 나와 어두운 화면에서 눈에
+    // 튀었다. 최대 대비 모드는 컨테이너 색을 밝게 뒤집기 때문이다:
+    //
+    //   contrastLevel 1.0 → errorContainer #ffaea4 (휘도 0.542, 밝은 분홍)
+    //   contrastLevel 0.0 → errorContainer #93000a (휘도 0.062, 어두운 빨강)
+    //
+    // 애초에 필요하지도 않았다. 기본값에서도 surface/onSurface 대비가
+    // 14.4:1 로 WCAG AA(4.5:1)를 세 배 넘게 통과한다.
     final scheme = ColorScheme.fromSeed(
       seedColor: _easySeed,
       brightness: brightness,
-      // 다크 테마의 surface/onSurface 대비를 WCAG AA(4.5:1) 이상으로
-      // 끌어올리기 위해 표준(0.0)보다 높은 대비 레벨을 사용한다.
-      contrastLevel: brightness == Brightness.dark ? 1.0 : 0.0,
     ).copyWith(
       // hard 난이도는 tertiary 슬롯을 쓴다.
       tertiary: _hardSeed,
