@@ -112,6 +112,32 @@ String? independentIntervalName({
   return null;
 }
 
+/// 자리바꿈 음정을 **제1원리로** 계산한다. music_notes 를 쓰지 않는다.
+///
+/// 자리바꿈 규칙 (음악 이론):
+///   도수  N  →  9 - N       (2도↔7도, 3도↔6도, 4도↔5도, 1도↔8도)
+///   품질  장 ↔ 단, 증 ↔ 감, 겹증 ↔ 겹감, 완전 ↔ 완전
+String? independentInversion(String korean) {
+  final match = RegExp(r'^(완전|겹감|겹증|장|단|증|감)(\d)$').firstMatch(korean);
+  if (match == null) return null;
+
+  const flip = {
+    '완전': '완전',
+    '장': '단',
+    '단': '장',
+    '증': '감',
+    '감': '증',
+    '겹증': '겹감',
+    '겹감': '겹증',
+  };
+
+  final quality = flip[match.group(1)!];
+  final size = 9 - int.parse(match.group(2)!);
+  if (quality == null || size < 1 || size > 8) return null;
+
+  return '$quality$size';
+}
+
 void main() {
   group('제1원리 계산기 자체 검증 (교과서 값)', () {
     final cases = <(String, int, String, String, int, String, String)>[
@@ -258,5 +284,81 @@ void main() {
 
     expect(compared, greaterThan(1000), reason: '비교 표본이 너무 적다');
     expect(mismatches, isEmpty, reason: '앱의 음정 계산이 음악 이론과 어긋난다');
+  });
+
+  test('자리바꿈(유형 3) 정답도 제1원리 자리바꿈 규칙과 일치한다', () {
+    const accidentals = [
+      'none',
+      'sharp',
+      'flat',
+      'double sharp',
+      'double flat'
+    ];
+    const plain = ProblemMode(
+      difficulty: Difficulty.hard,
+      questionType: QuestionType.nameTheInterval,
+    );
+    const inverted = ProblemMode(
+      difficulty: Difficulty.hard,
+      questionType: QuestionType.invertedInterval,
+    );
+
+    var compared = 0;
+    final mismatches = <String>[];
+
+    for (final a in StaffLayout.slots) {
+      for (final b in StaffLayout.slots) {
+        if (a.index == b.index) continue;
+        if ((a.index - b.index).abs() > 7) continue;
+
+        for (final accA in accidentals) {
+          for (final accB in accidentals) {
+            final problem = IntervalProblem(
+              lower: a,
+              upper: b,
+              accidentals: [accA, accB],
+            );
+
+            String? plainAnswer;
+            String? invertedAnswer;
+            try {
+              plainAnswer = AnswerChecker.grade(
+                problem: problem,
+                mode: plain,
+                submitted: '',
+              ).correctAnswerText.replaceAll('도', '');
+              invertedAnswer = AnswerChecker.grade(
+                problem: problem,
+                mode: inverted,
+                submitted: '',
+              ).correctAnswerText.replaceAll('도', '');
+            } on FormatException {
+              continue; // 답 불가 조합 — 생성기가 걸러낸다
+            }
+
+            final expected = independentInversion(plainAnswer);
+            if (expected == null) continue;
+
+            compared++;
+            if (invertedAnswer != expected) {
+              mismatches.add(
+                '$a + $b [$accA,$accB] 원래=$plainAnswer '
+                '앱자리바꿈=$invertedAnswer 제1원리=$expected',
+              );
+            }
+          }
+        }
+      }
+    }
+
+    // ignore: avoid_print
+    print('inversion: $compared건 비교, 불일치 ${mismatches.length}건');
+    for (final m in mismatches.take(8)) {
+      // ignore: avoid_print
+      print('  $m');
+    }
+
+    expect(compared, greaterThan(1000));
+    expect(mismatches, isEmpty, reason: '자리바꿈 정답이 음악 이론과 어긋난다');
   });
 }
