@@ -27,6 +27,12 @@ final class IntervalProblem {
   ///
   /// 문제가 자기 음높이를 아는 것이 자연스럽고, 생성기(Task 13)와
   /// 채점기(Task 17)가 같은 계산을 중복하지 않게 한다.
+  /// 유형 2에서 가려지는 음(=정답이 되는 음). 임시표가 적용된 상태다.
+  Pitch get hiddenPitch => _withAccidental(upper.pitch, accidentals[1]);
+
+  /// 유형 2에서 가려지는 음에 붙은 임시표.
+  String get hiddenAccidental => accidentals[1];
+
   List<Pitch> get sortedPitches => [
         _withAccidental(lower.pitch, accidentals[0]),
         _withAccidental(upper.pitch, accidentals[1]),

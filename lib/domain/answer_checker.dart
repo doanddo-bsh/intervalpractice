@@ -38,6 +38,35 @@ abstract final class AnswerChecker {
   static bool hiddenNoteIsAbove(IntervalProblem problem) =>
       problem.upper.index < problem.lower.index;
 
+  /// 유형 2에서 사용자가 골라야 하는 임시표 기호들. UI 버튼 순서와 같다.
+  ///
+  /// 원본 앱의 표기를 그대로 쓴다: `b` 플랫, `bb` 겹플랫, `#` 샵, `x` 겹샵.
+  static const accidentalSymbols = <String>['b', '없음', '#', 'bb', 'x'];
+
+  /// 유형 2의 정답 문자열.
+  ///
+  /// Easy 는 계이름만(`솔`), Hard 는 임시표까지 포함한다(`솔#`).
+  /// **Hard 에서 임시표를 빼면 정답을 특정할 수 없다** — 가려진 음이 솔인지
+  /// 솔♯인지 구분이 안 되기 때문이다.
+  static String noteAnswer(IntervalProblem problem, ProblemMode mode) {
+    final letter = StaffLayout.koreanNameOf(problem.upper.pitch);
+    if (!mode.usesAccidentals) return letter;
+
+    return letter + accidentalSymbolOf(problem.hiddenAccidental);
+  }
+
+  /// 생성기가 쓰는 임시표 이름을 버튼 기호로 바꾼다.
+  static String accidentalSymbolOf(String accidental) => switch (accidental) {
+        'sharp' => '#',
+        'double sharp' => 'x',
+        'flat' => 'b',
+        'double flat' => 'bb',
+        _ => '',
+      };
+
+  /// 버튼 기호를 정답 문자열 조각으로 바꾼다. `없음`은 빈 문자열이다.
+  static String answerFragmentOf(String symbol) => symbol == '없음' ? '' : symbol;
+
   static Grading grade({
     required IntervalProblem problem,
     required ProblemMode mode,
@@ -47,12 +76,15 @@ abstract final class AnswerChecker {
     final pitches = problem.sortedPitches;
 
     if (mode.questionType == QuestionType.nameTheNote) {
-      // 화면에 가려진 음(upper)의 계이름이 정답이다.
-      final answer = StaffLayout.koreanNameOf(problem.upper.pitch);
+      final answer = noteAnswer(problem, mode);
 
       return Grading(
         isCorrect: submitted == answer,
-        correctAnswerText: answer,
+        // Hard 는 어떤 음인지 분명히 보이도록 영문 표기를 함께 준다
+        // (원본도 `솔#(G♯)` 형태였다).
+        correctAnswerText: mode.usesAccidentals
+            ? '$answer(${problem.hiddenPitch.note.format()})'
+            : answer,
         commentary: Commentary.forNoteQuestion(pitches),
       );
     }

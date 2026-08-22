@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../domain/answer_checker.dart';
 import '../../domain/problem_mode.dart';
 import '../../domain/staff_layout.dart';
 import '../../theme/app_theme.dart';
@@ -21,7 +22,13 @@ class AnswerPad extends StatelessWidget {
     required this.onNoteSelected,
     this.givenInterval,
     this.hiddenNoteIsAbove = true,
+    this.selectedNoteLetter,
+    this.onNoteLetterSelected,
   });
+
+  /// 유형 2(Hard)에서 1단계로 고른 계이름.
+  final String? selectedNoteLetter;
+  final ValueChanged<String>? onNoteLetterSelected;
 
   /// 유형 2에서 화면에 보여줄 "주어진 음정" (예: `단3도`).
   ///
@@ -56,6 +63,8 @@ class AnswerPad extends StatelessWidget {
         difficulty: mode.difficulty,
         givenInterval: givenInterval,
         hiddenNoteIsAbove: hiddenNoteIsAbove,
+        selectedLetter: selectedNoteLetter,
+        onLetterSelected: onNoteLetterSelected ?? (_) {},
       );
     }
 
@@ -113,17 +122,26 @@ class _NotePad extends StatelessWidget {
     required this.difficulty,
     required this.givenInterval,
     required this.hiddenNoteIsAbove,
+    required this.selectedLetter,
+    required this.onLetterSelected,
   });
 
   final String? submittedAnswer;
+
+  /// 최종 제출(계이름 + 임시표)을 받는다.
   final ValueChanged<String> onSelected;
   final Difficulty difficulty;
   final String? givenInterval;
   final bool hiddenNoteIsAbove;
 
+  /// Hard 에서 1단계로 고른 계이름. Easy 에서는 쓰지 않는다.
+  final String? selectedLetter;
+  final ValueChanged<String> onLetterSelected;
+
   @override
   Widget build(BuildContext context) {
     const names = StaffLayout.koreanNoteNames;
+    final needsAccidental = difficulty == Difficulty.hard;
 
     return Column(
       children: [
@@ -149,19 +167,50 @@ class _NotePad extends StatelessWidget {
         SizedBox(height: 25.0.h),
         _ButtonRow(
           labels: names.sublist(0, 4),
-          selected: submittedAnswer,
+          // Hard 는 계이름이 1단계 선택이라 하이라이트가 selectedLetter 를 따른다.
+          selected: needsAccidental ? selectedLetter : submittedAnswer,
           enabled: submittedAnswer == null,
-          onTap: onSelected,
+          onTap: needsAccidental ? onLetterSelected : onSelected,
           difficulty: difficulty,
         ),
         SizedBox(height: 13.0.h),
         _ButtonRow(
           labels: names.sublist(4),
-          selected: submittedAnswer,
+          selected: needsAccidental ? selectedLetter : submittedAnswer,
           enabled: submittedAnswer == null,
-          onTap: onSelected,
+          onTap: needsAccidental ? onLetterSelected : onSelected,
           difficulty: difficulty,
         ),
+        // Hard 는 임시표까지 골라야 정답이 특정된다. 계이름만으로는
+        // 가려진 음이 솔인지 솔#인지 구분할 수 없다.
+        if (needsAccidental && selectedLetter != null) ...[
+          SizedBox(height: 26.0.h),
+          Text('임시표를 고르세요', style: Theme.of(context).textTheme.titleSmall),
+          SizedBox(height: 20.0.h),
+          _ButtonRow(
+            labels: AnswerChecker.accidentalSymbols.sublist(0, 3),
+            values: AnswerChecker.accidentalSymbols
+                .sublist(0, 3)
+                .map((s) => selectedLetter! + AnswerChecker.answerFragmentOf(s))
+                .toList(),
+            selected: submittedAnswer,
+            enabled: submittedAnswer == null,
+            onTap: onSelected,
+            difficulty: difficulty,
+          ),
+          SizedBox(height: 13.0.h),
+          _ButtonRow(
+            labels: AnswerChecker.accidentalSymbols.sublist(3),
+            values: AnswerChecker.accidentalSymbols
+                .sublist(3)
+                .map((s) => selectedLetter! + AnswerChecker.answerFragmentOf(s))
+                .toList(),
+            selected: submittedAnswer,
+            enabled: submittedAnswer == null,
+            onTap: onSelected,
+            difficulty: difficulty,
+          ),
+        ],
       ],
     );
   }

@@ -35,6 +35,9 @@ class _QuizPageState extends State<QuizPage> {
   final _interstitial = InterstitialAdService();
 
   String? _selectedSize;
+
+  /// 유형 2(Hard)에서 1단계로 고른 계이름. 임시표를 마저 골라야 제출된다.
+  String? _selectedNoteLetter;
   String? _submittedAnswer;
 
   @override
@@ -124,6 +127,7 @@ class _QuizPageState extends State<QuizPage> {
     Navigator.pop(context);
     setState(() {
       _selectedSize = null;
+      _selectedNoteLetter = null;
       _submittedAnswer = null;
     });
     _session.nextQuestion();
@@ -177,6 +181,7 @@ class _QuizPageState extends State<QuizPage> {
     Navigator.pop(context);
     setState(() {
       _selectedSize = null;
+      _selectedNoteLetter = null;
       _submittedAnswer = null;
     });
     _session.restart();
@@ -186,6 +191,7 @@ class _QuizPageState extends State<QuizPage> {
     Navigator.pop(context);
     setState(() {
       _selectedSize = null;
+      _selectedNoteLetter = null;
       _submittedAnswer = null;
     });
     _session.startReview();
@@ -233,6 +239,9 @@ class _QuizPageState extends State<QuizPage> {
                 hiddenNoteIsAbove: AnswerChecker.hiddenNoteIsAbove(
                   _session.current,
                 ),
+                selectedNoteLetter: _selectedNoteLetter,
+                onNoteLetterSelected: (letter) =>
+                    setState(() => _selectedNoteLetter = letter),
               ),
               const Expanded(child: SizedBox()),
               const BannerAdSlot(),
