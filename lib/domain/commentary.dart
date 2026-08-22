@@ -41,10 +41,19 @@ abstract final class Commentary {
 
     final base = '${basic[0]} $korean도 ${basic[1]}';
 
-    final lower = commentaryDownAccidental[_accidentalCode(low)];
-    final upper = commentaryUpAccidental[_accidentalCode(high)];
+    // 자리바꿈 문제는 위/아래가 화면과 반대라, 그 음을 화면에서 짚을 수 있게
+    // 부르는 전용 문구를 쓴다 (commentary_data.dart 주석 참고).
+    final lower = inverted
+        ? commentaryInvertedDownAccidental[_accidentalCode(low)]
+        : commentaryDownAccidental[_accidentalCode(low)];
+    final upper = inverted
+        ? commentaryInvertedUpAccidental[_accidentalCode(high)]
+        : commentaryUpAccidental[_accidentalCode(high)];
 
     return [
+      // Easy 유형 3은 임시표가 없어 아래 두 줄이 비므로, 이 도입 문장이
+      // 없으면 자리바꿈 문제인데 해설에 자리바꿈 얘기가 하나도 안 나온다.
+      if (inverted) commentaryInversionLead,
       if (lower != null) lower,
       if (upper != null) upper,
       base,

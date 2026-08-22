@@ -10,6 +10,7 @@ import 'package:intervalpractice/domain/answer_checker.dart';
 import 'dart:math';
 
 import 'package:intervalpractice/domain/commentary.dart';
+import 'package:intervalpractice/domain/commentary_data.dart';
 import 'package:intervalpractice/domain/korean_interval.dart';
 import 'package:intervalpractice/domain/problem.dart';
 import 'package:intervalpractice/domain/staff_layout.dart';
@@ -162,6 +163,145 @@ void main() {
       );
 
       expect(result, '');
+    });
+  });
+
+  group('자리바꿈(유형 3) 해설은 임시표가 붙은 음을 화면 기준으로 가리킨다', () {
+    // 자리바꿈 해설은 자리를 바꾼 뒤의 음정을 설명하므로 위/아래가 화면과
+    // 반대다. 유형 1과 같은 "아래에 있는 음" 문구를 쓰면, 악보에서 위에
+    // 그려진 음을 "아래에 있는 음"이라 부르게 되어 계산이 맞는데도 읽는
+    // 사람이 반대로 이해한다. 실기기에서 확인된 문제다.
+    test('실기기 화면 사례 — 도♯4 + 시bb4, 정답 겹증2도', () {
+      final problem = IntervalProblem(
+        lower: StaffLayout.byIndex(9), // B4  — 악보에서 위
+        upper: StaffLayout.byIndex(15), // C4 — 악보에서 아래
+        accidentals: const ['double flat', 'sharp'],
+      );
+      const mode = ProblemMode(
+        difficulty: Difficulty.hard,
+        questionType: QuestionType.invertedInterval,
+      );
+
+      final grading = AnswerChecker.grade(
+        problem: problem,
+        mode: mode,
+        submitted: '',
+      );
+
+      expect(grading.correctAnswerText, '겹증2도');
+      expect(
+        grading.commentary,
+        '자리바꿈하면 아래 음이 한 옥타브 위로 올라가 위아래가 바뀝니다. '
+        '아래로 오는 음에 붙은 더블플렛으로 인해 음정간 간격이 늘어나고 '
+        '위로 가는 음에 붙은 샵으로 인해 음정간 간격이 늘어나고 '
+        '반음이 1개이므로 간격이 줄어들어 겹증2도 음정입니다 '
+        '\n(장2도 음정의 기본 반음수는 0개)',
+      );
+    });
+
+    test('Easy 유형 3 — 임시표가 없어도 자리바꿈 도입 문장이 붙는다', () {
+      // 임시표 설명이 통째로 비는 난이도라, 도입 문장이 없으면 해설에
+      // 자리바꿈 언급이 하나도 남지 않는다.
+      final problem = IntervalProblem(
+        lower: StaffLayout.byIndex(13), // E4
+        upper: StaffLayout.byIndex(12), // F4
+        accidentals: const ['none', 'none'],
+      );
+      const mode = ProblemMode(
+        difficulty: Difficulty.easy,
+        questionType: QuestionType.invertedInterval,
+      );
+
+      final grading = AnswerChecker.grade(
+        problem: problem,
+        mode: mode,
+        submitted: '',
+      );
+
+      expect(grading.correctAnswerText, '장7도');
+      expect(
+        grading.commentary,
+        // 장7도의 기본 반음수도 1개라 "간격이 줄어들어"가 붙지 않는다.
+        '자리바꿈하면 아래 음이 한 옥타브 위로 올라가 위아래가 바뀝니다. '
+        '반음이 1개이므로 장7도 음정입니다 '
+        '\n(장7도 음정의 기본 반음수는 1개)',
+      );
+    });
+
+    test('유형 1·2 에는 자리바꿈 도입 문장이 붙지 않는다', () {
+      final problem = IntervalProblem(
+        lower: StaffLayout.byIndex(13), // E4
+        upper: StaffLayout.byIndex(12), // F4
+        accidentals: const ['none', 'none'],
+      );
+
+      for (final mode in ProblemMode.all) {
+        if (mode.questionType == QuestionType.invertedInterval) continue;
+
+        final commentary = AnswerChecker.grade(
+          problem: problem,
+          mode: mode,
+          submitted: '',
+        ).commentary;
+
+        expect(
+          commentary,
+          isNot(contains('자리바꿈')),
+          reason: '$mode 에 자리바꿈 문구가 새어 들어갔다: $commentary',
+        );
+      }
+    });
+
+    test('유형 1은 기존 "위/아래에 있는 음" 문구를 그대로 쓴다', () {
+      final problem = IntervalProblem(
+        lower: StaffLayout.byIndex(9), // B4
+        upper: StaffLayout.byIndex(15), // C4
+        accidentals: const ['double flat', 'sharp'],
+      );
+      const mode = ProblemMode(
+        difficulty: Difficulty.hard,
+        questionType: QuestionType.nameTheInterval,
+      );
+
+      final grading = AnswerChecker.grade(
+        problem: problem,
+        mode: mode,
+        submitted: '',
+      );
+
+      expect(grading.correctAnswerText, '겹감7도');
+      expect(grading.commentary, startsWith('아래에 있는 음에 붙은 샵으로'));
+      expect(grading.commentary, contains('위에 있는 음에 붙은 더블플렛으로'));
+      expect(grading.commentary, isNot(contains('자리바꿈하면')));
+    });
+
+    test('생성 가능한 모든 유형 3 문제에서 자리바꿈 전용 문구만 쓴다', () {
+      for (final difficulty in Difficulty.values) {
+        final mode = ProblemMode(
+          difficulty: difficulty,
+          questionType: QuestionType.invertedInterval,
+        );
+        final generator = ProblemGenerator(random: Random(4242));
+
+        for (var i = 0; i < 500; i++) {
+          final commentary = AnswerChecker.grade(
+            problem: generator.next(mode: mode),
+            mode: mode,
+            submitted: '',
+          ).commentary;
+
+          expect(
+            commentary,
+            isNot(contains('있는 음에 붙은')),
+            reason: '$mode 에 유형 1 문구가 섞였다: $commentary',
+          );
+          expect(
+            commentary,
+            startsWith(commentaryInversionLead),
+            reason: '$mode 해설이 자리바꿈 설명 없이 시작한다: $commentary',
+          );
+        }
+      }
     });
   });
 }
