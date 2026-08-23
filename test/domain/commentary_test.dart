@@ -10,7 +10,6 @@ import 'package:intervalpractice/domain/answer_checker.dart';
 import 'dart:math';
 
 import 'package:intervalpractice/domain/commentary.dart';
-import 'package:intervalpractice/domain/commentary_data.dart';
 import 'package:intervalpractice/domain/korean_interval.dart';
 import 'package:intervalpractice/domain/problem.dart';
 import 'package:intervalpractice/domain/staff_layout.dart';
@@ -191,7 +190,9 @@ void main() {
       expect(grading.correctAnswerText, '겹증2도');
       expect(
         grading.commentary,
-        '자리바꿈하면 아래 음이 한 옥타브 위로 올라가 위아래가 바뀝니다. '
+        '자리바꿈 전 음정은 겹감7도입니다. '
+        '자리바꿈은 아래 음을 한 옥타브 올려도 되고 위 음을 한 옥타브 내려도 됩니다. '
+        '어느 쪽이든 2도가 됩니다. '
         '아래로 오는 음에 붙은 더블플렛으로 인해 음정간 간격이 늘어나고 '
         '위로 가는 음에 붙은 샵으로 인해 음정간 간격이 늘어나고 '
         '반음이 1개이므로 간격이 줄어들어 겹증2도 음정입니다 '
@@ -199,7 +200,7 @@ void main() {
       );
     });
 
-    test('Easy 유형 3 — 임시표가 없어도 자리바꿈 도입 문장이 붙는다', () {
+    test('Easy 유형 3 — 자리바꿈 전 음정과 옮기는 방법을 먼저 알려 준다', () {
       // 임시표 설명이 통째로 비는 난이도라, 도입 문장이 없으면 해설에
       // 자리바꿈 언급이 하나도 남지 않는다.
       final problem = IntervalProblem(
@@ -222,7 +223,9 @@ void main() {
       expect(
         grading.commentary,
         // 장7도의 기본 반음수도 1개라 "간격이 줄어들어"가 붙지 않는다.
-        '자리바꿈하면 아래 음이 한 옥타브 위로 올라가 위아래가 바뀝니다. '
+        '자리바꿈 전 음정은 단2도입니다. '
+        '자리바꿈은 아래 음을 한 옥타브 올려도 되고 위 음을 한 옥타브 내려도 됩니다. '
+        '어느 쪽이든 7도가 됩니다. '
         '반음이 1개이므로 장7도 음정입니다 '
         '\n(장7도 음정의 기본 반음수는 1개)',
       );
@@ -297,8 +300,13 @@ void main() {
           );
           expect(
             commentary,
-            startsWith(commentaryInversionLead),
-            reason: '$mode 해설이 자리바꿈 설명 없이 시작한다: $commentary',
+            startsWith('자리바꿈 전 음정은 '),
+            reason: '$mode 해설이 자리바꿈 전 음정 없이 시작한다: $commentary',
+          );
+          expect(
+            commentary,
+            contains('아래 음을 한 옥타브 올려도 되고 위 음을 한 옥타브 내려도 됩니다'),
+            reason: '$mode 해설이 옮기는 방향을 한쪽만 설명한다: $commentary',
           );
         }
       }

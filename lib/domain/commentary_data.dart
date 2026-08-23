@@ -98,9 +98,23 @@ const Map<String, String> commentaryDownAccidental = {
 // 자리바꿈 언급이 하나도 남지 않는다. 그래서 (1)은 난이도와 무관하게 붙인다.
 // ---------------------------------------------------------------------
 
-/// 유형 3 해설 맨 앞에 붙는 도입 문장.
-const String commentaryInversionLead = '자리바꿈하면 아래 음이 한 옥타브 위로 올라가 '
-    '위아래가 바뀝니다.';
+/// 유형 3 해설 맨 앞에 붙는 도입 문장 두 개.
+///
+/// [originalKorean] 은 자리바꿈 **전** 음정의 한글 이름("겹감7" 처럼 "도"가
+/// 빠진 형태), [invertedSize] 는 자리바꿈 **후** 도수 한 글자("2")다.
+///
+/// 자리바꿈은 아래 음을 한 옥타브 올리는 것으로도, 위 음을 한 옥타브 내리는
+/// 것으로도 할 수 있고 결과가 같다. 한쪽만 적어 두면 "반대로 옮기면 어떻게
+/// 되나"라는 질문이 남으므로 둘 다 적는다.
+///
+/// "위아래가 바뀐다"고는 쓰지 않는다. `ProblemGenerator._maxSlotDistance`가
+/// 7이라 두 음이 정확히 한 옥타브 떨어진 문제가 나오는데(대략 10문제에 1개),
+/// 그때 자리바꿈 결과는 1도라 위아래라는 게 사라진다. 옮기는 동작만 서술하면
+/// 그 경우에도 문장이 참이다.
+String commentaryInversionIntro(String originalKorean, String invertedSize) =>
+    '자리바꿈 전 음정은 $originalKorean도입니다. '
+    '자리바꿈은 아래 음을 한 옥타브 올려도 되고 위 음을 한 옥타브 내려도 됩니다. '
+    '어느 쪽이든 $invertedSize도가 됩니다.';
 
 /// 임시표 코드 -> 자리바꿈 후 **위**로 가는 음(= 악보에서 아래 음)의 설명.
 const Map<String, String> commentaryInvertedUpAccidental = {

@@ -28,13 +28,15 @@ abstract final class Commentary {
     final low = inverted ? sortedPitches[1] : sortedPitches[0];
     final high = inverted ? sortedPitches[0] : sortedPitches[1];
 
-    var interval = sortedPitches[0].interval(sortedPitches[1]);
-    if (inverted) interval = interval.inversion;
+    final original = sortedPitches[0].interval(sortedPitches[1]);
+    final interval = inverted ? original.inversion : original;
     final abbreviation = KoreanInterval.intervalAbbreviation(interval);
 
-    final key = abbreviation[abbreviation.length - 1] +
-        _noteLetter(low) +
-        _noteLetter(high);
+    // 도수는 항상 마지막 한 글자다. 품질(d/dd/m/M/P/A/AA)이 앞에 오고
+    // 도수는 1~8 한 자리뿐이기 때문이다(KoreanInterval.isAnswerable 이 보장).
+    final invertedSize = abbreviation[abbreviation.length - 1];
+
+    final key = invertedSize + _noteLetter(low) + _noteLetter(high);
 
     final basic = commentaryBasic[key];
     if (basic == null) return '';
@@ -53,7 +55,11 @@ abstract final class Commentary {
     return [
       // Easy 유형 3은 임시표가 없어 아래 두 줄이 비므로, 이 도입 문장이
       // 없으면 자리바꿈 문제인데 해설에 자리바꿈 얘기가 하나도 안 나온다.
-      if (inverted) commentaryInversionLead,
+      if (inverted)
+        commentaryInversionIntro(
+          KoreanInterval.fromInterval(original),
+          invertedSize,
+        ),
       if (lower != null) lower,
       if (upper != null) upper,
       base,
