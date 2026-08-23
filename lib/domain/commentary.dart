@@ -32,11 +32,21 @@ abstract final class Commentary {
     final interval = inverted ? original.inversion : original;
     final abbreviation = KoreanInterval.intervalAbbreviation(interval);
 
-    // 도수는 항상 마지막 한 글자다. 품질(d/dd/m/M/P/A/AA)이 앞에 오고
-    // 도수는 1~8 한 자리뿐이기 때문이다(KoreanInterval.isAnswerable 이 보장).
-    final invertedSize = abbreviation[abbreviation.length - 1];
+    // 도수는 마지막 한 글자다. 품질(d/dd/m/M/P/A/AA)이 앞에 오고 도수는
+    // 1~8 한 자리이기 때문이다. 표에 없는 음정이면 마지막 글자가 도수가
+    // 아닐 수 있는데, 그때는 아래 `basic == null` 에서 걸러진다.
+    final sizeDigit = abbreviation[abbreviation.length - 1];
 
-    final key = invertedSize + _noteLetter(low) + _noteLetter(high);
+    // 자리바꿈 해설은 자리바꿈 **전** 음정 이름까지 말하므로, 그쪽도 이름을
+    // 붙일 수 있는 음정이어야 한다. 아래 `basic == null` 가드는 자리바꿈
+    // **후** 음정으로 만든 키만 보기 때문에 이걸 잡아 주지 못한다 —
+    // music_notes 가 자리바꿈 결과를 홑음정으로 접어 주는 탓에, 원음정이
+    // 복합음정("P19 (P5)")이거나 세 겹 음정("ddd5")이어도 키는 표에 있는
+    // 값이 나올 수 있다. 실제 출제에서는 `ProblemGenerator._isAnswerable`이
+    // 양쪽 모두를 보장하므로 여기 걸리는 일은 없다.
+    if (inverted && !KoreanInterval.isAnswerable(original)) return '';
+
+    final key = sizeDigit + _noteLetter(low) + _noteLetter(high);
 
     final basic = commentaryBasic[key];
     if (basic == null) return '';
@@ -53,12 +63,12 @@ abstract final class Commentary {
         : commentaryUpAccidental[_accidentalCode(high)];
 
     return [
-      // Easy 유형 3은 임시표가 없어 아래 두 줄이 비므로, 이 도입 문장이
+      // Easy 유형 3은 임시표가 없어 아래 두 줄이 비므로, 이 도입 문장들이
       // 없으면 자리바꿈 문제인데 해설에 자리바꿈 얘기가 하나도 안 나온다.
       if (inverted)
         commentaryInversionIntro(
           KoreanInterval.fromInterval(original),
-          invertedSize,
+          sizeDigit,
         ),
       if (lower != null) lower,
       if (upper != null) upper,

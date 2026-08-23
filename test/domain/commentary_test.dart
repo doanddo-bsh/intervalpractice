@@ -163,6 +163,44 @@ void main() {
 
       expect(result, '');
     });
+
+    test('자리바꿈에서 원음정이 복합음정이어도 크래시 대신 빈 문자열을 낸다', () {
+      // 자리바꿈 키는 자리바꿈 **후** 음정으로 만들어진다. music_notes 가
+      // 자리바꿈 결과를 홑음정으로 접어 주기 때문에, 원음정이 표 밖(복합음정)
+      // 이어도 키는 표에 있는 값이 나올 수 있다. 그때 원음정 이름을 그대로
+      // 문장에 끼우면 "완전19 (P5)도" 같은 문자열이 사용자에게 노출된다.
+      final wide = IntervalProblem(
+        lower: StaffLayout.byIndex(0), // D6
+        upper: StaffLayout.byIndex(18), // G3
+        accidentals: const ['none', 'none'],
+      );
+
+      final result = Commentary.forIntervalQuestion(
+        wide.sortedPitches,
+        'x',
+        inverted: true,
+      );
+
+      expect(result, '');
+    });
+
+    test('자리바꿈에서 원음정이 세 겹 음정이어도 크래시하지 않는다', () {
+      // 파♯5 + 도bb6 = ddd5. 자리바꿈은 AAA4 라 키("4cf")는 표에 있지만,
+      // 원음정 ddd 는 한글 품질 표에 없어 fromInterval 이 던진다.
+      final problem = IntervalProblem(
+        lower: StaffLayout.byIndex(1), // C6 -> 도bb6
+        upper: StaffLayout.byIndex(5), // F5 -> 파♯5
+        accidentals: const ['double flat', 'sharp'],
+      );
+
+      final result = Commentary.forIntervalQuestion(
+        problem.sortedPitches,
+        'x',
+        inverted: true,
+      );
+
+      expect(result, '');
+    });
   });
 
   group('자리바꿈(유형 3) 해설은 임시표가 붙은 음을 화면 기준으로 가리킨다', () {
@@ -275,7 +313,7 @@ void main() {
       expect(grading.correctAnswerText, '겹감7도');
       expect(grading.commentary, startsWith('아래에 있는 음에 붙은 샵으로'));
       expect(grading.commentary, contains('위에 있는 음에 붙은 더블플렛으로'));
-      expect(grading.commentary, isNot(contains('자리바꿈하면')));
+      expect(grading.commentary, isNot(contains('자리바꿈')));
     });
 
     test('생성 가능한 모든 유형 3 문제에서 자리바꿈 전용 문구만 쓴다', () {
