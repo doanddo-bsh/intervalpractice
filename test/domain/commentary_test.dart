@@ -269,6 +269,39 @@ void main() {
       );
     });
 
+    test('완전8도 -> 완전1도 — "위아래가 바뀐다"고 말하지 않는다', () {
+      // 자리 인덱스 차가 7(한 옥타브)인 문제는 실제로 출제된다 — 측정해 보면
+      // 전체의 11% 남짓이다. 그때 자리바꿈 결과는 1도이고, 아래 음을 한 옥타브
+      // 올리면 두 음이 같은 음이 되어 위아래라는 게 사라진다. 도입 문구가
+      // "위아래가 바뀝니다"라고 단언하면 이 경우 거짓이 된다.
+      final problem = IntervalProblem(
+        lower: StaffLayout.byIndex(8), // C5 — 악보에서 위
+        upper: StaffLayout.byIndex(15), // C4 — 악보에서 아래
+        accidentals: const ['none', 'none'],
+      );
+      const mode = ProblemMode(
+        difficulty: Difficulty.easy,
+        questionType: QuestionType.invertedInterval,
+      );
+
+      final grading = AnswerChecker.grade(
+        problem: problem,
+        mode: mode,
+        submitted: '',
+      );
+
+      expect(grading.correctAnswerText, '완전1도');
+      expect(
+        grading.commentary,
+        '자리바꿈 전 음정은 완전8도입니다. '
+        '자리바꿈은 아래 음을 한 옥타브 올려도 되고 위 음을 한 옥타브 내려도 됩니다. '
+        '어느 쪽이든 1도가 됩니다. '
+        '반음이 0개이므로 완전1도 음정입니다 '
+        '\n(완전1도 음정의 기본 반음수는 0개)',
+      );
+      expect(grading.commentary, isNot(contains('위아래')));
+    });
+
     test('유형 1·2 에는 자리바꿈 도입 문장이 붙지 않는다', () {
       final problem = IntervalProblem(
         lower: StaffLayout.byIndex(13), // E4
@@ -345,6 +378,12 @@ void main() {
             commentary,
             contains('아래 음을 한 옥타브 올려도 되고 위 음을 한 옥타브 내려도 됩니다'),
             reason: '$mode 해설이 옮기는 방향을 한쪽만 설명한다: $commentary',
+          );
+          expect(
+            commentary,
+            isNot(contains('위아래')),
+            reason: '$mode 해설이 위아래가 바뀐다고 단언한다 — 한 옥타브 떨어진 '
+                '문제는 자리바꿈하면 1도가 되어 위아래가 사라진다: $commentary',
           );
         }
       }
