@@ -38,8 +38,9 @@ final class ProblemGenerator {
       final problem = IntervalProblem(
         lower: first,
         upper: second,
-        accidentals:
-            mode.usesAccidentals ? _randomAccidentals() : const ['none', 'none'],
+        accidentals: mode.usesAccidentals
+            ? _randomAccidentals()
+            : const ['none', 'none'],
       );
 
       // 답할 수 있는 문제인지는 **실제 후보를 계산해서** 판정한다.

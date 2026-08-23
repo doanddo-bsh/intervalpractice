@@ -123,7 +123,9 @@ void main() {
 
       for (var i = 0; i < 5000; i++) {
         for (final accidental in generator.next(mode: hardType1).accidentals) {
-          if (accidental != 'none') counts[accidental] = counts[accidental]! + 1;
+          if (accidental != 'none') {
+            counts[accidental] = counts[accidental]! + 1;
+          }
         }
       }
 
