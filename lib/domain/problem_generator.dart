@@ -38,9 +38,8 @@ final class ProblemGenerator {
       final problem = IntervalProblem(
         lower: first,
         upper: second,
-        accidentals: mode.usesAccidentals
-            ? _randomAccidentals(allowNone: _allowsNoAccidental(mode))
-            : const ['none', 'none'],
+        accidentals:
+            mode.usesAccidentals ? _randomAccidentals() : const ['none', 'none'],
       );
 
       // 답할 수 있는 문제인지는 **실제 후보를 계산해서** 판정한다.
@@ -65,29 +64,18 @@ final class ProblemGenerator {
   bool _isSamePair(StaffSlot a, StaffSlot b, IntervalProblem previous) =>
       {a.index, b.index}.difference(previous.slotIndices.toSet()).isEmpty;
 
-  /// 이 모드에서 **임시표가 하나도 없는 문제**를 내도 되는지.
+  /// 임시표를 어디에 붙일지: 한쪽에만 62.5%, 양쪽 모두 37.5%.
   ///
-  /// Hard 유형 1·3은 안 된다. 임시표가 없으면 같은 유형의 Easy 문제와 글자
-  /// 하나 다르지 않게 되어 난이도 구분이 사라진다.
+  /// **Hard 는 두 음 다 임시표가 없는 문제를 절대 내지 않는다.** 그런 문제는
+  /// 같은 유형의 Easy 문제와 글자 하나 다르지 않아 난이도 구분이 사라진다.
+  /// (원래는 20% 확률로 나왔고, 그 몫을 아래 두 분기가 원래 비율 50:30 을
+  /// 유지한 채 나눠 가져 62.5:37.5 가 됐다.)
   ///
-  /// 유형 2는 예외다. 여기서는 가려진 음의 임시표 자체가 정답의 일부이고
-  /// 답안 패드에 `없음` 버튼이 있다. 임시표 없는 문제를 막으면 그 버튼이
-  /// **영원히 오답**이 되어, 5개 중 1개를 지워도 되는 문제로 바뀐다.
-  static bool _allowsNoAccidental(ProblemMode mode) =>
-      mode.questionType == QuestionType.nameTheNote;
-
-  /// 임시표를 몇 개 붙일지: 한쪽만 50%, 양쪽 30%, 없음 20%.
-  /// [allowNone] 이 false 면 "없음"을 빼고 62.5% / 37.5% 로 다시 나눈다.
-  List<String> _randomAccidentals({required bool allowNone}) {
-    final where = _random.nextDouble();
-
-    if (allowNone && where > 0.8) return const ['none', 'none'];
-
-    // "없음"을 뺀 만큼 남은 두 분기가 구간을 나눠 갖는다. 원래 비율
-    // (한쪽 50 : 양쪽 30)을 그대로 유지하도록 경계만 옮긴다.
-    final oneSidedCutoff = allowNone ? 0.5 : 0.625;
-
-    if (where <= oneSidedCutoff) {
+  /// 유형 2의 `없음` 버튼은 이래도 살아 있다. 한쪽에만 붙이는 분기에서
+  /// 임시표가 **보이는 음**에 갈 수도 있고, 그러면 가려진 음의 정답은
+  /// `없음`이 된다. 전체의 약 31%가 그 경우다.
+  List<String> _randomAccidentals() {
+    if (_random.nextDouble() <= 0.625) {
       final accidental = _anyAccidental();
       return _random.nextBool() ? [accidental, 'none'] : ['none', accidental];
     }

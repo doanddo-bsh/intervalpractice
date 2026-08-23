@@ -68,9 +68,9 @@ void main() {
       expect(sawAccidental, isTrue);
     });
 
-    test('hard 유형 1·3은 임시표 없는 문제를 절대 내지 않는다', () {
+    test('hard 는 세 유형 모두 두 음 다 임시표 없는 문제를 내지 않는다', () {
       // 임시표가 하나도 없으면 같은 유형의 Easy 문제와 구별되지 않는다.
-      for (final mode in [hardType1, hardType3]) {
+      for (final mode in [hardType1, hardType2, hardType3]) {
         final generator = ProblemGenerator(random: Random(11));
 
         for (var i = 0; i < 3000; i++) {
@@ -85,19 +85,29 @@ void main() {
       }
     });
 
-    test('hard 유형 2는 임시표 없는 음(= 정답이 "없음")도 출제한다', () {
-      // 유형 2의 정답에는 임시표가 포함된다. 임시표 없는 음을 아예 막으면
-      // 답안 패드의 `없음` 버튼이 영원히 오답이 되어 선택지가 하나 줄어든다.
+    test('hard 유형 2는 한쪽에만 임시표가 붙어 정답이 "없음"인 문제도 낸다', () {
+      // "두 음 다 없음"을 막는 것과 "가려진 음이 없음"을 막는 것은 다르다.
+      // 후자까지 막으면 답안 패드의 `없음` 버튼이 영원히 오답이 되어
+      // 5지선다가 4지선다로 줄어든다. 보이는 음에만 임시표가 붙는 경우는
+      // 계속 나와야 한다.
       final generator = ProblemGenerator(random: Random(11));
       var hiddenWithoutAccidental = 0;
 
       for (var i = 0; i < 1000; i++) {
-        if (generator.next(mode: hardType2).hiddenAccidental == 'none') {
+        final problem = generator.next(mode: hardType2);
+
+        if (problem.hiddenAccidental == 'none') {
           hiddenWithoutAccidental++;
+          expect(
+            problem.accidentals[0],
+            isNot('none'),
+            reason: '가려진 음이 "없음"이면 보이는 음에는 임시표가 있어야 한다: $problem',
+          );
         }
       }
 
-      expect(hiddenWithoutAccidental, greaterThan(100));
+      // 한쪽만 붙는 62.5% 중 절반이 보이는 음 쪽 -> 약 31%.
+      expect(hiddenWithoutAccidental, inInclusiveRange(200, 420));
     });
 
     test('hard 는 네 가지 임시표를 고르게 섞어 낸다', () {
