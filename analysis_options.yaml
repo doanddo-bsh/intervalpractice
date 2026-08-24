@@ -9,6 +9,24 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  # Downgrade these to warnings (from error) so that the analyzer doesn't
+  # fail hard on patterns still present in code slated for removal in
+  # Tasks 17-18, while still surfacing them clearly.
+  errors:
+    deprecated_member_use: warning
+    unused_local_variable: warning
+    unused_field: warning
+  # build/ios/SourcePackages contains a full checkout of plugin sources
+  # (including their own test suites) fetched by Xcode's Swift Package
+  # Manager integration. It's generated, gitignored build output, not
+  # project source, so it must not be analyzed. Generated code (*.g.dart,
+  # *.freezed.dart) is also excluded since it isn't hand-maintained.
+  exclude:
+    - build/**
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
@@ -21,8 +39,10 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+    - prefer_const_constructors
+    - prefer_const_declarations
+    - avoid_print
+    - unawaited_futures
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

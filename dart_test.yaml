@@ -1,0 +1,9 @@
+# 골든 테스트는 폰트 래스터화와 플랫폼에 따라 결과가 달라진다.
+# macOS에서 생성한 골든이 Ubuntu CI 러너에서 그대로 재현되지 않으므로
+# CI에서는 제외한다(.github/workflows/ci.yml 의 --exclude-tags golden).
+#
+# 로컬에서 육안 확인용으로 갱신할 때:
+#   flutter test --update-goldens test/ui/quiz_golden_test.dart
+tags:
+  golden:
+    description: 렌더 결과를 PNG로 남기는 육안 검증용 테스트. CI에서 제외한다.

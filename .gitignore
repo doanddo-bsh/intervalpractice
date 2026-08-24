@@ -5,9 +5,11 @@
 *.swp
 .DS_Store
 .atom/
+.build/
 .buildlog/
 .history
 .svn/
+.swiftpm/
 migrate_working_dir/
 
 # IntelliJ related
@@ -42,3 +44,37 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Machine-specific SDK paths
+/android/local.properties
+/ios/Flutter/Generated.xcconfig
+/ios/Flutter/flutter_export_environment.sh
+
+# ---------------------------------------------------------------
+# SIGNING SECRETS — never commit. CI injects these from Secrets.
+# ---------------------------------------------------------------
+# Android upload/release keystore + its passwords
+*.jks
+*.keystore
+key.properties
+/android/key.properties
+/android/app/key.properties
+
+# Apple signing material
+*.p12
+*.p8
+*.mobileprovision
+*.cer
+*.certSigningRequest
+/ios/Runner/GoogleService-Info.plist
+
+# Generated at CI runtime by release-ios.yml from Secrets (APPSTORE_TEAM_ID,
+# IOS_PROVISIONING_PROFILE_NAME) -- never commit a copy with real values.
+/ios/ExportOptions.plist
+/android/app/google-services.json
+
+# Local staging folder for the above
+/keyfiles/
+
+# 실기기 통합 테스트가 찍은 스크린샷 (산출물)
+/screenshots/
